@@ -1,0 +1,15 @@
+<div class="seller surface">
+  <a class="seller__head" href="{% url 'ads:profile' seller.pk %}">
+    {% include "components/avatar.html" with person=seller size="lg" %}
+    <span>
+      <span class="seller__name">{{ seller.first_name }}</span>
+      <span class="seller__meta">{% if seller.rating_count %}{% icon "star" 14 %}{{ seller.rating_avg|floatformat:1 }} · {{ seller.rating_count|count_plural:"отзыв,отзыва,отзывов" }}{% else %}Пока без отзывов{% endif %}</span>
+    </span>
+  </a>
+  <ul class="seller__facts">
+    <li>На сайте с {{ seller.date_joined|date:"E Y" }}</li>
+    {% if seller.last_seen_at %}<li>{% last_seen seller.last_seen_at %}</li>{% endif %}
+    {% if seller.city %}<li>{{ seller.city.name }}</li>{% endif %}
+  </ul>
+  {% if seller_ads_count > 1 %}<a class="seller__more" href="{% url 'ads:profile' seller.pk %}">Ещё {{ seller_ads_count|add:"-1"|count_plural:"объявление,объявления,объявлений" }} продавца</a>{% endif %}
+</div>

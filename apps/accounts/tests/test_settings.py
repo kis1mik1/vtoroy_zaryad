@@ -191,7 +191,7 @@ def test_delete_account_anonymizes_user(auth_client, user, deleted_accounts):
 
     response = auth_client.post(reverse("accounts:delete"), {"password": PASSWORD, "confirm": "on"})
 
-    assert response.url == reverse("core:home")
+    assert response.url == reverse("ads:home")
     user.refresh_from_db()
     assert not user.is_active
     assert user.is_deleted

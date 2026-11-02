@@ -7,7 +7,7 @@ class StaticViewSitemap(Sitemap):
 
     def items(self):
         return [
-            "core:home",
+            "ads:home",
             "core:rules",
             "core:safety",
             "core:terms",
@@ -19,4 +19,4 @@ class StaticViewSitemap(Sitemap):
         return reverse(item)
 
     def priority(self, item):
-        return 1.0 if item == "core:home" else 0.4
+        return 1.0 if item == "ads:home" else 0.4

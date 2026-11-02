@@ -1,21 +1,22 @@
 {% extends "layouts/default.html" %}
 {% load static %}
 
-{% block title %}{{ project_name }} — объявления о технике во Владивостоке и на Дальнем Востоке{% endblock %}
+{% block title %}{{ project_name }} — объявления о технике {% if current_city %}{{ current_city.where }}{% else %}на Дальнем Востоке{% endif %}{% endblock %}
 {% block title_suffix %}{% endblock %}
-
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/home.css' %}">{% endblock %}
 
 {% block content %}
   <section class="hero">
     <div class="hero__text">
-      <p class="hero__eyebrow">{% icon "zap" 16 %}Владивосток и Дальний Восток</p>
+      <p class="hero__eyebrow">{% icon "zap" 16 %}{% if current_city %}{{ current_city.name }}{% else %}Дальний Восток{% endif %}</p>
       <h1>{{ site_slogan }}</h1>
+      <form class="hero__search" method="get" action="{% url 'ads:search' %}" role="search">
+        <label class="visually-hidden" for="hero-q">Что ищете</label>
+        {% icon "search" 20 %}
+        <input id="hero-q" type="search" name="q" placeholder="Например, айфон 13 или PS5" autocomplete="off" enterkeyhint="search">
+        <button class="btn btn--primary" type="submit">Найти</button>
+      </form>
       <p class="hero__lead">Смартфоны, ноутбуки, приставки и всё, что работает от розетки или аккумулятора. Новое из магазина и проверенное временем — от соседей по городу.</p>
-      <div class="cluster">
-        <a class="btn btn--primary btn--lg" href="{% url 'core:safety' %}">Как купить без риска</a>
-        <a class="btn btn--secondary btn--lg" href="{% url 'core:rules' %}">Правила размещения</a>
-      </div>
     </div>
     <div class="hero__art" aria-hidden="true">
       <svg viewBox="0 0 240 200">
@@ -27,6 +28,45 @@
       </svg>
     </div>
   </section>
+
+  <section class="home-section" aria-labelledby="categories-title">
+    <h2 id="categories-title">Категории</h2>
+    <div class="category-grid">
+      {% for node in tree %}
+        <a class="category-tile" href="{% url 'ads:category' node.category.slug %}">
+          <span class="category-tile__icon">{% icon node.category.icon|default:"package" 26 %}</span>
+          <span class="category-tile__name">{{ node.category.name }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="home-section" aria-labelledby="fresh-title">
+    <div class="home-section__head">
+      <h2 id="fresh-title">Свежие объявления {% if current_city %}{{ current_city.where }}{% else %}на Дальнем Востоке{% endif %}</h2>
+      <a href="{% url 'ads:search' %}">Все объявления {% icon "arrow-right" 16 %}</a>
+    </div>
+    {% if fresh %}
+      <div class="ad-grid">{% for ad in fresh %}{% include "components/ad_card.html" %}{% endfor %}</div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-state__icon">{% icon "package" 32 %}</div>
+        <h3>{% if current_city %}{{ current_city.where|capfirst }}{% else %}Здесь{% endif %} пока нет объявлений</h3>
+        <p>Станьте первым продавцом или посмотрите объявления в соседних городах.</p>
+        <div class="cluster">
+          <a class="btn btn--primary" href="{% url 'ads:create' %}">Разместить объявление</a>
+          <a class="btn btn--secondary" href="{% url 'ads:search' %}?city=all">Все города</a>
+        </div>
+      </div>
+    {% endif %}
+  </section>
+
+  {% if recent %}
+    <section class="home-section" aria-labelledby="recent-title">
+      <h2 id="recent-title">Вы недавно смотрели</h2>
+      <div class="ad-grid">{% for ad in recent %}{% include "components/ad_card.html" %}{% endfor %}</div>
+    </section>
+  {% endif %}
 
   <section class="principles" aria-labelledby="principles-title">
     <h2 id="principles-title" class="visually-hidden">Чем мы отличаемся</h2>
@@ -43,30 +83,10 @@
       <a href="{% url 'core:safety' %}">Что проверить при встрече</a>
     </article>
     <article class="card card__body principle">
-      <div class="principle__icon">{% icon "shield-check" 24 %}</div>
-      <h3>Сделка без предоплаты</h3>
-      <p>Встречайтесь лично, проверяйте технику на месте и платите после проверки. Сервис не просит перевода денег и данных карты.</p>
+      <div class="principle__icon">{% icon "scale" 24 %}</div>
+      <h3>Цена по рынку</h3>
+      <p>Метки «ниже рынка» и «выше рынка» считаются по объявлениям той же модели и памяти. Слишком низкая цена — повод насторожиться.</p>
       <a href="{% url 'core:safety' %}#fraud">Как распознать мошенника</a>
     </article>
-  </section>
-
-  <section class="regions" aria-labelledby="regions-title">
-    <header class="page-header">
-      <h2 id="regions-title">Где работает площадка</h2>
-      <p>{{ cities_count|count_plural:"город,города,городов" }} Приморья и Дальневосточного федерального округа. Выберите свой — его объявления будут первыми.</p>
-    </header>
-    <form method="post" action="{% url 'core:city_select' %}" class="regions__grid">
-      {% csrf_token %}
-      {% for region, cities in regions %}
-        <div class="regions__item">
-          <h3>{{ region }}</h3>
-          <ul>
-            {% for city in cities %}
-              <li><button type="submit" name="city" value="{{ city.slug }}"{% if current_city and current_city.pk == city.pk %} aria-current="true"{% endif %}>{{ city.name }}</button></li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endfor %}
-    </form>
   </section>
 {% endblock %}

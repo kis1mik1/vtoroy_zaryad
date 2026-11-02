@@ -1,0 +1,8 @@
+<div id="phone-box">
+  {% if phone %}
+    <a class="btn btn--primary btn--block btn--lg ad-buy__phone" href="tel:{{ ad.seller.phone }}">{% icon "phone" 18 %}{{ phone }}</a>
+    <p class="ad-buy__note">Скажите продавцу, что нашли объявление на «{{ project_name }}».</p>
+  {% else %}
+    <p class="ad-buy__note">{% icon "message-circle" 16 %}Продавец предпочитает переписку в сообщениях.</p>
+  {% endif %}
+</div>

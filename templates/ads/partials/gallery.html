@@ -1,0 +1,33 @@
+{% if photos %}
+<div class="gallery" data-gallery>
+  <div class="gallery__stage" data-gallery-track tabindex="0" aria-label="Фотографии, {{ photos|length }} шт.">
+    {% for photo in photos %}
+      <button class="gallery__slide" type="button" data-gallery-open="{{ forloop.counter0 }}" aria-label="Открыть фото {{ forloop.counter }} на весь экран">
+        <img src="{{ photo.image.url }}" alt="{{ ad.title }}, фото {{ forloop.counter }}" width="{{ photo.width }}" height="{{ photo.height }}"{% if not forloop.first %} loading="lazy"{% endif %}>
+      </button>
+    {% endfor %}
+  </div>
+  {% if photos|length > 1 %}
+    <button class="gallery__arrow gallery__arrow--prev" type="button" data-gallery-prev aria-label="Предыдущее фото">{% icon "chevron-left" 22 %}</button>
+    <button class="gallery__arrow gallery__arrow--next" type="button" data-gallery-next aria-label="Следующее фото">{% icon "chevron-right" 22 %}</button>
+    <span class="gallery__counter" data-gallery-counter>1 / {{ photos|length }}</span>
+    <div class="gallery__thumbs" role="tablist" aria-label="Миниатюры">
+      {% for photo in photos %}
+        <button class="gallery__thumb{% if forloop.first %} is-active{% endif %}" type="button" data-gallery-thumb="{{ forloop.counter0 }}" aria-label="Фото {{ forloop.counter }}"><img src="{{ photo.thumb.url }}" alt="" width="120" height="90" loading="lazy"></button>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <dialog class="lightbox" data-gallery-lightbox aria-label="Фотографии объявления">
+    <button class="lightbox__close" type="button" data-close-dialog aria-label="Закрыть">{% icon "x" 24 %}</button>
+    <img class="lightbox__image" src="" alt="" data-lightbox-image>
+    {% if photos|length > 1 %}
+      <button class="lightbox__arrow lightbox__arrow--prev" type="button" data-lightbox-prev aria-label="Предыдущее фото">{% icon "chevron-left" 28 %}</button>
+      <button class="lightbox__arrow lightbox__arrow--next" type="button" data-lightbox-next aria-label="Следующее фото">{% icon "chevron-right" 28 %}</button>
+    {% endif %}
+    <span class="lightbox__counter" data-lightbox-counter></span>
+  </dialog>
+  <script type="application/json" data-gallery-images>[{% for photo in photos %}"{{ photo.image.url|escapejs }}"{% if not forloop.last %}, {% endif %}{% endfor %}]</script>
+</div>
+{% else %}
+<div class="gallery gallery--empty">{% icon "image" 40 %}<span>Продавец не добавил фото</span></div>
+{% endif %}

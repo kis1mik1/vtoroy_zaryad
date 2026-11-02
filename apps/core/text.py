@@ -80,3 +80,13 @@ TRANSLIT = {
 def slugify_ru(value: str, max_length: int = 80) -> str:
     latin = "".join(TRANSLIT.get(char, char) for char in value.lower())
     return slugify(latin)[:max_length].strip("-")
+
+
+ONLINE_WINDOW_MINUTES = 10
+
+
+def last_seen_text(value: datetime) -> str:
+    minutes = (timezone.now() - value).total_seconds() / 60
+    if minutes < ONLINE_WINDOW_MINUTES:
+        return "В сети"
+    return f"Был(а) в сети {human_datetime(value)}"

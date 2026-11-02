@@ -52,7 +52,7 @@ def test_cities_cache_is_reset_on_save():
 
 
 def test_default_city_shown_in_header(client):
-    response = client.get(reverse("core:home"))
+    response = client.get(reverse("ads:home"))
 
     assert response.context["current_city"] == get_default_city()
     assert "Владивосток" in response.content.decode()
@@ -70,7 +70,7 @@ def test_select_city_saves_to_session_and_redirects_back(client):
 def test_select_all_cities(client):
     client.post(reverse("core:city_select"), {"city": ALL_CITIES})
 
-    response = client.get(reverse("core:home"))
+    response = client.get(reverse("ads:home"))
 
     assert response.context["current_city"] is None
     assert "Все города" in response.content.decode()
@@ -96,7 +96,7 @@ def test_stale_city_in_session_falls_back_to_default(client):
     session[CITY_SESSION_KEY] = "removed-city"
     session.save()
 
-    response = client.get(reverse("core:home"))
+    response = client.get(reverse("ads:home"))
 
     assert response.context["current_city"].slug == "vladivostok"
 

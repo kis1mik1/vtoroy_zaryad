@@ -287,7 +287,7 @@ def delete_account(request):
         services.delete_account(request.user)
         logout(request)
         messages.success(request, "Аккаунт удалён. Спасибо, что были с нами.")
-        return redirect("core:home")
+        return redirect("ads:home")
     return render(
         request,
         "accounts/settings_delete.html",

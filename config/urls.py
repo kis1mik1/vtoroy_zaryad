@@ -4,13 +4,14 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.views.generic import RedirectView
 
+from apps.ads.sitemaps import AdSitemap, CategorySitemap
 from apps.core.sitemaps import StaticViewSitemap
 
 admin.site.site_header = "Второй заряд — управление"
 admin.site.site_title = "Второй заряд"
 admin.site.index_title = "Разделы"
 
-sitemaps = {"static": StaticViewSitemap}
+sitemaps = {"static": StaticViewSitemap, "categories": CategorySitemap, "ads": AdSitemap}
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),

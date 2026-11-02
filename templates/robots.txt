@@ -6,6 +6,8 @@ Disallow: /notifications/
 Disallow: /moderation/
 Disallow: /payments/
 Disallow: /compare/
+Disallow: /search/?*q=
+Disallow: /ad/new/
 Disallow: /city/
 Disallow: /media/protected/
 

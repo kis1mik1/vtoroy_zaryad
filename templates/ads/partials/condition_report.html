@@ -1,0 +1,20 @@
+<section class="ad-section">
+  <h2>Состояние</h2>
+  <ul class="condition">
+    {% if ad.condition == "used" %}
+      {% if report.screen_state %}<li><span class="condition__label">Экран</span><span class="condition__value condition__value--{{ report.screen_state }}">{{ report.get_screen_state_display }}</span></li>{% endif %}
+      {% if report.body_state %}<li><span class="condition__label">Корпус</span><span class="condition__value condition__value--{{ report.body_state }}">{{ report.get_body_state_display }}</span></li>{% endif %}
+      {% if report.battery_health %}
+        <li><span class="condition__label">Аккумулятор</span><span class="condition__value"><span class="battery" aria-hidden="true"><span style="width: {{ report.battery_health }}%"></span></span>{{ report.battery_health }}%</span></li>
+      {% endif %}
+      <li><span class="condition__label">Работоспособность</span><span class="condition__value">{% if report.everything_works %}{% icon "circle-check" 16 %}Всё работает{% else %}{% icon "triangle-alert" 16 %}Есть неисправности{% endif %}</span></li>
+      {% if not report.everything_works and report.issues %}<li class="condition__note">{{ report.issues }}</li>{% endif %}
+      <li><span class="condition__label">Ремонт</span><span class="condition__value">{% if report.was_repaired %}Был: {{ report.repair_note }}{% else %}Не было{% endif %}</span></li>
+    {% else %}
+      <li><span class="condition__label">Упаковка</span><span class="condition__value">{% if report.is_sealed %}{% icon "package" 16 %}В заводской плёнке{% else %}Вскрыта{% endif %}</span></li>
+      <li><span class="condition__label">Чек</span><span class="condition__value">{% if report.has_receipt %}Есть{% else %}Нет{% endif %}</span></li>
+      {% if report.warranty_until %}<li><span class="condition__label">Гарантия</span><span class="condition__value">до {{ report.warranty_until|day }}</span></li>{% endif %}
+    {% endif %}
+    {% if report.package_display %}<li><span class="condition__label">Комплект</span><span class="condition__value">{{ report.package_display|join:", " }}</span></li>{% endif %}
+  </ul>
+</section>

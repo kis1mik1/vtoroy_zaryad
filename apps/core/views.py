@@ -10,7 +10,7 @@ from django.views.decorators.http import require_GET, require_http_methods
 from django.views.generic import TemplateView
 
 from .middleware import ALL_CITIES, CITY_SESSION_KEY
-from .selectors import get_cities, get_cities_by_region, get_city_by_slug
+from .selectors import get_cities_by_region, get_city_by_slug
 from .styleguide import DemoForm, demo_page, sample_dates
 
 INFO_PAGES = (
@@ -20,16 +20,6 @@ INFO_PAGES = (
     ("core:privacy", "Политика конфиденциальности"),
     ("core:about", "О проекте"),
 )
-
-
-class HomeView(TemplateView):
-    template_name = "core/home.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["regions"] = get_cities_by_region()
-        context["cities_count"] = len(get_cities())
-        return context
 
 
 class InfoPageView(TemplateView):

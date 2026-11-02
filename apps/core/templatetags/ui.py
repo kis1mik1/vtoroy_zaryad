@@ -95,3 +95,16 @@ def captcha():
         "token_field": smartcaptcha.TOKEN_FIELD,
         "test_token": smartcaptcha.TEST_TOKEN,
     }
+
+
+@register.filter
+def sub(value, arg):
+    try:
+        return int(value) - int(arg)
+    except (TypeError, ValueError):
+        return ""
+
+
+@register.simple_tag
+def last_seen(value):
+    return text.last_seen_text(value) if value else ""

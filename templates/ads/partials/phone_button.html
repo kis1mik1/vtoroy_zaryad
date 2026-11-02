@@ -1,0 +1,13 @@
+<div id="phone-box">
+  {% if not ad.seller.shows_phone %}
+    <p class="ad-buy__note">{% icon "message-circle" 16 %}Продавец предпочитает переписку в сообщениях.</p>
+  {% elif user.is_authenticated %}
+    <form method="post" action="{% url 'ads:phone' ad.pk %}" hx-post="{% url 'ads:phone' ad.pk %}" hx-target="#phone-box" hx-swap="outerHTML">
+      {% csrf_token %}
+      <button class="btn btn--primary btn--block btn--lg" type="submit">{% icon "phone" 18 %}Показать телефон</button>
+    </form>
+  {% else %}
+    <a class="btn btn--primary btn--block btn--lg" href="{% url 'accounts:login' %}?next={{ request.get_full_path|urlencode }}">{% icon "phone" 18 %}Показать телефон</a>
+    <p class="ad-buy__note">Телефон видят только зарегистрированные пользователи.</p>
+  {% endif %}
+</div>

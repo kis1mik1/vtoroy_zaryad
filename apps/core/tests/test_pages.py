@@ -12,7 +12,7 @@ pytestmark = pytest.mark.django_db
 @pytest.mark.parametrize(
     ("name", "heading"),
     [
-        ("core:home", "Где работает площадка"),
+        ("ads:home", "Категории"),
         ("core:rules", "Правила размещения"),
         ("core:safety", "Признаки мошенничества"),
         ("core:terms", "Пользовательское соглашение"),

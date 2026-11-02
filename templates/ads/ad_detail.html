@@ -1,0 +1,133 @@
+{% extends "layouts/default.html" %}
+{% load static ads %}
+
+{% block title %}{{ ad.title }} — {{ ad.price|price }} {{ ad.city.where }}{% endblock %}
+{% block meta_description %}{{ ad.description|truncatechars:160 }}{% endblock %}
+{% block meta_robots %}{% if ad.status != "active" %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
+{% block og_type %}product{% endblock %}
+{% block og_title %}{{ ad.title }} — {{ ad.price|price }}{% endblock %}
+{% block og_description %}{{ ad.description|truncatechars:200 }}{% endblock %}
+{% block og_image %}{% if photos %}{{ site_url }}{{ photos.0.image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/ad-detail.css' %}">{% endblock %}
+
+{% block content %}
+  {% with label=ad|market %}
+  {% if ad.status != "active" %}
+    <div class="alert {% if ad.status == 'sold' %}alert--success{% elif ad.status == 'rejected' %}alert--error{% else %}alert--warning{% endif %} ad-status-note">
+      {% icon "info" %}
+      <div>
+        {% if ad.status == "sold" %}<div class="alert__title">Товар продан</div>Посмотрите похожие объявления в разделе «{{ ad.category.name }}».
+        {% elif ad.status == "pending" %}<div class="alert__title">Объявление на проверке</div>Его видите только вы. После проверки оно появится в поиске.
+        {% elif ad.status == "rejected" %}<div class="alert__title">Объявление отклонено</div>{{ ad.rejection_reason }}
+        {% else %}<div class="alert__title">Объявление в архиве</div>Покупатели его не видят.{% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="ad-page">
+    <div class="ad-page__top">
+      <header class="ad-head">
+        <h1>{{ ad.title }}</h1>
+        <div class="ad-head__meta">
+          <span>{{ ad.city.name }}</span>
+          {% if ad.published_at %}<span>опубликовано {{ ad.published_at|humandate }}</span>{% endif %}
+          <span>{% icon "eye" 14 %}{{ ad.views_count|count_plural:"просмотр,просмотра,просмотров" }}</span>
+          <span>№ {{ ad.pk }}</span>
+        </div>
+      </header>
+
+      {% include "ads/partials/gallery.html" %}
+    </div>
+    <div class="ad-page__main">
+
+      <section class="ad-section">
+        <h2>Характеристики</h2>
+        <dl class="specs">
+          <div><dt>Состояние</dt><dd>{{ ad.get_condition_display }}</dd></div>
+          {% if ad.device_model %}<div><dt>Модель</dt><dd>{{ ad.device_model.full_name }}{% if ad.device_model.release_year %}, {{ ad.device_model.release_year }}{% endif %}</dd></div>
+          {% elif ad.custom_model_name %}<div><dt>Модель</dt><dd>{% if ad.brand %}{{ ad.brand.name }} {% endif %}{{ ad.custom_model_name }}</dd></div>{% endif %}
+          {% for value in ad.attribute_values.all %}<div><dt>{{ value.attribute.name }}</dt><dd>{{ value.display }}</dd></div>{% endfor %}
+        </dl>
+      </section>
+
+      {% if report %}{% include "ads/partials/condition_report.html" %}{% endif %}
+
+      <section class="ad-section">
+        <h2>Описание</h2>
+        <div class="ad-description">{{ ad.description|linebreaksbr }}</div>
+      </section>
+
+      {% with changes=ad.price_changes.all %}
+        {% if changes %}
+          <section class="ad-section">
+            <h2>История цены</h2>
+            <ol class="price-history">
+              {% for change in changes %}
+                <li><span>{{ change.created_at|humandate }}</span><span class="price-history__values"><s>{{ change.old_price|price }}</s> → <strong>{{ change.new_price|price }}</strong></span>{% if change.new_price < change.old_price %}<span class="badge badge--success">−{{ change.old_price|sub:change.new_price|price }}</span>{% else %}<span class="badge badge--warning">+{{ change.new_price|sub:change.old_price|price }}</span>{% endif %}</li>
+              {% endfor %}
+              {% if ad.published_at %}<li><span>{{ ad.published_at|humandate }}</span><span class="price-history__values">Опубликовано</span></li>{% endif %}
+            </ol>
+          </section>
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <aside class="ad-page__side">
+      <div class="ad-buy surface">
+        <div class="ad-buy__price">{{ ad.price|price }}</div>
+        <div class="ad-buy__badges">
+          {% if ad.is_negotiable %}<span class="badge">Торг уместен</span>{% endif %}
+          {% if label %}<span class="badge badge--{{ label.tone }}">{{ label.text }}</span>{% endif %}
+        </div>
+        {% if ad.market_median %}
+          <p class="ad-buy__market">Обычно {{ ad.device_model.name }}{% if ad.condition == "used" %} б/у{% else %} новый{% endif %} продают за {{ ad.market_p25|price }} – {{ ad.market_p75|price }}</p>
+        {% endif %}
+
+        {% if is_owner %}
+          <div class="ad-buy__actions">
+            {% if ad.is_editable %}<a class="btn btn--primary btn--block" href="{% url 'ads:edit' ad.pk %}">{% icon "pencil" 18 %}Редактировать</a>{% endif %}
+            {% if ad.status == "active" %}
+              <form method="post" action="{% url 'ads:status' ad.pk 'sold' %}" data-confirm="Отметить объявление проданным? Оно исчезнет из поиска." data-confirm-action="Продано">{% csrf_token %}<button class="btn btn--secondary btn--block" type="submit">{% icon "hand-coins" 18 %}Продано</button></form>
+              <form method="post" action="{% url 'ads:status' ad.pk 'withdraw' %}" data-confirm="Снять объявление с публикации?" data-confirm-action="Снять">{% csrf_token %}<button class="btn btn--ghost btn--block" type="submit">{% icon "archive" 18 %}Снять с публикации</button></form>
+            {% endif %}
+            <p class="ad-buy__stats">{{ ad.views_count|count_plural:"просмотр,просмотра,просмотров" }} · {{ ad.contacts_shown_count|count_plural:"показ телефона,показа телефона,показов телефона" }} · {{ ad.favorites_count }} в избранном</p>
+          </div>
+        {% elif ad.status == "active" %}
+          <div class="ad-buy__actions">
+            {% include "ads/partials/phone_button.html" %}
+            <div class="ad-buy__row">
+              {% if ad.pk in favorite_ids %}{% include "ads/partials/favorite_button.html" with is_favorite=True variant="full" %}{% else %}{% include "ads/partials/favorite_button.html" with is_favorite=False variant="full" %}{% endif %}
+              {% if ad.pk in compare_ids %}{% include "ads/partials/compare_button.html" with in_compare=True variant="full" %}{% else %}{% include "ads/partials/compare_button.html" with in_compare=False variant="full" %}{% endif %}
+            </div>
+            <button class="btn btn--ghost btn--block" type="button" data-share data-share-title="{{ ad.title }}" data-share-url="{{ site_url }}{{ request.path }}">{% icon "share-2" 18 %}Поделиться</button>
+          </div>
+        {% endif %}
+      </div>
+
+      {% include "ads/partials/seller_card.html" %}
+
+      <div class="ad-safety surface">
+        {% icon "shield-check" 20 %}
+        <p>Не переводите предоплату и проверяйте технику при встрече. <a href="{% url 'core:safety' %}">Как купить безопасно</a></p>
+      </div>
+    </aside>
+  </div>
+
+  {% if similar %}
+    <section class="ad-related">
+      <h2>Похожие объявления</h2>
+      <div class="ad-grid">{% for ad in similar %}{% include "components/ad_card.html" %}{% endfor %}</div>
+    </section>
+  {% endif %}
+  {% if recent %}
+    <section class="ad-related">
+      <h2>Вы недавно смотрели</h2>
+      <div class="ad-grid">{% for ad in recent %}{% include "components/ad_card.html" %}{% endfor %}</div>
+    </section>
+  {% endif %}
+
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "Product", "name": "{{ ad.title|escapejs }}", "description": "{{ ad.description|truncatechars:300|escapejs }}"{% if photos %}, "image": "{{ site_url }}{{ photos.0.image.url }}"{% endif %}, "itemCondition": "https://schema.org/{% if ad.condition == 'new' %}NewCondition{% else %}UsedCondition{% endif %}", "offers": {"@type": "Offer", "price": "{{ ad.price }}", "priceCurrency": "RUB", "availability": "https://schema.org/{% if ad.status == 'active' %}InStock{% else %}SoldOut{% endif %}"}}
+  </script>
+  {% endwith %}
+{% endblock %}

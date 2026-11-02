@@ -75,6 +75,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.site",
                 "apps.notifications.context_processors.notifications",
+                "apps.ads.context_processors.compare",
             ],
             "builtins": ["apps.core.templatetags.ui"],
         },
@@ -121,12 +122,17 @@ CELERY_BEAT_SCHEDULE = {
         "task": "apps.ads.tasks.remove_orphan_photos",
         "schedule": 6 * 60 * 60,
     },
+    "recalculate-price-stats": {
+        "task": "apps.ads.tasks.recalculate_price_stats",
+        "schedule": 60 * 60,
+    },
+    "check-saved-searches": {"task": "apps.ads.tasks.check_saved_searches", "schedule": 60 * 60},
 }
 
 AUTH_USER_MODEL = "accounts.User"
 LOGIN_URL = "accounts:login"
-LOGIN_REDIRECT_URL = "core:home"
-LOGOUT_REDIRECT_URL = "core:home"
+LOGIN_REDIRECT_URL = "ads:home"
+LOGOUT_REDIRECT_URL = "ads:home"
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 3
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
