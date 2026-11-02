@@ -6,6 +6,7 @@ venv/
 /media/
 /staticfiles/
 /logs/
+/var/
 .pytest_cache/
 .ruff_cache/
 .coverage
