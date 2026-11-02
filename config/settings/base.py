@@ -98,7 +98,14 @@ CACHES = {
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {"hosts": [env("CHANNELS_REDIS_URL", default="redis://localhost:6379/2")]},
+        "CONFIG": {
+            "hosts": [
+                {
+                    "address": env("CHANNELS_REDIS_URL", default="redis://localhost:6379/2"),
+                    "socket_timeout": 30,
+                }
+            ]
+        },
     }
 }
 
