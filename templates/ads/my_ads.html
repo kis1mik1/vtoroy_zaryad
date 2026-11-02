@@ -1,0 +1,36 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Мои объявления{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/my-ads.css' %}">{% endblock %}
+
+{% block content %}
+  {% url 'ads:create' as create_url %}
+  <header class="page-header my-ads__header">
+    <h1>Мои объявления</h1>
+    <a class="btn btn--primary" href="{{ create_url }}">{% icon "plus" 18 %}Разместить объявление</a>
+  </header>
+
+  <nav class="tabs" aria-label="Статус объявлений">
+    {% for value, label, count in tabs %}
+      <a class="tabs__tab" href="?status={{ value }}"{% if value == status %} aria-current="page"{% endif %}>{{ label }}{% if count %}<span class="tabs__count">{{ count }}</span>{% endif %}</a>
+    {% endfor %}
+  </nav>
+
+  {% if ads %}
+    <ul class="my-ads">
+      {% for ad in ads %}{% include "ads/partials/my_ad_row.html" %}{% endfor %}
+    </ul>
+  {% elif status == "active" %}
+    {% include "components/empty_state.html" with icon_name="package" title="Нет активных объявлений" text="Продайте технику, которой больше не пользуетесь: размещение бесплатное." action_url=create_url action_label="Разместить объявление" %}
+  {% elif status == "pending" %}
+    {% include "components/empty_state.html" with icon_name="clock" title="Ничего не ждёт проверки" text="Новые и изменённые объявления появляются здесь, пока их проверяет модератор." %}
+  {% elif status == "rejected" %}
+    {% include "components/empty_state.html" with icon_name="circle-check" title="Отклонённых нет" text="Если модератор найдёт нарушение, объявление появится здесь с причиной." %}
+  {% elif status == "sold" %}
+    {% include "components/empty_state.html" with icon_name="hand-coins" title="Проданных пока нет" text="Отмечайте проданные объявления, чтобы покупатели не писали зря." %}
+  {% else %}
+    {% include "components/empty_state.html" with icon_name="archive" title="Архив пуст" text="Сюда попадают снятые с публикации объявления и те, что не поднимали 30 дней." %}
+  {% endif %}
+{% endblock %}

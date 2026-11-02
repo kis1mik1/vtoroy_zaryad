@@ -1,0 +1,4 @@
+<form method="post" action="{% url 'ads:status' ad.pk action %}"{% if confirm %} data-confirm="{{ confirm }}" data-confirm-action="{{ label }}"{% endif %}>
+  {% csrf_token %}
+  <button class="btn btn--{% if danger %}ghost my-ad__danger{% else %}ghost{% endif %} btn--sm" type="submit">{% icon icon_name 16 %}{{ label }}</button>
+</form>

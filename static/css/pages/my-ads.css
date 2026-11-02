@@ -1,0 +1,120 @@
+.my-ads__header,
+.my-ads__header.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.my-ads {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.my-ad {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .my-ad {
+    grid-template-columns: 200px minmax(0, 1fr);
+    padding: var(--space-4);
+  }
+}
+
+.my-ad__photo {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  color: var(--color-text-subtle);
+}
+
+.my-ad__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.my-ad__body {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.my-ad__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-4);
+}
+
+.my-ad__title {
+  font-size: var(--text-lg);
+  overflow-wrap: anywhere;
+}
+
+.my-ad__price {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.my-ad__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.my-ad__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.my-ad__reason {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+}
+
+.my-ad__reason .icon {
+  margin-top: 3px;
+}
+
+.my-ad__note {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.my-ad__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.my-ad__actions .btn--secondary {
+  margin-right: var(--space-2);
+}
+
+.my-ad__danger {
+  color: var(--color-danger);
+}

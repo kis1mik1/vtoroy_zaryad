@@ -1,0 +1,46 @@
+<li class="my-ad card">
+  <div class="my-ad__photo">
+    {% with photo=ad.photos.all|first %}
+      {% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="240" height="180" loading="lazy">{% else %}{% icon "image" 28 %}{% endif %}
+    {% endwith %}
+  </div>
+  <div class="my-ad__body">
+    <div class="my-ad__top">
+      <h2 class="my-ad__title">{{ ad.title }}</h2>
+      <span class="my-ad__price">{{ ad.price|price }}</span>
+    </div>
+    <div class="my-ad__meta">
+      <span class="badge badge--{% if ad.status == 'active' %}success{% elif ad.status == 'pending' %}info{% elif ad.status == 'rejected' %}danger{% else %}{% endif %}">{{ ad.get_status_display }}</span>
+      <span>{{ ad.category.name }}</span>
+      <span>{{ ad.city.name }}</span>
+      {% if ad.status == "active" %}
+        <span>опубликовано {{ ad.published_at|humandate }}</span>
+      {% else %}
+        <span>{{ ad.status_changed_at|humandate }}</span>
+      {% endif %}
+      {% if ad.status == "active" or ad.status == "sold" %}<span>{% icon "eye" 14 %}{{ ad.views_count|number }}</span>{% endif %}
+    </div>
+    {% if ad.status == "rejected" and ad.rejection_reason %}
+      <p class="my-ad__reason">{% icon "circle-x" 16 %}{{ ad.rejection_reason }}</p>
+    {% elif ad.status == "pending" %}
+      <p class="my-ad__note">Модератор проверит объявление в течение рабочего дня. Мы пришлём уведомление.</p>
+    {% endif %}
+    <div class="my-ad__actions">
+      {% if ad.is_editable %}
+        <a class="btn btn--secondary btn--sm" href="{% url 'ads:edit' ad.pk %}">{% icon "pencil" 16 %}{% if ad.status == "rejected" %}Исправить{% else %}Редактировать{% endif %}</a>
+      {% endif %}
+      {% if ad.status == "active" %}
+        {% include "ads/partials/status_button.html" with action="sold" label="Продано" icon_name="hand-coins" confirm="Отметить объявление проданным? Оно исчезнет из поиска." %}
+        {% include "ads/partials/status_button.html" with action="withdraw" label="Снять с публикации" icon_name="archive" confirm="Снять объявление с публикации? Его можно будет вернуть из архива." %}
+      {% elif ad.status == "pending" %}
+        {% include "ads/partials/status_button.html" with action="withdraw" label="Отменить публикацию" icon_name="archive" confirm="Отменить публикацию? Объявление уйдёт в архив." %}
+      {% elif ad.status == "archived" %}
+        {% include "ads/partials/status_button.html" with action="restore" label="Вернуть" icon_name="rotate-ccw" %}
+        {% include "ads/partials/status_button.html" with action="sold" label="Продано" icon_name="hand-coins" %}
+        {% include "ads/partials/status_button.html" with action="delete" label="Удалить" icon_name="trash-2" confirm="Удалить объявление навсегда?" danger=True %}
+      {% else %}
+        {% include "ads/partials/status_button.html" with action="delete" label="Удалить" icon_name="trash-2" confirm="Удалить объявление навсегда?" danger=True %}
+      {% endif %}
+    </div>
+  </div>
+</li>

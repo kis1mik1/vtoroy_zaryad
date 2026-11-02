@@ -1,0 +1,13 @@
+<div class="uploader{% if state.photo_error %} field--invalid{% endif %}" data-uploader data-url="{% url 'ads:photo_upload' %}" data-max="{{ max_photos }}">
+  <ul class="photo-grid" data-photo-list aria-label="Загруженные фото">
+    {% for photo in state.photos %}{% include "ads/partials/photo_tile.html" %}{% endfor %}
+  </ul>
+  <label class="uploader__drop" data-photo-drop>
+    <input class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic" multiple data-photo-input>
+    {% icon "camera" 28 %}
+    <span class="uploader__title">Добавить фото</span>
+    <span class="uploader__hint">Перетащите сюда или нажмите. До {{ max_photos }} фото, JPEG, PNG, WebP или HEIC до 15 МБ.</span>
+  </label>
+  <p class="field__help">Первое фото будет главным. Порядок меняется перетаскиванием или кнопками со стрелками. Снимайте само устройство со всех сторон и включённый экран.</p>
+  <ul class="field__error" data-photo-errors>{% if state.photo_error %}<li>{{ state.photo_error }}</li>{% endif %}</ul>
+</div>

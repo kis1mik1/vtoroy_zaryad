@@ -1,0 +1,32 @@
+<div class="category-picker{% if form.category.errors %} field--invalid{% endif %}{% if state.category %} is-collapsed{% endif %}" data-category-picker
+     hx-get="{% url 'ads:form_section' %}"
+     hx-trigger="change"
+     hx-target="#ad-model-section"
+     hx-swap="outerHTML"
+     hx-include="[name=category]:checked, [name=condition]:checked, [name=ad]"
+     hx-vals='{"part": "category"}'>
+  <div class="category-picker__summary">
+    <span>{% icon "check" 18 %}<strong data-category-name>{% if state.category %}{{ state.category.name }}{% endif %}</strong></span>
+    <button class="btn btn--secondary btn--sm" type="button" data-category-expand>Изменить</button>
+  </div>
+  <div class="input-group category-picker__search">
+    {% icon "search" 18 %}
+    <input class="input" type="search" placeholder="Найти категорию" aria-label="Найти категорию" data-filter-input="category-list" autocomplete="off">
+  </div>
+  <div class="category-picker__groups" id="category-list" role="radiogroup" aria-label="Категория">
+    {% for node in tree %}
+      <fieldset class="category-picker__group" data-filter-group>
+        <legend>{% if node.category.icon %}{% icon node.category.icon 18 %}{% endif %}{{ node.category.name }}</legend>
+        <div class="category-picker__items">
+          {% for category in node.children|default_if_none:"" %}
+            {% include "ads/partials/category_option.html" %}
+          {% empty %}
+            {% include "ads/partials/category_option.html" with category=node.category %}
+          {% endfor %}
+        </div>
+      </fieldset>
+    {% endfor %}
+    <p class="muted" data-filter-empty hidden>Ничего не нашлось. Попробуйте другое слово.</p>
+  </div>
+  {% if form.category.errors %}<ul class="field__error">{% for error in form.category.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+</div>

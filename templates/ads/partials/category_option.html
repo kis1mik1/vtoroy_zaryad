@@ -1,0 +1,4 @@
+<label class="chip" data-filter-item="{{ category.name }}">
+  <input type="radio" name="category" value="{{ category.pk }}"{% if state.category and state.category.pk == category.pk %} checked{% endif %} required>
+  <span>{{ category.name }}</span>
+</label>

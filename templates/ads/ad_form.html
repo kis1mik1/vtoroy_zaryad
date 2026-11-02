@@ -1,0 +1,57 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/ad-form.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>{{ title }}</h1>
+    {% if state.ad and state.ad.status == "rejected" %}
+      <div class="alert alert--error">{% icon "circle-x" %}<div><div class="alert__title">Объявление отклонено</div>{{ state.ad.rejection_reason }} Исправьте его и сохраните — оно снова уйдёт на проверку.</div></div>
+    {% elif state.ad and state.ad.status == "active" %}
+      <p>Если измените название, описание, фото, категорию или модель, объявление снова пройдёт проверку. Цену можно менять без проверки.</p>
+    {% else %}
+      <p>Размещение бесплатное. После проверки объявление увидят покупатели.</p>
+    {% endif %}
+  </header>
+
+  <form method="post" class="ad-form" novalidate data-ad-form>
+    {% csrf_token %}
+    {% if state.ad %}<input type="hidden" name="ad" value="{{ state.ad.pk }}">{% endif %}
+    {% if form.non_field_errors %}<ul class="form__errors" role="alert">{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+
+    <section class="ad-step surface" aria-labelledby="step-category">
+      <h2 id="step-category"><span class="ad-step__number">1</span>Категория</h2>
+      {% include "ads/partials/category_picker.html" %}
+    </section>
+
+    {% include "ads/partials/model_section.html" %}
+
+    {% include "ads/partials/condition_section.html" %}
+
+    <section class="ad-step surface" aria-labelledby="step-photos">
+      <h2 id="step-photos"><span class="ad-step__number">4</span>Фото</h2>
+      {% include "ads/partials/uploader.html" %}
+    </section>
+
+    <section class="ad-step surface" aria-labelledby="step-details">
+      <h2 id="step-details"><span class="ad-step__number">5</span>Описание и цена</h2>
+      <div class="form">
+        {{ form.title.as_field_group }}
+        {{ form.description.as_field_group }}
+        <div class="ad-price">
+          {{ form.price.as_field_group }}
+          {{ form.is_negotiable.as_field_group }}
+        </div>
+        {{ form.city.as_field_group }}
+      </div>
+    </section>
+
+    <div class="ad-form__submit">
+      <button class="btn btn--primary btn--lg" type="submit">{{ submit_label }}</button>
+      <p class="muted">Нажимая кнопку, вы соглашаетесь с <a href="{% url 'core:rules' %}" target="_blank">правилами размещения</a>.</p>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,10 @@
+<li class="photo-tile" data-photo>
+  <img src="{{ photo.thumb.url }}" alt="" width="240" height="180">
+  <input type="hidden" name="photos" value="{{ photo.pk }}">
+  <span class="photo-tile__main">Главное</span>
+  <div class="photo-tile__actions">
+    <button type="button" class="photo-tile__button" data-photo-move="-1" aria-label="Переместить левее">{% icon "chevron-left" 16 %}</button>
+    <button type="button" class="photo-tile__button" data-photo-move="1" aria-label="Переместить правее">{% icon "chevron-right" 16 %}</button>
+    <button type="button" class="photo-tile__button photo-tile__button--remove" data-photo-remove aria-label="Удалить фото">{% icon "x" 16 %}</button>
+  </div>
+</li>

@@ -1,0 +1,58 @@
+<section class="ad-step surface" id="ad-model-section" aria-labelledby="step-model" data-model-section>
+  <h2 id="step-model"><span class="ad-step__number">2</span>Модель и характеристики</h2>
+  {% if not state.category %}
+    <p class="ad-step__placeholder">Сначала выберите категорию — покажем бренды, модели и нужные характеристики.</p>
+  {% else %}
+    <div class="form">
+      {% if brands %}
+        <div class="ad-model-row">
+          <div class="field{% if form.brand.errors %} field--invalid{% endif %}">
+            <label class="field__label" for="id_brand">Бренд</label>
+            <select name="brand" id="id_brand"
+                    hx-get="{% url 'ads:form_section' %}" hx-trigger="change" hx-target="#ad-model-section" hx-swap="outerHTML"
+                    hx-include="[name=category]:checked, [name=brand], [name=custom_model_name], [name=ad], [name^=attr_]">
+              <option value="">Другой бренд или без бренда</option>
+              {% for brand in brands %}<option value="{{ brand.pk }}"{% if state.brand_value == brand.pk|stringformat:"d" %} selected{% endif %}>{{ brand.name }}</option>{% endfor %}
+            </select>
+            {% if form.brand.errors %}<ul class="field__error">{% for error in form.brand.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+          </div>
+          {% if models %}
+            <div class="field{% if form.device_model.errors %} field--invalid{% endif %}">
+              <label class="field__label" for="id_device_model">Модель</label>
+              <select name="device_model" id="id_device_model" data-model-select
+                      hx-get="{% url 'ads:form_section' %}" hx-trigger="change" hx-target="#ad-model-section" hx-swap="outerHTML"
+                      hx-include="[name=category]:checked, [name=brand], [name=device_model], [name=custom_model_name], [name=ad], [name^=attr_]">
+                <option value="">Выберите модель</option>
+                {% for model in models %}<option value="{{ model.pk }}"{% if state.model_value == model.pk|stringformat:"d" %} selected{% endif %}>{{ model.name }}{% if model.release_year %} ({{ model.release_year }}){% endif %}</option>{% endfor %}
+                <option value="{{ other_model }}"{% if state.model_value == other_model %} selected{% endif %}>Другая модель — нет в списке</option>
+              </select>
+              {% if form.device_model.errors %}<ul class="field__error">{% for error in form.device_model.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if not state.device_model %}
+        <div data-custom-model{% if models and state.model_value != other_model %} hidden{% endif %}>
+          {{ form.custom_model_name.as_field_group }}
+        </div>
+      {% endif %}
+
+      {% if attributes_form.fixed %}
+        <div class="spec-list">
+          <div class="spec-list__title">{% icon "badge-check" 16 %}Из справочника для {{ state.device_model.full_name }}</div>
+          <dl>
+            {% for value in attributes_form.fixed %}<div><dt>{{ value.attribute.name }}</dt><dd>{{ value.display }}</dd></div>{% endfor %}
+          </dl>
+        </div>
+      {% endif %}
+
+      {% if attributes_form.fields %}
+        <div class="ad-attributes">
+          {% for field in attributes_form %}{{ field.as_field_group }}{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+{% if include_condition %}{% include "ads/partials/condition_section.html" with oob=True %}{% endif %}
