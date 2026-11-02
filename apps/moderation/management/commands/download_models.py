@@ -41,7 +41,10 @@ class Command(BaseCommand):
         target.mkdir(parents=True, exist_ok=True)
         self.stdout.write(f"Скачиваю {model} ({tag})…")
         with tempfile.TemporaryDirectory(dir=target) as cache:
-            source = Path(open_clip.download_pretrained(config, cache_dir=cache))
+            try:
+                source = Path(open_clip.download_pretrained(config, cache_dir=cache))
+            except Exception as exc:
+                raise CommandError(f"Не удалось скачать веса: {exc}") from exc
             suffix = ".safetensors" if source.suffix == ".safetensors" else ".bin"
             destination = target / f"{model}-{tag}{suffix}"
             shutil.copyfile(source, destination)
