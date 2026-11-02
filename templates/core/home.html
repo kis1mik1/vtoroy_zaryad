@@ -1,0 +1,72 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}{{ site_name }} — объявления о технике во Владивостоке и на Дальнем Востоке{% endblock %}
+{% block title_suffix %}{% endblock %}
+
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/home.css' %}">{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <div class="hero__text">
+      <p class="hero__eyebrow">{% icon "zap" 16 %}Владивосток и Дальний Восток</p>
+      <h1>{{ site_slogan }}</h1>
+      <p class="hero__lead">Смартфоны, ноутбуки, приставки и всё, что работает от розетки или аккумулятора. Новое из магазина и проверенное временем — от соседей по городу.</p>
+      <div class="cluster">
+        <a class="btn btn--primary btn--lg" href="{% url 'core:safety' %}">Как купить без риска</a>
+        <a class="btn btn--secondary btn--lg" href="{% url 'core:rules' %}">Правила размещения</a>
+      </div>
+    </div>
+    <div class="hero__art" aria-hidden="true">
+      <svg viewBox="0 0 240 200">
+        <rect x="20" y="40" width="170" height="120" rx="26" fill="none" stroke="currentColor" stroke-width="10"/>
+        <rect x="198" y="78" width="18" height="44" rx="7" fill="currentColor"/>
+        <rect x="40" y="60" width="62" height="80" rx="12" class="hero__cell"/>
+        <rect x="108" y="60" width="62" height="80" rx="12" class="hero__cell hero__cell--empty"/>
+        <path d="M78 74 58 104h16l-6 22 22-32H74l4-20Z" class="hero__bolt"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="principles" aria-labelledby="principles-title">
+    <h2 id="principles-title" class="visually-hidden">Чем мы отличаемся</h2>
+    <article class="card card__body principle">
+      <div class="principle__icon">{% icon "badge-check" 24 %}</div>
+      <h3>Только электроника</h3>
+      <p>Площадка узкая намеренно: здесь не продают шины, диваны и котят. Каждое объявление проверяется до публикации.</p>
+      <a href="{% url 'core:rules' %}">Что можно размещать</a>
+    </article>
+    <article class="card card__body principle">
+      <div class="principle__icon">{% icon "battery-charging" 24 %}</div>
+      <h3>Честное состояние</h3>
+      <p>Продавец указывает износ аккумулятора, следы на корпусе и экране, ремонт и комплект. Покупатель знает, за что платит.</p>
+      <a href="{% url 'core:safety' %}">Что проверить при встрече</a>
+    </article>
+    <article class="card card__body principle">
+      <div class="principle__icon">{% icon "shield-check" 24 %}</div>
+      <h3>Сделка без предоплаты</h3>
+      <p>Встречайтесь лично, проверяйте технику на месте и платите после проверки. Сервис не просит перевода денег и данных карты.</p>
+      <a href="{% url 'core:safety' %}#fraud">Как распознать мошенника</a>
+    </article>
+  </section>
+
+  <section class="regions" aria-labelledby="regions-title">
+    <header class="page-header">
+      <h2 id="regions-title">Где работает площадка</h2>
+      <p>{{ cities_count|count_plural:"город,города,городов" }} Приморья и Дальневосточного федерального округа. Выберите свой — его объявления будут первыми.</p>
+    </header>
+    <form method="post" action="{% url 'core:city_select' %}" class="regions__grid">
+      {% csrf_token %}
+      {% for region, cities in regions %}
+        <div class="regions__item">
+          <h3>{{ region }}</h3>
+          <ul>
+            {% for city in cities %}
+              <li><button type="submit" name="city" value="{{ city.slug }}"{% if current_city and current_city.pk == city.pk %} aria-current="true"{% endif %}>{{ city.name }}</button></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </form>
+  </section>
+{% endblock %}

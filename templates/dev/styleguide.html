@@ -1,0 +1,133 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Компоненты интерфейса{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/styleguide.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>Компоненты интерфейса</h1>
+    <p>Страница доступна только в режиме разработки.</p>
+  </header>
+
+  <div class="sg">
+    <section class="surface stack">
+      <h2>Кнопки</h2>
+      <div class="cluster">
+        <button class="btn btn--primary" type="button">Разместить объявление</button>
+        <button class="btn btn--secondary" type="button">Написать продавцу</button>
+        <button class="btn" type="button">Обычная</button>
+        <button class="btn btn--ghost" type="button">Прозрачная</button>
+        <button class="btn btn--danger" type="button">Удалить</button>
+        <button class="btn btn--primary" type="button" disabled>Недоступна</button>
+        <button class="btn btn--primary is-loading" type="button">Загрузка</button>
+      </div>
+      <div class="cluster">
+        <button class="btn btn--primary btn--lg" type="button">{% icon "plus" %}Крупная</button>
+        <button class="btn btn--secondary btn--sm" type="button">{% icon "heart" 16 %}Маленькая</button>
+        <button class="btn btn--secondary btn--icon" type="button" aria-label="В избранное">{% icon "heart" %}</button>
+        <button class="btn btn--secondary btn--icon btn--sm" type="button" aria-label="Поделиться">{% icon "share-2" 16 %}</button>
+      </div>
+    </section>
+
+    <section class="surface stack">
+      <h2>Бейджи и плашки</h2>
+      <div class="cluster">
+        <span class="badge">Б/у</span>
+        <span class="badge badge--accent">{% icon "zap" %}Закреплено</span>
+        <span class="badge badge--success">Ниже рынка</span>
+        <span class="badge badge--info">В рынке</span>
+        <span class="badge badge--warning">Выше рынка</span>
+        <span class="badge badge--danger">Отклонено</span>
+      </div>
+      <div class="alert">{% icon "info" %}<div><div class="alert__title">Объявление на проверке</div>Обычно это занимает несколько секунд.</div></div>
+      <div class="alert alert--success">{% icon "circle-check" %}<div>Объявление опубликовано.</div></div>
+      <div class="alert alert--warning">{% icon "triangle-alert" %}<div><div class="alert__title">Подтвердите почту</div>Без этого нельзя размещать объявления и писать продавцам.</div></div>
+      <div class="alert alert--error">{% icon "circle-x" %}<div>Объявление отклонено: в описании есть номер телефона.</div></div>
+    </section>
+
+    <section class="surface stack">
+      <h2>Уведомления</h2>
+      <p class="muted">Обычный запрос перезагружает страницу, htmx-запрос добавляет уведомление без перезагрузки.</p>
+      <div class="cluster">
+        <a class="btn btn--secondary" href="?toast=success">Успех</a>
+        <a class="btn btn--secondary" href="?toast=error">Ошибка</a>
+        <button class="btn btn--secondary" type="button" hx-get="?toast=info" hx-target="#toast-result">Через htmx</button>
+        <button class="btn btn--secondary" type="button" hx-get="?toast=warning" hx-target="#toast-result">Предупреждение через htmx</button>
+        <span id="toast-result"></span>
+      </div>
+    </section>
+
+    <section class="surface stack">
+      <h2>Форма</h2>
+      <form method="post" class="form" novalidate>
+        {% csrf_token %}
+        {{ form }}
+        <label class="switch"><input type="checkbox" checked> Присылать письма о новых сообщениях</label>
+        <div class="form__actions">
+          <button class="btn btn--primary" type="submit">Проверить форму</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="surface stack">
+      <h2>Вкладки и меню</h2>
+      <div class="tabs" role="tablist" aria-label="Мои объявления">
+        <button class="tabs__tab" role="tab" id="tab-active" aria-controls="panel-active" aria-selected="true">Активные<span class="tabs__count">3</span></button>
+        <button class="tabs__tab" role="tab" id="tab-review" aria-controls="panel-review" aria-selected="false" tabindex="-1">На проверке<span class="tabs__count">1</span></button>
+        <button class="tabs__tab" role="tab" id="tab-archive" aria-controls="panel-archive" aria-selected="false" tabindex="-1">Архив</button>
+      </div>
+      <div class="tab-panel" role="tabpanel" id="panel-active" aria-labelledby="tab-active">Три активных объявления.</div>
+      <div class="tab-panel" role="tabpanel" id="panel-review" aria-labelledby="tab-review" hidden>Одно объявление ждёт проверки.</div>
+      <div class="tab-panel" role="tabpanel" id="panel-archive" aria-labelledby="tab-archive" hidden>{% include "components/empty_state.html" with icon_name="package" title="В архиве пусто" text="Сюда попадают снятые с публикации объявления." %}</div>
+      <div class="cluster">
+        <div class="dropdown" data-dropdown>
+          <button class="btn btn--secondary" type="button" aria-haspopup="true" aria-expanded="false" data-dropdown-toggle>Действия{% icon "chevron-down" 18 %}</button>
+          <div class="dropdown__menu dropdown__menu--left" role="menu" hidden data-dropdown-menu>
+            <button class="dropdown__item" type="button" role="menuitem">{% icon "pencil" 18 %}Редактировать</button>
+            <button class="dropdown__item" type="button" role="menuitem">{% icon "zap" 18 %}Продвинуть</button>
+            <div class="dropdown__divider"></div>
+            <button class="dropdown__item" type="button" role="menuitem">{% icon "trash-2" 18 %}Снять с публикации</button>
+          </div>
+        </div>
+        <button class="btn btn--secondary" type="button" data-open-dialog="sg-dialog">Открыть окно</button>
+        <form method="get" data-confirm="Снять объявление с публикации? Его можно будет вернуть из архива." data-confirm-action="Снять">
+          <input type="hidden" name="toast" value="success">
+          <button class="btn btn--danger" type="submit">Опасное действие</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="surface stack">
+      <h2>Форматирование</h2>
+      <dl class="sg-format">
+        <dt>Цена</dt><dd>{{ 12990|price }} · {{ 149990|price }} · {{ 990|price }}</dd>
+        <dt>Склонения</dt><dd>{{ 1|count_plural:"объявление,объявления,объявлений" }} · {{ 3|count_plural:"объявление,объявления,объявлений" }} · {{ 11|count_plural:"объявление,объявления,объявлений" }} · {{ 1520|count_plural:"объявление,объявления,объявлений" }}</dd>
+        <dt>Даты</dt><dd>{% for value in sample_dates %}{{ value|humandate }}{% if not forloop.last %} · {% endif %}{% endfor %}</dd>
+      </dl>
+    </section>
+
+    <section class="surface stack">
+      <h2>Скелетоны и пагинация</h2>
+      <div class="sg-skeletons">
+        {% for i in "123" %}
+          <div class="stack"><div class="skeleton skeleton--media"></div><div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text"></div></div>
+        {% endfor %}
+      </div>
+      {% pagination page_obj %}
+    </section>
+  </div>
+
+  <dialog class="modal" id="sg-dialog" aria-labelledby="sg-dialog-title">
+    <div class="modal__header">
+      <h2 class="modal__title" id="sg-dialog-title">Пожаловаться на объявление</h2>
+      <button class="btn btn--ghost btn--icon btn--sm" type="button" data-close-dialog aria-label="Закрыть">{% icon "x" %}</button>
+    </div>
+    <div class="modal__body"><p>Окно закрывается кнопкой, клавишей Esc или кликом по фону.</p></div>
+    <div class="modal__footer">
+      <button class="btn btn--secondary" type="button" data-close-dialog>Отмена</button>
+      <button class="btn btn--primary" type="button" data-close-dialog>Отправить</button>
+    </div>
+  </dialog>
+{% endblock %}

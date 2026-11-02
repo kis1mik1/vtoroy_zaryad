@@ -1,0 +1,9 @@
+<div class="dropdown hide-mobile" data-dropdown>
+  <button class="header-control header-control--icon" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Тема оформления" data-dropdown-toggle>
+    {% icon "sun-moon" 20 %}
+  </button>
+  <div class="dropdown__menu" role="menu" hidden data-dropdown-menu>
+    <div class="dropdown__label">Тема</div>
+    {% include "components/theme_options.html" %}
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.error-page {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  max-width: 560px;
+  margin: var(--space-12) auto;
+  text-align: center;
+}
+
+.error-page__code {
+  font-size: clamp(5rem, 3rem + 10vw, 9rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 3px var(--color-border-strong);
+}
+
+.error-page p {
+  color: var(--color-text-muted);
+}
+
+.error-page .cluster {
+  justify-content: center;
+  margin-top: var(--space-2);
+}

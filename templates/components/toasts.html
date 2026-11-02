@@ -1,0 +1,9 @@
+<div class="toasts" id="toasts" role="status" aria-live="polite"{% if oob %} hx-swap-oob="beforeend"{% endif %}>
+  {% for message in messages %}
+    <div class="toast toast--{{ message.tags|default:'info' }}" data-toast>
+      {% if message.level_tag == "error" %}{% icon "circle-x" %}{% elif message.level_tag == "warning" %}{% icon "triangle-alert" %}{% elif message.level_tag == "success" %}{% icon "circle-check" %}{% else %}{% icon "info" %}{% endif %}
+      <span class="toast__text">{{ message }}</span>
+      <button class="toast__close" type="button" aria-label="Закрыть" data-toast-close>{% icon "x" 18 %}</button>
+    </div>
+  {% endfor %}
+</div>

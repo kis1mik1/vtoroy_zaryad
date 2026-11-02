@@ -1,0 +1,26 @@
+<form method="post" action="{% url 'core:city_select' %}" class="city-picker">
+  {% csrf_token %}
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+  <div class="input-group">
+    {% icon "search" 18 %}
+    <input class="input" type="search" placeholder="Найти город" aria-label="Найти город" data-filter-input="city-list" autocomplete="off" autofocus>
+  </div>
+  <div class="city-picker__list" id="city-list">
+    <button class="city-picker__all{% if not current_city %} is-current{% endif %}" type="submit" name="city" value="{{ all_cities }}">
+      Все города Дальнего Востока
+    </button>
+    {% for region, cities in regions %}
+      <section class="city-picker__group" data-filter-group>
+        <h3 class="city-picker__region">{{ region }}</h3>
+        <ul>
+          {% for city in cities %}
+            <li data-filter-item="{{ city.name }}">
+              <button type="submit" name="city" value="{{ city.slug }}"{% if current_city and current_city.pk == city.pk %} class="is-current" aria-current="true"{% endif %}>{{ city.name }}</button>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endfor %}
+    <p class="muted" data-filter-empty hidden>Такого города пока нет в списке. Выберите «Все города Дальнего Востока».</p>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+.sg {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.sg-format {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-6);
+}
+
+.sg-format dt {
+  color: var(--color-text-muted);
+}
+
+.sg-skeletons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+}

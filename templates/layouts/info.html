@@ -1,0 +1,27 @@
+{% extends "layouts/default.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block meta_description %}{{ description }}{% endblock %}
+{% block og_title %}{{ title }}{% endblock %}
+{% block og_description %}{{ description }}{% endblock %}
+
+{% block content %}
+  <div class="with-sidebar">
+    <aside aria-label="Информация">
+      <nav class="side-nav">
+        {% for url, label in info_pages %}
+          <a href="{{ url }}"{% if url == request.path %} aria-current="page"{% endif %}>{{ label }}</a>
+        {% endfor %}
+      </nav>
+    </aside>
+    <article class="surface">
+      <header class="page-header">
+        <h1>{{ title }}</h1>
+        {% block lead %}{% endblock %}
+      </header>
+      <div class="prose">
+        {% block article %}{% endblock %}
+      </div>
+    </article>
+  </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="logo" href="{% url 'core:home' %}" aria-label="{{ site_name }} — на главную">
+      {% include "components/logo.html" %}
+      <span class="logo__text">{{ site_name }}</span>
+    </a>
+    <a class="header-control site-header__city"
+       href="{% url 'core:city_select' %}?next={{ request.get_full_path|urlencode }}"
+       hx-get="{% url 'core:city_select' %}?next={{ request.get_full_path|urlencode }}"
+       hx-target="#modal-content"
+       data-opens-modal>
+      {% icon "map-pin" 18 %}
+      <span>{% if current_city %}{{ current_city.name }}{% else %}Все города{% endif %}</span>
+    </a>
+    <div class="site-header__spacer"></div>
+    <div class="site-header__actions">
+      {% include "components/theme_switcher.html" %}
+    </div>
+  </div>
+</header>

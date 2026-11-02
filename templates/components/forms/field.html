@@ -1,0 +1,15 @@
+{% if field.widget_type == "checkbox" %}
+<div class="field field--checkbox{% if field.errors %} field--invalid{% endif %}">
+  {{ field }}
+  <label class="field__label" for="{{ field.auto_id }}">{{ field.label }}</label>
+  {% if field.help_text %}<p class="field__help" id="{{ field.auto_id }}_helptext">{{ field.help_text|safe }}</p>{% endif %}
+  {% if field.errors %}<ul class="field__error">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+</div>
+{% else %}
+<div class="field{% if field.errors %} field--invalid{% endif %}">
+  {% if field.label %}{% if field.use_fieldset %}<span class="field__label" id="{{ field.auto_id }}_label">{{ field.label }}{% if field.field.required %}<span class="required" aria-hidden="true">*</span>{% endif %}</span>{% else %}<label class="field__label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="required" aria-hidden="true">*</span>{% endif %}</label>{% endif %}{% endif %}
+  {{ field }}
+  {% if field.help_text %}<p class="field__help" id="{{ field.auto_id }}_helptext">{{ field.help_text|safe }}</p>{% endif %}
+  {% if field.errors %}<ul class="field__error" id="{{ field.auto_id }}_error">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+</div>
+{% endif %}

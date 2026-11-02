@@ -1,0 +1,9 @@
+{% extends "errors/base_error.html" %}
+{% block title %}Страница устарела{% endblock %}
+{% block code %}403{% endblock %}
+{% block heading %}Страница устарела{% endblock %}
+{% block text %}Форма была открыта слишком давно или в браузере отключены cookie. Обновите страницу и отправьте форму ещё раз.{% endblock %}
+{% block actions %}
+  <a class="btn btn--primary" href="{{ request.get_full_path }}">{% icon "refresh-cw" 18 %}Обновить страницу</a>
+  <a class="btn btn--secondary" href="{% url 'core:home' %}">На главную</a>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% if page_obj.has_other_pages %}
+<nav class="pagination" aria-label="Страницы">
+  {% if page_obj.has_previous %}
+    <a class="pagination__item" href="{% page_url page_obj.previous_page_number param %}" rel="prev" aria-label="Предыдущая страница">{% icon "chevron-left" %}</a>
+  {% else %}
+    <span class="pagination__item pagination__item--disabled" aria-hidden="true">{% icon "chevron-left" %}</span>
+  {% endif %}
+  {% for number in page_range %}
+    {% if number == ellipsis %}
+      <span class="pagination__item pagination__item--gap">{{ ellipsis }}</span>
+    {% elif number == page_obj.number %}
+      <span class="pagination__item" aria-current="page">{{ number }}</span>
+    {% else %}
+      <a class="pagination__item" href="{% page_url number param %}">{{ number }}</a>
+    {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+    <a class="pagination__item" href="{% page_url page_obj.next_page_number param %}" rel="next" aria-label="Следующая страница">{% icon "chevron-right" %}</a>
+  {% else %}
+    <span class="pagination__item pagination__item--disabled" aria-hidden="true">{% icon "chevron-right" %}</span>
+  {% endif %}
+</nav>
+{% endif %}

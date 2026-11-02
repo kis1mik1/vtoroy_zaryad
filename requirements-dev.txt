@@ -1,0 +1,6 @@
+-r requirements.txt
+django-debug-toolbar==8.0.0
+pytest==9.2.0
+pytest-django==4.14.0
+factory_boy==3.3.3
+ruff==0.17.3

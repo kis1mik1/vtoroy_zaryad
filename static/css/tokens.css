@@ -1,0 +1,136 @@
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("../fonts/manrope-cyrillic-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("../fonts/manrope-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+20BD, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  --container: 1240px;
+  --container-narrow: 820px;
+  --header-height: 64px;
+  --bottom-nav-height: 64px;
+
+  --duration-fast: 120ms;
+  --duration: 200ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --graphite-950: #0e1013;
+  --graphite-900: #16191d;
+  --graphite-800: #20242a;
+  --graphite-700: #2c3139;
+  --graphite-600: #3d434d;
+  --graphite-400: #7a828e;
+  --graphite-300: #a3aab4;
+  --graphite-200: #d3d8de;
+  --graphite-100: #e8ebee;
+  --graphite-50: #f4f5f7;
+
+  --lime-300: #e2ff7a;
+  --lime-400: #d4ff3f;
+  --lime-500: #bfef1f;
+  --lime-600: #9ccb0b;
+  --lime-900: #2c3a02;
+
+  --blue-400: #6aa1ff;
+  --blue-500: #2f74f0;
+  --blue-600: #1f5fd6;
+
+  --color-bg: light-dark(var(--graphite-50), var(--graphite-950));
+  --color-surface: light-dark(#ffffff, var(--graphite-900));
+  --color-surface-raised: light-dark(#ffffff, var(--graphite-800));
+  --color-surface-muted: light-dark(var(--graphite-100), var(--graphite-800));
+  --color-border: light-dark(#dde1e6, var(--graphite-700));
+  --color-border-strong: light-dark(#c3c9d0, var(--graphite-600));
+
+  --color-text: light-dark(#14171b, #eef0f2);
+  --color-text-muted: light-dark(#5b636e, var(--graphite-300));
+  --color-text-subtle: light-dark(#7d8590, var(--graphite-400));
+  --color-text-inverse: #f4f5f7;
+
+  --color-link: light-dark(var(--blue-600), var(--blue-400));
+  --color-link-hover: light-dark(#164bb0, #94bcff);
+
+  --color-accent: var(--lime-400);
+  --color-accent-hover: var(--lime-300);
+  --color-accent-active: var(--lime-500);
+  --color-on-accent: var(--graphite-950);
+  --color-accent-soft: light-dark(#f1ffc2, #263104);
+  --color-accent-text: light-dark(#4a6100, var(--lime-400));
+
+  --color-header-bg: var(--graphite-900);
+  --color-header-text: #eef0f2;
+  --color-header-muted: var(--graphite-300);
+  --color-header-control: var(--graphite-800);
+  --color-header-control-hover: var(--graphite-700);
+
+  --color-success: light-dark(#1d8a4e, #4bd28a);
+  --color-success-soft: light-dark(#e3f6ea, #10301f);
+  --color-warning: light-dark(#a35f00, #f2b14b);
+  --color-warning-soft: light-dark(#fff2dc, #35260b);
+  --color-danger: light-dark(#c8312b, #ff7b73);
+  --color-danger-soft: light-dark(#fde8e7, #3a1614);
+  --color-info: light-dark(var(--blue-600), var(--blue-400));
+  --color-info-soft: light-dark(#e7effe, #13213b);
+
+  --color-focus: light-dark(var(--blue-500), var(--lime-400));
+
+  --shadow-sm: 0 1px 2px light-dark(rgb(20 23 27 / 0.06), rgb(0 0 0 / 0.4));
+  --shadow-md: 0 1px 2px light-dark(rgb(20 23 27 / 0.05), rgb(0 0 0 / 0.35)),
+    0 4px 14px light-dark(rgb(20 23 27 / 0.07), rgb(0 0 0 / 0.35));
+  --shadow-lg: 0 12px 40px light-dark(rgb(20 23 27 / 0.16), rgb(0 0 0 / 0.55));
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}

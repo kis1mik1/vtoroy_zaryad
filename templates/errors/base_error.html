@@ -1,0 +1,19 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/errors.css' %}">{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+  <section class="error-page">
+    <div class="error-page__code" aria-hidden="true">{% block code %}{% endblock %}</div>
+    <h1>{% block heading %}{% endblock %}</h1>
+    <p>{% block text %}{% endblock %}</p>
+    <div class="cluster">
+      {% block actions %}
+        <a class="btn btn--primary" href="{% url 'core:home' %}">{% icon "house" 18 %}На главную</a>
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}

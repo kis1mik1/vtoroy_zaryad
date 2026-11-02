@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
+  {% include "components/header.html" %}
+  {% include "components/toasts.html" %}
+  <main id="main" class="page" tabindex="-1">
+    <div class="container">
+      {% block breadcrumbs %}{% if breadcrumbs %}{% include "components/breadcrumbs.html" %}{% endif %}{% endblock %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  {% include "components/footer.html" %}
+  {% include "components/bottom_nav.html" %}
+  {% include "components/menu.html" %}
+  {% include "components/modal.html" %}
+  {% include "components/confirm.html" %}
+{% endblock %}

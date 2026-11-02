@@ -1,0 +1,40 @@
+{% load static %}<!doctype html>
+<html lang="ru"{% if theme %} data-theme="{{ theme }}"{% endif %}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}{% endblock %}{% block title_suffix %} — {{ site_name }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Объявления о новой и б/у электронике во Владивостоке, Приморье и на Дальнем Востоке.{% endblock %}">
+  {% block meta_robots %}{% endblock %}
+  <link rel="canonical" href="{{ site_url }}{{ request.path }}">
+  <meta property="og:site_name" content="{{ site_name }}">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ site_name }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ site_slogan }}{% endblock %}">
+  <meta property="og:url" content="{{ site_url }}{{ request.path }}">
+  <meta property="og:image" content="{% block og_image %}{{ site_url }}{% static 'img/og-default.png' %}{% endblock %}">
+  <meta name="theme-color" content="#16191d">
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="icon" href="{% static 'img/favicon-32.png' %}" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+  <link rel="manifest" href="{% static 'site.webmanifest' %}">
+  <link rel="preload" href="{% static 'fonts/manrope-cyrillic-wght-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components/controls.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components/feedback.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components/navigation.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components/overlay.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components/city-picker.css' %}">
+  {% block styles %}{% endblock %}
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+  <script type="module" src="{% static 'js/app.js' %}"></script>
+  {% block head %}{% endblock %}
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  {% block body %}{% endblock %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

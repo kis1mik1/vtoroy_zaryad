@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /account/
+Disallow: /my/
+Disallow: /messages/
+Disallow: /notifications/
+Disallow: /moderation/
+Disallow: /payments/
+Disallow: /compare/
+Disallow: /city/
+Disallow: /media/protected/
+
+Sitemap: {{ site_url }}/sitemap.xml

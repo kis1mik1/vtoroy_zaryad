@@ -1,0 +1,146 @@
+.hero {
+  display: grid;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-10) var(--space-6);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(circle at 85% 20%, rgb(212 255 63 / 0.16), transparent 45%),
+    var(--graphite-900);
+  color: #eef0f2;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: 1.5fr 1fr;
+    padding: var(--space-16) var(--space-12);
+  }
+}
+
+.hero__text {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--lime-400);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.hero h1 {
+  max-width: 18ch;
+  font-size: var(--text-3xl);
+  font-weight: 800;
+}
+
+.hero__lead {
+  max-width: 54ch;
+  color: var(--graphite-300);
+  font-size: var(--text-lg);
+}
+
+.hero .btn--secondary {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--graphite-800);
+  --btn-border: var(--graphite-600);
+  --btn-color: #eef0f2;
+}
+
+.hero__art {
+  display: none;
+  color: var(--graphite-600);
+}
+
+@media (min-width: 900px) {
+  .hero__art {
+    display: block;
+  }
+}
+
+.hero__cell {
+  fill: var(--lime-400);
+}
+
+.hero__cell--empty {
+  fill: var(--graphite-700);
+}
+
+.hero__bolt {
+  fill: var(--graphite-900);
+}
+
+.principles {
+  display: grid;
+  gap: var(--space-4);
+  margin-block: var(--space-10);
+}
+
+@media (min-width: 768px) {
+  .principles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.principle {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+.principle p {
+  color: var(--color-text-muted);
+}
+
+.principle a {
+  font-weight: 650;
+}
+
+.principle__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-text);
+}
+
+.regions__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-6) var(--space-8);
+}
+
+.regions__item h3 {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-md);
+}
+
+.regions__item ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.regions__item button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: var(--text-sm);
+}
+
+.regions__item button:hover {
+  text-decoration: underline;
+}
+
+.regions__item button[aria-current="true"] {
+  color: var(--color-text);
+  font-weight: 700;
+}

@@ -1,0 +1,3 @@
+<button class="dropdown__item" type="button" role="menuitemradio" aria-checked="{% if not theme %}true{% else %}false{% endif %}" data-theme-choice="">{% icon "sun-moon" 18 %}Как в системе</button>
+<button class="dropdown__item" type="button" role="menuitemradio" aria-checked="{% if theme == 'light' %}true{% else %}false{% endif %}" data-theme-choice="light">{% icon "sun" 18 %}Светлая</button>
+<button class="dropdown__item" type="button" role="menuitemradio" aria-checked="{% if theme == 'dark' %}true{% else %}false{% endif %}" data-theme-choice="dark">{% icon "moon" 18 %}Тёмная</button>

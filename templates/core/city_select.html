@@ -1,0 +1,14 @@
+{% extends "layouts/default.html" %}
+
+{% block title %}Выбор города{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="surface city-page">
+    <header class="page-header">
+      <h1>Выберите город</h1>
+      <p>Объявления из выбранного города показываются первыми.</p>
+    </header>
+    {% include "core/partials/city_list.html" %}
+  </div>
+{% endblock %}

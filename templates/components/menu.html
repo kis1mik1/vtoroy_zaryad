@@ -1,0 +1,18 @@
+<dialog class="modal" id="menu-dialog" aria-labelledby="menu-dialog-title">
+  <div class="modal__header">
+    <h2 class="modal__title" id="menu-dialog-title">Меню</h2>
+    <button class="btn btn--ghost btn--icon btn--sm" type="button" data-close-dialog aria-label="Закрыть">{% icon "x" %}</button>
+  </div>
+  <div class="modal__body stack">
+    <nav class="menu-list" aria-label="Разделы">
+      <a class="dropdown__item" href="{% url 'core:rules' %}">{% icon "file-text" 18 %}Правила размещения</a>
+      <a class="dropdown__item" href="{% url 'core:safety' %}">{% icon "shield-check" 18 %}Безопасная сделка</a>
+      <a class="dropdown__item" href="{% url 'core:about' %}">{% icon "info" 18 %}О проекте</a>
+    </nav>
+    <div class="dropdown__divider"></div>
+    <div class="menu-list" role="menu" aria-label="Тема оформления">
+      <div class="dropdown__label">Тема</div>
+      {% include "components/theme_options.html" %}
+    </div>
+  </div>
+</dialog>
