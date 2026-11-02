@@ -67,6 +67,18 @@ def test_custom_title_kept(phones):
     assert ad.title == "Айфон в идеале"
 
 
+def test_build_title_skips_values_already_in_model_name(phones):
+    cpu = phones["attributes"]["storage"]
+    model = phones["iphone"]
+    model.name = "iPhone 13 256 ГБ"
+
+    title = build_title(
+        device_model=model, attributes=[AttributeValue(cpu, option=phones["storage"]["256 ГБ"])]
+    )
+
+    assert title == "Apple iPhone 13 256 ГБ"
+
+
 def test_build_title_for_custom_model(phones):
     title = build_title(brand=phones["other_brand"], custom_name=" 3310 ", attributes=[])
 

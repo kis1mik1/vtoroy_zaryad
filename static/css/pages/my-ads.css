@@ -1,11 +1,3 @@
-.my-ads__header,
-.my-ads__header.page-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .my-ads {
   display: grid;
   gap: var(--space-3);
@@ -16,8 +8,9 @@
 
 .my-ad {
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  gap: var(--space-4);
+  grid-template-columns: 104px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3) var(--space-4);
   padding: var(--space-3);
 }
 
@@ -60,8 +53,14 @@
 }
 
 .my-ad__title {
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
   overflow-wrap: anywhere;
+}
+
+@media (min-width: 640px) {
+  .my-ad__title {
+    font-size: var(--text-lg);
+  }
 }
 
 .my-ad__price {
@@ -108,7 +107,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-1);
-  margin-top: var(--space-1);
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 640px) {
+  .my-ad__actions {
+    grid-column: 2;
+    margin-top: calc(-1 * var(--space-2));
+  }
 }
 
 .my-ad__actions .btn--secondary {

@@ -59,11 +59,15 @@ def build_title(*, device_model=None, brand=None, custom_name="", attributes=())
         base = device_model.full_name
     else:
         base = " ".join(filter(None, [brand.name if brand else "", custom_name.strip()]))
-    parts = [base] + [
-        value.display
-        for value in sorted(attributes, key=lambda v: v.attribute.sort_order)
-        if value.attribute.in_title and value.display
-    ]
+    base_words = set(base.lower().split())
+    parts = [base]
+    for value in sorted(attributes, key=lambda v: v.attribute.sort_order):
+        display = value.display
+        if not value.attribute.in_title or not display:
+            continue
+        if set(display.lower().split()) <= base_words:
+            continue
+        parts.append(display)
     title = ", ".join(part for part in parts if part)
     return title[:120]
 
