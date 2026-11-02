@@ -8,7 +8,10 @@
       {"name": "Watch Series 9", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["41 мм", "45 мм"]}},
       {"name": "Watch Series 10", "year": 2024, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["42 мм", "46 мм"]}},
       {"name": "Watch Ultra", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS + Cellular"], "size": ["49 мм"]}},
-      {"name": "Watch Ultra 2", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS + Cellular"], "size": ["49 мм"]}}
+      {"name": "Watch Ultra 2", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS + Cellular"], "size": ["49 мм"]}},
+      {"name": "Watch SE 3", "year": 2025, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["40 мм", "44 мм"]}},
+      {"name": "Watch Series 11", "year": 2025, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["42 мм", "46 мм"]}},
+      {"name": "Watch Ultra 3", "year": 2025, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS + Cellular"], "size": ["49 мм"]}}
     ],
     "Samsung": [
       {"name": "Galaxy Watch4", "year": 2021, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["40 мм", "44 мм"]}},

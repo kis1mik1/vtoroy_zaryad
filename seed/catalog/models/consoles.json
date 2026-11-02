@@ -26,7 +26,12 @@
     ],
     "Valve": [
       {"name": "Steam Deck LCD", "year": 2022, "options": {"storage": ["64 ГБ", "256 ГБ", "512 ГБ"]}},
-      {"name": "Steam Deck OLED", "year": 2023, "options": {"storage": ["512 ГБ", "1 ТБ"]}}
+      {"name": "Steam Deck OLED", "year": 2023, "options": {"storage": ["512 ГБ", "1 ТБ"]}},
+      {"name": "Steam Machine", "year": 2026, "options": {"storage": ["512 ГБ", "2 ТБ"]}}
+    ],
+    "ASUS": [
+      {"name": "ROG Xbox Ally", "year": 2025, "options": {"storage": ["512 ГБ"]}},
+      {"name": "ROG Xbox Ally X", "year": 2025, "options": {"storage": ["1 ТБ"]}}
     ]
   }
 }

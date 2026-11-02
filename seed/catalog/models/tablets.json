@@ -13,7 +13,13 @@
       {"name": "iPad Pro 11 M2 (2022)", "year": 2022, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
       {"name": "iPad Pro 12.9 M2 (2022)", "year": 2022, "specs": {"type": "Планшет", "screen": 12.9}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
       {"name": "iPad Pro 11 M4 (2024)", "year": 2024, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
-      {"name": "iPad Pro 13 M4 (2024)", "year": 2024, "specs": {"type": "Планшет", "screen": 13}, "options": {"storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}}
+      {"name": "iPad Pro 13 M4 (2024)", "year": 2024, "specs": {"type": "Планшет", "screen": 13}, "options": {"storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Pro 11 M5 (2025)", "year": 2025, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Pro 13 M5 (2025)", "year": 2025, "specs": {"type": "Планшет", "screen": 13}, "options": {"storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Air 11 M3 (2025)", "year": 2025, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Air 13 M3 (2025)", "year": 2025, "specs": {"type": "Планшет", "screen": 13}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Air 11 M4 (2026)", "year": 2026, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Air 13 M4 (2026)", "year": 2026, "specs": {"type": "Планшет", "screen": 13}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}}
     ],
     "Samsung": [
       {"name": "Galaxy Tab S8", "year": 2022, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},

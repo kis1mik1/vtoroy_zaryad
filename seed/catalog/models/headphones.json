@@ -8,6 +8,7 @@
       {"name": "AirPods 4 с шумоподавлением", "year": 2024, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
       {"name": "AirPods Pro", "year": 2019, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
       {"name": "AirPods Pro 2", "year": 2022, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "AirPods Pro 3", "year": 2025, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
       {"name": "AirPods Max", "year": 2020, "specs": {"type": "Полноразмерные", "connection": "Bluetooth", "anc": true}}
     ],
     "Sony": [

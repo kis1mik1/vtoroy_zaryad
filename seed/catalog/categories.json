@@ -152,6 +152,7 @@
     "kind": "choice",
     "options": [
      "11,6″",
+     "13″",
      "13,3″",
      "13,4″",
      "13,6″",
@@ -185,6 +186,10 @@
      "Apple M4",
      "Apple M4 Pro",
      "Apple M4 Max",
+     "Apple M5",
+     "Apple M5 Pro",
+     "Apple M5 Max",
+     "Apple A18 Pro",
      "Intel Celeron",
      "Intel Pentium",
      "Intel Core i3",

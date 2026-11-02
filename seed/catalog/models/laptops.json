@@ -9,6 +9,9 @@
       {"name": "MacBook Air 15 M3", "year": 2024, "specs": {"screen": "15,3″"}, "options": {"cpu": ["Apple M3"], "ram": ["8 ГБ", "16 ГБ", "24 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
       {"name": "MacBook Air 13 M4", "year": 2025, "specs": {"screen": "13,6″"}, "options": {"cpu": ["Apple M4"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
       {"name": "MacBook Air 15 M4", "year": 2025, "specs": {"screen": "15,3″"}, "options": {"cpu": ["Apple M4"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Air 13 M5", "year": 2026, "specs": {"screen": "13,6″"}, "options": {"cpu": ["Apple M5"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Air 15 M5", "year": 2026, "specs": {"screen": "15,3″"}, "options": {"cpu": ["Apple M5"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Neo", "year": 2026, "specs": {"screen": "13″"}, "options": {"cpu": ["Apple A18 Pro"], "ram": ["8 ГБ"], "storage": ["256 ГБ", "512 ГБ"], "gpu": ["Встроенная"]}},
       {"name": "MacBook Pro 13 M1", "year": 2020, "specs": {"screen": "13,3″"}, "options": {"cpu": ["Apple M1"], "ram": ["8 ГБ", "16 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
       {"name": "MacBook Pro 13 M2", "year": 2022, "specs": {"screen": "13,3″"}, "options": {"cpu": ["Apple M2"], "ram": ["8 ГБ", "16 ГБ", "24 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
       {"name": "MacBook Pro 14 (2021)", "year": 2021, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M1 Pro", "Apple M1 Max"], "ram": ["16 ГБ", "32 ГБ", "64 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
@@ -18,7 +21,10 @@
       {"name": "MacBook Pro 14 (2023, M3)", "year": 2023, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M3", "Apple M3 Pro", "Apple M3 Max"], "ram": ["8 ГБ", "16 ГБ", "18 ГБ", "24 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "96 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
       {"name": "MacBook Pro 16 (2023, M3)", "year": 2023, "specs": {"screen": "16,2″"}, "options": {"cpu": ["Apple M3 Pro", "Apple M3 Max"], "ram": ["18 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "96 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
       {"name": "MacBook Pro 14 (2024, M4)", "year": 2024, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M4", "Apple M4 Pro", "Apple M4 Max"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
-      {"name": "MacBook Pro 16 (2024, M4)", "year": 2024, "specs": {"screen": "16,2″"}, "options": {"cpu": ["Apple M4 Pro", "Apple M4 Max"], "ram": ["24 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}}
+      {"name": "MacBook Pro 16 (2024, M4)", "year": 2024, "specs": {"screen": "16,2″"}, "options": {"cpu": ["Apple M4 Pro", "Apple M4 Max"], "ram": ["24 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 14 (2025, M5)", "year": 2025, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M5"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 14 (2026, M5 Pro/Max)", "year": 2026, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M5 Pro", "Apple M5 Max"], "ram": ["24 ГБ", "48 ГБ", "64 ГБ", "128 ГБ"], "storage": ["1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 16 (2026, M5 Pro/Max)", "year": 2026, "specs": {"screen": "16,2″"}, "options": {"cpu": ["Apple M5 Pro", "Apple M5 Max"], "ram": ["24 ГБ", "48 ГБ", "64 ГБ", "128 ГБ"], "storage": ["1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}}
     ],
     "ASUS": [
       {"name": "TUF Gaming F15", "year": 2022, "specs": {"screen": "15,6″"}},
