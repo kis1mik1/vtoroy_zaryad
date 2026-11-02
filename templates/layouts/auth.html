@@ -1,0 +1,15 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+  <div class="auth">
+    <section class="auth__card card">
+      {% block card %}{% endblock %}
+    </section>
+    {% block after_card %}{% endblock %}
+  </div>
+{% endblock %}

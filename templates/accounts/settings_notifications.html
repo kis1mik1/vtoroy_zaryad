@@ -1,0 +1,20 @@
+{% extends "layouts/settings.html" %}
+
+{% block lead %}<p>Уведомления на сайте приходят всегда. Здесь можно выбрать, о чём ещё писать на {{ user.email }}. Письма о безопасности аккаунта и оплате отправляются в любом случае.</p>{% endblock %}
+
+{% block settings %}
+  <form method="post" class="form">
+    {% csrf_token %}
+    <div class="switch-list">
+      {% for field in form %}
+        <label class="switch switch--row" for="{{ field.id_for_label }}">
+          <span>{{ field.label }}</span>
+          {{ field }}
+        </label>
+      {% endfor %}
+    </div>
+    <div class="form__actions">
+      <button class="btn btn--primary" type="submit">Сохранить</button>
+    </div>
+  </form>
+{% endblock %}

@@ -21,6 +21,8 @@ urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
     path("favicon.ico", RedirectView.as_view(url=f"{settings.STATIC_URL}img/favicon.ico")),
+    path("account/", include("apps.accounts.urls")),
+    path("notifications/", include("apps.notifications.urls")),
     path("", include("apps.core.urls")),
 ]
 

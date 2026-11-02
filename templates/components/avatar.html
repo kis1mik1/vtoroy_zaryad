@@ -1,0 +1,1 @@
+<span class="avatar{% if size %} avatar--{{ size }}{% endif %}" aria-hidden="true">{% if person.avatar %}<img src="{{ person.avatar.url }}" alt="" width="400" height="400" loading="lazy">{% else %}{{ person.initials }}{% endif %}</span>

@@ -1,0 +1,15 @@
+{% extends "layouts/auth.html" %}
+
+{% block title %}Нужно подтвердить почту{% endblock %}
+
+{% block card %}
+  <div class="auth__icon auth__icon--warning">{% icon "mail" 28 %}</div>
+  <header class="auth__header">
+    <h1>Подтвердите почту</h1>
+    <p>Размещать объявления и писать продавцам можно после подтверждения адреса <strong>{{ user.email }}</strong>. Это защищает покупателей от спама и поддельных аккаунтов.</p>
+  </header>
+  <form method="post" action="{% url 'accounts:verify_resend' %}" class="form">
+    {% csrf_token %}
+    <button class="btn btn--primary btn--block" type="submit">Отправить письмо ещё раз</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% if user.is_authenticated %}
+  <div class="dropdown hide-mobile" data-dropdown>
+    <button class="header-control header-control--icon header-bell" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Уведомления" data-dropdown-toggle>
+      {% icon "bell" 20 %}
+      {% include "notifications/partials/badge.html" %}
+    </button>
+    <div class="dropdown__menu dropdown__menu--notices" hidden data-dropdown-menu hx-get="{% url 'notifications:dropdown' %}" hx-trigger="dropdown:open" hx-swap="innerHTML">
+      <div class="notices-dropdown"><div class="stack"><div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text"></div><div class="skeleton skeleton--text"></div></div></div>
+    </div>
+  </div>
+  <div class="dropdown" data-dropdown>
+    <button class="header-control header-user" type="button" aria-haspopup="true" aria-expanded="false" data-dropdown-toggle>
+      {% include "components/avatar.html" with person=user size="sm" %}
+      <span class="header-user__name hide-mobile">{{ user.first_name }}</span>
+      {% icon "chevron-down" 16 "hide-mobile" %}
+    </button>
+    <div class="dropdown__menu" role="menu" hidden data-dropdown-menu>
+      <div class="dropdown__profile">
+        <span class="dropdown__profile-name">{{ user.first_name }}</span>
+        <span class="dropdown__profile-email">{{ user.email }}</span>
+      </div>
+      <div class="dropdown__divider"></div>
+      <a class="dropdown__item" role="menuitem" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
+      <a class="dropdown__item" role="menuitem" href="{% url 'notifications:list' %}">{% icon "bell" 18 %}Уведомления</a>
+      {% if user.is_staff %}
+        <a class="dropdown__item" role="menuitem" href="{% url 'admin:index' %}">{% icon "lock" 18 %}Управление сайтом</a>
+      {% endif %}
+      <div class="dropdown__divider"></div>
+      <form method="post" action="{% url 'accounts:logout' %}">
+        {% csrf_token %}
+        <button class="dropdown__item" type="submit" role="menuitem">{% icon "log-out" 18 %}Выйти</button>
+      </form>
+    </div>
+  </div>
+{% else %}
+  <a class="header-control" href="{% url 'accounts:login' %}{% if request.path != '/' %}?next={{ request.get_full_path|urlencode }}{% endif %}">{% icon "log-in" 18 %}<span>Войти</span></a>
+{% endif %}

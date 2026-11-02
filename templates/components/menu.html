@@ -4,6 +4,23 @@
     <button class="btn btn--ghost btn--icon btn--sm" type="button" data-close-dialog aria-label="Закрыть">{% icon "x" %}</button>
   </div>
   <div class="modal__body stack">
+    {% if user.is_authenticated %}
+      <div class="menu-list">
+        <a class="dropdown__item" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
+        {% if user.is_staff %}<a class="dropdown__item" href="{% url 'admin:index' %}">{% icon "lock" 18 %}Управление сайтом</a>{% endif %}
+        <form method="post" action="{% url 'accounts:logout' %}">
+          {% csrf_token %}
+          <button class="dropdown__item" type="submit">{% icon "log-out" 18 %}Выйти</button>
+        </form>
+      </div>
+      <div class="dropdown__divider"></div>
+    {% else %}
+      <div class="menu-list">
+        <a class="dropdown__item" href="{% url 'accounts:login' %}">{% icon "log-in" 18 %}Войти</a>
+        <a class="dropdown__item" href="{% url 'accounts:register' %}">{% icon "user" 18 %}Регистрация</a>
+      </div>
+      <div class="dropdown__divider"></div>
+    {% endif %}
     <nav class="menu-list" aria-label="Разделы">
       <a class="dropdown__item" href="{% url 'core:rules' %}">{% icon "file-text" 18 %}Правила размещения</a>
       <a class="dropdown__item" href="{% url 'core:safety' %}">{% icon "shield-check" 18 %}Безопасная сделка</a>

@@ -28,12 +28,13 @@
   <link rel="stylesheet" href="{% static 'css/components/overlay.css' %}">
   <link rel="stylesheet" href="{% static 'css/layout.css' %}">
   <link rel="stylesheet" href="{% static 'css/components/city-picker.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components/user.css' %}">
   {% block styles %}{% endblock %}
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
   <script type="module" src="{% static 'js/app.js' %}"></script>
   {% block head %}{% endblock %}
 </head>
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'{% if user.is_authenticated %} data-live-url="/ws/notifications/"{% endif %}>
   {% block body %}{% endblock %}
   {% block scripts %}{% endblock %}
 </body>

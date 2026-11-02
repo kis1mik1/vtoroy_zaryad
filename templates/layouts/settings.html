@@ -1,0 +1,35 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}{{ title }} — настройки{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="with-sidebar">
+    <aside aria-label="Разделы настроек">
+      <div class="settings-user">
+        {% include "components/avatar.html" with person=user size="lg" %}
+        <div>
+          <div class="settings-user__name">{{ user.first_name }}</div>
+          <div class="settings-user__meta">На сайте с {{ user.date_joined|date:"E Y" }}</div>
+        </div>
+      </div>
+      <nav class="side-nav">
+        {% for url, label, icon_name in sections %}
+          <a href="{{ url }}"{% if url == request.path %} aria-current="page"{% endif %}>{{ label }}</a>
+        {% endfor %}
+      </nav>
+    </aside>
+    <div class="stack">
+      {% if not user.is_email_verified %}{% include "accounts/partials/verify_banner.html" %}{% endif %}
+      <section class="surface">
+        <header class="page-header">
+          <h1>{{ title }}</h1>
+          {% block lead %}{% endblock %}
+        </header>
+        {% block settings %}{% endblock %}
+      </section>
+    </div>
+  </div>
+{% endblock %}

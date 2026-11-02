@@ -1,0 +1,23 @@
+{% extends "layouts/auth.html" %}
+
+{% block title %}Ссылка не работает{% endblock %}
+
+{% block card %}
+  <div class="auth__icon auth__icon--danger">{% icon "circle-x" 28 %}</div>
+  <header class="auth__header">
+    <h1>Ссылка не работает</h1>
+    <p>{{ error }}</p>
+  </header>
+  {% if user.is_authenticated %}
+    {% if not user.is_email_verified %}
+      <form method="post" action="{% url 'accounts:verify_resend' %}" class="form">
+        {% csrf_token %}
+        <button class="btn btn--primary btn--block" type="submit">Отправить новое письмо</button>
+      </form>
+    {% else %}
+      <a class="btn btn--primary btn--block" href="{% url 'accounts:security' %}">К настройкам почты</a>
+    {% endif %}
+  {% else %}
+    <a class="btn btn--primary btn--block" href="{% url 'accounts:login' %}">Войти</a>
+  {% endif %}
+{% endblock %}

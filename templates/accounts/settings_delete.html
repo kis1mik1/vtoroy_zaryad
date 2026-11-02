@@ -1,0 +1,18 @@
+{% extends "layouts/settings.html" %}
+
+{% block settings %}
+  <div class="alert alert--error">
+    {% icon "triangle-alert" %}
+    <div>
+      <div class="alert__title">Это действие нельзя отменить</div>
+      Все ваши объявления будут сняты с публикации. Имя, почта, телефон и фото будут удалены, вместо имени собеседники увидят «Пользователь удалён». Зарегистрироваться снова на этот адрес можно будет сразу.
+    </div>
+  </div>
+  <form method="post" class="form delete-form" novalidate data-confirm="Удалить аккаунт навсегда?" data-confirm-action="Удалить">
+    {% csrf_token %}
+    {{ form }}
+    <div class="form__actions">
+      <button class="btn btn--danger" type="submit">Удалить аккаунт</button>
+    </div>
+  </form>
+{% endblock %}

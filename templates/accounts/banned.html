@@ -1,0 +1,27 @@
+{% extends "layouts/auth.html" %}
+
+{% block title %}Аккаунт заблокирован{% endblock %}
+
+{% block card %}
+  <div class="auth__icon auth__icon--danger">{% icon "ban" 28 %}</div>
+  <header class="auth__header">
+    <h1>Аккаунт заблокирован</h1>
+    {% if banned_user.is_banned_forever %}
+      <p>Блокировка бессрочная.</p>
+    {% else %}
+      <p>Доступ откроется {{ banned_user.banned_until|humandate }}.</p>
+    {% endif %}
+  </header>
+  <dl class="ban-details">
+    <dt>Причина</dt>
+    <dd>{{ banned_user.ban_reason|default:"Нарушение правил площадки" }}</dd>
+  </dl>
+  <p class="muted">Если считаете блокировку ошибкой, напишите на <a href="mailto:{{ support_email }}">{{ support_email }}</a> с адреса {{ banned_user.email }}. Пока аккаунт заблокирован, ваши объявления не показываются.</p>
+  <div class="cluster">
+    <a class="btn btn--secondary" href="{% url 'core:rules' %}">Правила площадки</a>
+    <form method="post" action="{% url 'accounts:logout' %}">
+      {% csrf_token %}
+      <button class="btn btn--ghost" type="submit">Выйти</button>
+    </form>
+  </div>
+{% endblock %}

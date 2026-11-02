@@ -1,0 +1,11 @@
+<div class="alert alert--warning verify-banner">
+  {% icon "mail" %}
+  <div class="verify-banner__text">
+    <div class="alert__title">Подтвердите почту</div>
+    Мы отправили ссылку на {{ user.email }}. Пока почта не подтверждена, нельзя размещать объявления и писать продавцам.
+  </div>
+  <form method="post" action="{% url 'accounts:verify_resend' %}">
+    {% csrf_token %}
+    <button class="btn btn--secondary btn--sm" type="submit">Отправить ещё раз</button>
+  </form>
+</div>

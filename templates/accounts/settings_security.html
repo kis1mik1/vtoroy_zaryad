@@ -1,0 +1,29 @@
+{% extends "layouts/settings.html" %}
+
+{% block settings %}
+  <div class="settings-blocks">
+    <section class="settings-block" id="email">
+      <h2>Электронная почта</h2>
+      <p class="muted">Сейчас: <strong>{{ user.email }}</strong>{% if user.is_email_verified %} <span class="badge badge--success">{% icon "check" %}подтверждена</span>{% else %} <span class="badge badge--warning">не подтверждена</span>{% endif %}</p>
+      <p class="muted">На новый адрес придёт письмо со ссылкой. Адрес сменится, когда вы перейдёте по ней.</p>
+      <form method="post" action="{% url 'accounts:email_change' %}" class="form" novalidate>
+        {% csrf_token %}
+        {{ email_form }}
+        <div class="form__actions">
+          <button class="btn btn--primary" type="submit">Сменить почту</button>
+        </div>
+      </form>
+    </section>
+    <section class="settings-block" id="password">
+      <h2>Пароль</h2>
+      <form method="post" action="{% url 'accounts:password_change' %}" class="form" novalidate>
+        {% csrf_token %}
+        {{ password_form }}
+        <div class="form__actions">
+          <button class="btn btn--primary" type="submit">Изменить пароль</button>
+          <a class="btn btn--ghost" href="{% url 'accounts:password_reset' %}">Не помню текущий</a>
+        </div>
+      </form>
+    </section>
+  </div>
+{% endblock %}

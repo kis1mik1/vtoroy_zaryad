@@ -1,0 +1,24 @@
+{% extends "layouts/auth.html" %}
+
+{% block title %}Подтвердите почту{% endblock %}
+
+{% block card %}
+  <div class="auth__icon">{% icon "mail" 28 %}</div>
+  <header class="auth__header">
+    <h1>Проверьте почту</h1>
+    <p>Мы отправили ссылку для подтверждения на <strong>{{ user.email }}</strong>. Она действует 3 дня.</p>
+  </header>
+  <ul class="auth__hints">
+    <li>Письмо приходит в течение пары минут. Загляните в «Спам» и «Рассылки».</li>
+    <li>Пока почта не подтверждена, можно смотреть объявления и настраивать профиль.</li>
+  </ul>
+  <form method="post" action="{% url 'accounts:verify_resend' %}" class="form">
+    {% csrf_token %}
+    <button class="btn btn--secondary btn--block" type="submit">Отправить письмо ещё раз</button>
+  </form>
+  <a class="btn btn--ghost btn--block" href="{% url 'accounts:settings' %}">Заполнить профиль</a>
+{% endblock %}
+
+{% block after_card %}
+  <p class="auth__switch">Ошиблись в адресе? <a href="{% url 'accounts:security' %}">Изменить почту</a></p>
+{% endblock %}
