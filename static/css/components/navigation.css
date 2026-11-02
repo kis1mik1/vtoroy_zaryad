@@ -198,6 +198,10 @@ a.pagination__item:hover {
   color: var(--color-text-muted);
 }
 
+.dropdown__item .counter {
+  margin-left: auto;
+}
+
 .dropdown__divider {
   height: 1px;
   margin: var(--space-2) 0;

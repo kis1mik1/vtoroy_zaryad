@@ -1,0 +1,9 @@
+<li class="mod-complaint">
+  <div class="mod-complaint__head">
+    <span class="badge{% if complaint.reason == 'fraud' %} badge--danger{% else %} badge--warning{% endif %}">{{ complaint.get_reason_display }}</span>
+    <a href="{% url 'moderation:user' complaint.author.pk %}">{{ complaint.author.first_name }}</a>
+    <span class="muted">{{ complaint.created_at|humandate }}</span>
+    {% if complaint.status != "new" %}<span class="muted">· {{ complaint.get_status_display|lower }}{% if complaint.handled_by %}, {{ complaint.handled_by.first_name }}{% endif %}</span>{% endif %}
+  </div>
+  {% if complaint.comment %}<p class="mod-complaint__text">{{ complaint.comment }}</p>{% endif %}
+</li>

@@ -1,0 +1,14 @@
+<div class="modal__header">
+  <h2 class="modal__title" id="modal-title">{% if ad %}Пожаловаться на объявление{% else %}Пожаловаться на пользователя{% endif %}</h2>
+  <button class="btn btn--ghost btn--icon btn--sm" type="button" data-close-dialog aria-label="Закрыть">{% icon "x" %}</button>
+</div>
+<form method="post" class="form" action="{{ request.path }}" hx-post="{{ request.path }}" hx-target="#modal-content">
+  {% csrf_token %}
+  <div class="modal__body stack">
+    {% include "moderation/partials/complaint_fields.html" %}
+  </div>
+  <div class="modal__footer">
+    <button class="btn btn--secondary" type="button" data-close-dialog>Отмена</button>
+    <button class="btn btn--danger" type="submit">Отправить жалобу</button>
+  </div>
+</form>

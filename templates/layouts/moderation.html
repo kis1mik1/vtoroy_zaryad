@@ -1,0 +1,31 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/moderation.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="with-sidebar mod-layout">
+    <aside class="mod-aside" aria-label="Разделы модерации">
+      <nav class="side-nav">
+        <a href="{% url 'moderation:queue' %}"{% if section == "queue" %} aria-current="page"{% endif %}>Очередь{% if moderation_counts.queue %}<span class="tabs__count">{{ moderation_counts.queue }}</span>{% endif %}</a>
+        {% if perms.moderation.handle_complaint %}
+          <a href="{% url 'moderation:complaints' %}"{% if section == "complaints" %} aria-current="page"{% endif %}>Жалобы{% if moderation_counts.complaints %}<span class="tabs__count">{{ moderation_counts.complaints }}</span>{% endif %}</a>
+        {% endif %}
+        <a href="{% url 'moderation:rejected' %}"{% if section == "rejected" %} aria-current="page"{% endif %}>Отклонены автоматически</a>
+        <a href="{% url 'moderation:history' %}"{% if section == "history" %} aria-current="page"{% endif %}>Журнал решений</a>
+      </nav>
+      <section class="mod-models surface" aria-labelledby="mod-models-title">
+        <h2 id="mod-models-title">Автопроверка</h2>
+        <ul>
+          <li class="mod-models__item">{% if models_status.text_ready %}{% icon "circle-check" 18 "mod-models__ok" %}{% else %}{% icon "triangle-alert" 18 "mod-models__off" %}{% endif %}<span><strong>Текст</strong>{{ models_status.text_note }}</span></li>
+          <li class="mod-models__item">{% if models_status.images_ready %}{% icon "circle-check" 18 "mod-models__ok" %}{% else %}{% icon "triangle-alert" 18 "mod-models__off" %}{% endif %}<span><strong>Фото</strong>{{ models_status.images_note }}</span></li>
+          <li class="mod-models__item">{% icon "circle-check" 18 "mod-models__ok" %}<span><strong>Правила</strong>Контакты, запрещённые товары, дубли, цена</span></li>
+        </ul>
+      </section>
+    </aside>
+    <div class="mod-main">
+      {% block panel %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}

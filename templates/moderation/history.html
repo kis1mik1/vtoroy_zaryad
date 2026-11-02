@@ -1,0 +1,30 @@
+{% extends "layouts/moderation.html" %}
+
+{% block title %}Журнал решений{% endblock %}
+
+{% block panel %}
+  <header class="page-header">
+    <h1>Журнал решений</h1>
+    <p>Все решения модераторов и автоматические переводы на проверку после жалоб.</p>
+  </header>
+  {% if page_obj.object_list %}
+    <div class="surface mod-table-wrap">
+      <table class="mod-table">
+        <thead><tr><th scope="col">Когда</th><th scope="col">Объявление</th><th scope="col">Решение</th><th scope="col">Кто</th></tr></thead>
+        <tbody>
+          {% for action in page_obj %}
+            <tr>
+              <td>{{ action.created_at|humandate }}</td>
+              <td><a href="{% url 'moderation:ad' action.ad_id %}">{{ action.ad.title|truncatechars:60 }}</a></td>
+              <td>{{ action.get_action_display }}{% if action.reason_code %}<span class="muted"> · {{ action.get_reason_code_display }}</span>{% endif %}{% if action.comment %}<div class="muted">{{ action.comment }}</div>{% endif %}</td>
+              <td>{% if action.moderator %}{{ action.moderator.first_name }}{% else %}<span class="muted">автоматически</span>{% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% pagination page_obj %}
+  {% else %}
+    {% include "components/empty_state.html" with icon_name="list" title="Решений пока нет" text="Здесь появятся одобрения, отказы и снятия с публикации." %}
+  {% endif %}
+{% endblock %}

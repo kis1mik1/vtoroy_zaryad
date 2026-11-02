@@ -17,7 +17,7 @@
       {% icon "info" %}
       <div>
         {% if ad.status == "sold" %}<div class="alert__title">Товар продан</div>Посмотрите похожие объявления в разделе «{{ ad.category.name }}».
-        {% elif ad.status == "pending" %}<div class="alert__title">Объявление на проверке</div>Его видите только вы. После проверки оно появится в поиске.
+        {% elif ad.status == "pending" %}<div class="alert__title">Объявление на проверке</div>{% if ad.is_checking %}Идёт автоматическая проверка, обычно она занимает несколько секунд.{% else %}Его проверяет модератор, обычно в течение рабочего дня.{% endif %} Пока объявление видите только вы.
         {% elif ad.status == "rejected" %}<div class="alert__title">Объявление отклонено</div>{{ ad.rejection_reason }}
         {% else %}<div class="alert__title">Объявление в архиве</div>Покупатели его не видят.{% endif %}
       </div>
@@ -102,6 +102,9 @@
             <button class="btn btn--ghost btn--block" type="button" data-share data-share-title="{{ ad.title }}" data-share-url="{{ site_url }}{{ request.path }}">{% icon "share-2" 18 %}Поделиться</button>
           </div>
         {% endif %}
+        {% if perms.moderation.review_ad %}
+          <a class="btn btn--ghost btn--block" href="{% url 'moderation:ad' ad.pk %}">{% icon "shield-check" 18 %}Открыть в модерации</a>
+        {% endif %}
       </div>
 
       {% include "ads/partials/seller_card.html" %}
@@ -110,6 +113,12 @@
         {% icon "shield-check" 20 %}
         <p>Не переводите предоплату и проверяйте технику при встрече. <a href="{% url 'core:safety' %}">Как купить безопасно</a></p>
       </div>
+      {% if not is_owner and ad.status == "active" %}
+        <div class="ad-complain">
+          {% url 'moderation:complain_ad' ad.pk as complain_url %}
+          {% include "moderation/partials/complain_link.html" with url=complain_url label="Пожаловаться на объявление" %}
+        </div>
+      {% endif %}
     </aside>
   </div>
 

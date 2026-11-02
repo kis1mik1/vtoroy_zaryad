@@ -1,0 +1,104 @@
+{% extends "layouts/moderation.html" %}
+
+{% block title %}{{ person.first_name }} — модерация{% endblock %}
+
+{% block panel %}
+  <header class="page-header mod-person">
+    {% include "components/avatar.html" with person=person size="xl" %}
+    <div>
+      <h1>{{ person.first_name }}</h1>
+      <div class="mod-head__meta">
+        <span>{{ person.email }}</span>
+        {% if person.phone %}<span>{{ person.phone }}</span>{% endif %}
+        <span>на сайте с {{ person.date_joined|date:"j E Y" }}</span>
+        {% if person.last_seen_at %}<span>{% last_seen person.last_seen_at %}</span>{% endif %}
+        <a href="{% url 'ads:profile' person.pk %}" target="_blank" rel="noopener">{% icon "external-link" 14 %}Профиль на сайте</a>
+      </div>
+      <div class="mod-head__badges">
+        {% if person.is_banned %}<span class="badge badge--danger">{% icon "ban" 14 %}Заблокирован {% if person.is_banned_forever %}навсегда{% else %}до {{ person.banned_until|date:"j E Y, H:i" }}{% endif %}</span>{% endif %}
+        {% if not person.is_email_verified %}<span class="badge badge--warning">Почта не подтверждена</span>{% endif %}
+        {% if person.is_deleted %}<span class="badge">Аккаунт удалён</span>{% endif %}
+        {% if person.is_staff %}<span class="badge badge--info">Сотрудник</span>{% endif %}
+      </div>
+    </div>
+  </header>
+
+  <dl class="mod-stats">
+    <div><dt>Объявлений</dt><dd>{{ summary.total }}</dd></div>
+    <div><dt>Активных</dt><dd>{{ summary.active }}</dd></div>
+    <div><dt>Отклонено модераторами</dt><dd>{{ summary.taken_down }}</dd></div>
+    <div><dt>Жалоб</dt><dd>{{ summary.complaints }}</dd></div>
+  </dl>
+
+  <div class="mod-review">
+    <div class="mod-review__main stack">
+      <section class="surface mod-section" aria-labelledby="ads-title">
+        <h2 id="ads-title">Объявления</h2>
+        {% if ads %}
+          <ul class="mod-rows">
+            {% for ad in ads %}
+              <li><a href="{% url 'moderation:ad' ad.pk %}">{{ ad.title }}</a><span class="muted">{{ ad.price|price }} · {{ ad.category.name }}</span><span class="badge badge--{% if ad.status == 'active' %}success{% elif ad.status == 'pending' %}info{% elif ad.status == 'rejected' %}danger{% endif %}">{{ ad.get_status_display }}</span></li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="muted">Объявлений нет.</p>
+        {% endif %}
+      </section>
+
+      <section class="surface mod-section" aria-labelledby="complaints-title">
+        <h2 id="complaints-title">Жалобы на пользователя и его объявления</h2>
+        {% if complaints %}
+          <ul class="mod-complaints">
+            {% for complaint in complaints %}
+              {% include "moderation/partials/complaint.html" %}
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="muted">Жалоб не было.</p>
+        {% endif %}
+      </section>
+
+      <section class="surface mod-section" aria-labelledby="bans-title">
+        <h2 id="bans-title">Блокировки</h2>
+        {% if bans %}
+          <ol class="mod-timeline">
+            {% for ban in bans %}
+              <li>
+                <span class="mod-timeline__time">{{ ban.created_at|humandate }}</span>
+                <span>{{ ban.reason }} · {% if ban.until %}до {{ ban.until|date:"j E Y" }}{% else %}навсегда{% endif %}{% if ban.moderator %} · {{ ban.moderator.first_name }}{% endif %}{% if ban.lifted_at %} · снята {{ ban.lifted_at|humandate }}{% endif %}</span>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p class="muted">Не блокировался.</p>
+        {% endif %}
+      </section>
+    </div>
+
+    <aside class="mod-review__side stack">
+      {% if can_ban %}
+        <section class="surface mod-decision" id="ban" aria-labelledby="ban-title">
+          {% if person.is_banned %}
+            <h2 id="ban-title">Блокировка</h2>
+            <p>{{ person.ban_reason }}</p>
+            <form method="post" action="{% url 'moderation:user_unban' person.pk %}" data-confirm="Снять блокировку? Объявления пользователя снова станут видны." data-confirm-action="Снять">
+              {% csrf_token %}
+              <button class="btn btn--secondary btn--block" type="submit">Снять блокировку</button>
+            </form>
+          {% elif person.is_staff or person.is_deleted %}
+            <h2 id="ban-title">Блокировка</h2>
+            <p class="muted">{% if person.is_deleted %}Аккаунт удалён.{% else %}Сотрудников блокирует только администратор.{% endif %}</p>
+          {% else %}
+            <h2 id="ban-title">Заблокировать</h2>
+            <p class="muted">Пока блокировка действует, пользователь не может войти на сайт, а его объявления скрыты.</p>
+            <form method="post" action="{% url 'moderation:user_ban' person.pk %}" class="form" data-confirm="Заблокировать {{ person.first_name }}?" data-confirm-action="Заблокировать">
+              {% csrf_token %}
+              {{ form }}
+              <button class="btn btn--danger btn--block" type="submit">{% icon "ban" 18 %}Заблокировать</button>
+            </form>
+          {% endif %}
+        </section>
+      {% endif %}
+    </aside>
+  </div>
+{% endblock %}

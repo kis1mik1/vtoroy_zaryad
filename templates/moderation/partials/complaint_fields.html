@@ -1,0 +1,3 @@
+{% if error %}<div class="alert alert--warning" role="alert">{% icon "info" %}<div>{{ error }}</div></div>{% endif %}
+<p class="muted">{% if ad %}«{{ ad.title }}». {% endif %}Жалобу увидит только модератор, {% if ad %}продавец{% else %}пользователь{% endif %} не узнает, кто её отправил.</p>
+{{ form }}

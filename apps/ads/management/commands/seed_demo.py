@@ -27,9 +27,12 @@ class Command(BaseCommand):
         history = builder.price_history(created)
         favorites = builder.favorites(sellers, created)
         stats = builder.finish(created)
+        complaints = builder.complaints(sellers, created)
+        problems = builder.problem_ads(sellers)
         self.stdout.write(
             self.style.SUCCESS(
                 f"Готово: продавцов {len(sellers)}, объявлений {len(created)}, "
-                f"изменений цены {history}, в избранном {favorites}, групп цен {stats}."
+                f"изменений цены {history}, в избранном {favorites}, групп цен {stats}, "
+                f"жалоб {complaints}, объявлений для автопроверки {problems}."
             )
         )

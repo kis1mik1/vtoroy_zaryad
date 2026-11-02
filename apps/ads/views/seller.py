@@ -131,18 +131,32 @@ class AdFormState:
         }
 
 
+def _after_review_request(request, ad: Ad):
+    ad.refresh_from_db()
+    if ad.status == AdStatus.ACTIVE:
+        messages.success(request, "Объявление проверено и опубликовано.")
+    elif ad.status == AdStatus.REJECTED:
+        messages.error(request, f"Объявление не прошло проверку. {ad.rejection_reason}")
+    elif ad.is_checking:
+        messages.success(
+            request, "Объявление отправлено на проверку. Обычно она занимает несколько секунд."
+        )
+    else:
+        messages.success(
+            request,
+            "Объявление отправлено модератору. Он посмотрит его в течение рабочего дня.",
+        )
+    return redirect(f"{reverse('ads:my_ads')}?status={ad.status}")
+
+
 @verified_email_required
 @require_http_methods(["GET", "POST"])
 def ad_create(request):
     state = AdFormState(request)
     if request.method == "POST" and state.is_valid():
         hit("ad-create", f"user:{request.user.pk}", CREATE_RATE)
-        services.create_ad(request.user, state.draft())
-        messages.success(
-            request,
-            "Объявление отправлено на проверку. Модератор посмотрит его в течение рабочего дня.",
-        )
-        return redirect(f"{reverse('ads:my_ads')}?status={AdStatus.PENDING}")
+        ad = services.create_ad(request.user, state.draft())
+        return _after_review_request(request, ad)
     context = state.context()
     context.update(
         title="Новое объявление",
@@ -167,11 +181,9 @@ def ad_edit(request, pk):
         return redirect(f"{reverse('ads:my_ads')}?status={ad.status}")
     state = AdFormState(request, ad)
     if request.method == "POST" and state.is_valid():
-        sent_to_review = services.update_ad(ad, state.draft())
-        if sent_to_review:
-            messages.success(request, "Изменения отправлены на проверку.")
-        else:
-            messages.success(request, "Изменения сохранены.")
+        if services.update_ad(ad, state.draft()):
+            return _after_review_request(request, ad)
+        messages.success(request, "Изменения сохранены.")
         ad.refresh_from_db()
         return redirect(f"{reverse('ads:my_ads')}?status={ad.status}")
     context = state.context()
@@ -211,6 +223,22 @@ def photo_upload(request):
     return render(request, "ads/partials/photo_tile.html", {"photo": photo})
 
 
+def _my_ads_queryset(user):
+    return (
+        Ad.objects.alive()
+        .filter(seller=user)
+        .select_related("city", "category")
+        .prefetch_related(Prefetch("photos", queryset=AdPhoto.objects.order_by("position", "pk")))
+    )
+
+
+@login_required
+@require_GET
+def my_ad_row(request, pk):
+    ad = get_object_or_404(_my_ads_queryset(request.user), pk=pk)
+    return render(request, "ads/partials/my_ad_row.html", {"ad": ad})
+
+
 @login_required
 @require_GET
 def my_ads(request):
@@ -221,12 +249,7 @@ def my_ads(request):
     counts = base.aggregate(
         **{value: Count("pk", filter=Q(status=value)) for value, _ in STATUS_TABS}
     )
-    ads = (
-        base.filter(status=status)
-        .select_related("city", "category")
-        .prefetch_related(Prefetch("photos", queryset=AdPhoto.objects.order_by("position", "pk")))
-        .order_by("-status_changed_at")
-    )
+    ads = _my_ads_queryset(request.user).filter(status=status).order_by("-status_changed_at")
     return render(
         request,
         "ads/my_ads.html",
@@ -251,6 +274,9 @@ def ad_status(request, pk, action):
     except services.TransitionError as exc:
         messages.error(request, str(exc))
     else:
+        ad.refresh_from_db()
+        if action == "restore" and ad.status != AdStatus.ACTIVE:
+            return _after_review_request(request, ad)
         messages.success(request, message)
     ad.refresh_from_db()
     target = AdStatus.ACTIVE if ad.is_deleted else ad.status

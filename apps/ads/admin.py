@@ -1,43 +1,14 @@
-from django import forms
 from django.contrib import admin, messages
 from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
 from django.shortcuts import render
 from django.utils.html import format_html
 
-from . import services
+from apps.moderation import services as moderation
+from apps.moderation.admin import ModerationActionInline, ModerationCheckInline
+from apps.moderation.forms import RejectForm
+from apps.moderation.permissions import REVIEW_AD
+
 from .models import Ad, AdAttributeValue, AdPhoto, AdStatus, ConditionReport, PriceChange
-
-REJECTION_REASONS = (
-    "Товар не относится к электронике",
-    "Фотографии не соответствуют товару или взяты из интернета",
-    "В описании есть контакты или ссылки",
-    "Неверно выбрана категория или модель",
-    "Цена не соответствует товару",
-    "Несколько товаров в одном объявлении",
-    "Запрещённый товар",
-)
-
-
-class RejectForm(forms.Form):
-    reason = forms.ChoiceField(
-        label="Причина", choices=[(r, r) for r in REJECTION_REASONS] + [("other", "Другая")]
-    )
-    comment = forms.CharField(
-        label="Пояснение для продавца", required=False, widget=forms.Textarea(attrs={"rows": 3})
-    )
-
-    def clean(self):
-        cleaned = super().clean()
-        if cleaned.get("reason") == "other" and not cleaned.get("comment"):
-            self.add_error("comment", "Опишите причину.")
-        return cleaned
-
-    @property
-    def message(self) -> str:
-        reason, comment = self.cleaned_data["reason"], self.cleaned_data["comment"].strip()
-        if reason == "other":
-            return comment
-        return f"{reason}. {comment}" if comment else reason
 
 
 class AdPhotoInline(admin.TabularInline):
@@ -86,32 +57,44 @@ class AdAdmin(admin.ModelAdmin):
         "updated_at",
         "published_at",
         "status_changed_at",
+        "review_queued_at",
         "views_count",
         "contacts_shown_count",
         "favorites_count",
     )
     date_hierarchy = "created_at"
-    inlines = [AdPhotoInline, ConditionReportInline, AdAttributeValueInline, PriceChangeInline]
+    inlines = [
+        AdPhotoInline,
+        ConditionReportInline,
+        AdAttributeValueInline,
+        PriceChangeInline,
+        ModerationCheckInline,
+        ModerationActionInline,
+    ]
     actions = ["approve_ads", "reject_ads"]
 
-    @admin.action(description="Одобрить и опубликовать")
+    def has_review_permission(self, request):
+        return request.user.has_perm(REVIEW_AD)
+
+    @admin.action(description="Одобрить и опубликовать", permissions=["review"])
     def approve_ads(self, request, queryset):
         approved = 0
         for ad in queryset.filter(status=AdStatus.PENDING):
-            services.approve(ad, moderator=request.user)
+            moderation.approve(ad, request.user)
             approved += 1
         skipped = queryset.count() - approved
         self.message_user(request, f"Опубликовано: {approved}", messages.SUCCESS)
         if skipped:
             self.message_user(request, f"Пропущено (не на проверке): {skipped}", messages.WARNING)
 
-    @admin.action(description="Отклонить с указанием причины")
+    @admin.action(description="Отклонить с указанием причины", permissions=["review"])
     def reject_ads(self, request, queryset):
         queryset = queryset.filter(status__in=(AdStatus.PENDING, AdStatus.ACTIVE))
         form = RejectForm(request.POST if "apply" in request.POST else None)
         if form.is_bound and form.is_valid():
+            reason, comment = form.cleaned_data["reason"], form.cleaned_data["comment"]
             for ad in queryset:
-                services.reject(ad, form.message, moderator=request.user)
+                moderation.reject(ad, request.user, reason, comment)
             self.message_user(request, f"Отклонено: {queryset.count()}", messages.SUCCESS)
             return None
         return render(

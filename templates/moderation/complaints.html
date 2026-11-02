@@ -1,0 +1,62 @@
+{% extends "layouts/moderation.html" %}
+
+{% block title %}Жалобы{% endblock %}
+
+{% block panel %}
+  <header class="page-header">
+    <h1>Жалобы</h1>
+    <p>Жалобы собраны по объявлениям и пользователям. Три жалобы от разных людей скрывают объявление до проверки.</p>
+  </header>
+
+  <nav class="tabs" aria-label="Статус жалоб">
+    {% for value, label in statuses %}
+      <a class="tabs__tab" href="?status={{ value }}"{% if value == status %} aria-current="page"{% endif %}>{% if value == "new" %}Новые{% elif value == "accepted" %}Подтверждённые{% else %}Отклонённые{% endif %}</a>
+    {% endfor %}
+  </nav>
+
+  {% if groups %}
+    <ul class="mod-groups">
+      {% for group in groups %}
+        <li class="card mod-group">
+          {% if group.kind == "ad" %}
+            {% with ad=group.target photo=group.target.ordered_photos|first %}
+              <div class="mod-group__target">
+                <div class="mod-group__photo">{% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="120" height="90" loading="lazy">{% else %}{% icon "image" 22 %}{% endif %}</div>
+                <div>
+                  <a class="mod-group__title" href="{% url 'moderation:ad' ad.pk %}">{{ ad.title }}</a>
+                  <div class="mod-item__meta"><span>{{ ad.price|price }}</span><span>{{ ad.get_status_display }}</span><span>продавец <a href="{% url 'moderation:user' ad.seller.pk %}">{{ ad.seller.first_name }}</a></span></div>
+                </div>
+              </div>
+            {% endwith %}
+          {% else %}
+            <div class="mod-group__target">
+              {% include "components/avatar.html" with person=group.target size="lg" %}
+              <div>
+                <a class="mod-group__title" href="{% url 'moderation:user' group.target.pk %}">{{ group.target.first_name }}</a>
+                <div class="mod-item__meta"><span>{{ group.target.email }}</span>{% if group.target.is_banned %}<span class="badge badge--danger">заблокирован</span>{% endif %}</div>
+              </div>
+            </div>
+          {% endif %}
+          <ul class="mod-complaints">
+            {% for complaint in group.complaints %}{% include "moderation/partials/complaint.html" %}{% endfor %}
+          </ul>
+          {% if status == "new" %}
+            <div class="mod-group__actions">
+              {% if group.kind == "ad" %}
+                <a class="btn btn--primary btn--sm" href="{% url 'moderation:ad' group.target.pk %}#decision">Разобрать объявление</a>
+              {% else %}
+                <a class="btn btn--primary btn--sm" href="{% url 'moderation:user' group.target.pk %}#ban">Открыть пользователя</a>
+              {% endif %}
+              <form method="post" action="{% url 'moderation:complaints_dismiss' group.kind group.target.pk %}" data-confirm="Отклонить все жалобы на {% if group.kind == 'ad' %}это объявление{% else %}этого пользователя{% endif %}?" data-confirm-action="Отклонить">
+                {% csrf_token %}
+                <button class="btn btn--secondary btn--sm" type="submit">Жалобы необоснованны</button>
+              </form>
+            </div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% include "components/empty_state.html" with icon_name="flag" title="Жалоб нет" text="Когда покупатели пожалуются на объявление или пользователя, жалоба появится здесь." %}
+  {% endif %}
+{% endblock %}

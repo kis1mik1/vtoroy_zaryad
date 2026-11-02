@@ -1,0 +1,161 @@
+{% extends "layouts/moderation.html" %}
+{% load moderation %}
+
+{% block title %}Проверка: {{ ad.title }}{% endblock %}
+
+{% block panel %}
+  <header class="page-header mod-head">
+    <div class="mod-head__badges">
+      <span class="badge badge--{% if ad.status == 'active' %}success{% elif ad.status == 'pending' %}info{% elif ad.status == 'rejected' %}danger{% endif %}">{{ ad.get_status_display }}</span>
+      {% if ad.open_complaints %}<span class="badge badge--danger">{% icon "flag" 14 %}{{ ad.open_complaints|count_plural:"жалоба,жалобы,жалоб" }}</span>{% endif %}
+      <span class="muted">№ {{ ad.pk }}</span>
+    </div>
+    <h1>{{ ad.title }}</h1>
+    <div class="mod-head__meta">
+      <strong>{{ ad.price|price }}</strong>
+      <span>{% if ad.category.parent %}{{ ad.category.parent.name }} → {% endif %}{{ ad.category.name }}</span>
+      <span>{{ ad.city.name }}</span>
+      <span>{{ ad.get_condition_display }}</span>
+      <span>создано {{ ad.created_at|humandate }}</span>
+      <a href="{% url 'ads:detail' ad.pk ad.slug %}" target="_blank" rel="noopener">{% icon "external-link" 14 %}На сайте</a>
+    </div>
+  </header>
+
+  <div class="mod-review">
+    <div class="mod-review__main stack">
+      {% with current=ad|current_check %}
+        <section class="surface mod-section" aria-labelledby="check-title">
+          <div class="mod-section__head">
+            <h2 id="check-title">Автопроверка</h2>
+            {% if check %}<span class="badge badge--{{ check.verdict|verdict_tone }}">{{ check.get_verdict_display }}</span>{% endif %}
+          </div>
+          {% if check %}
+            <p class="mod-section__note">{{ check.created_at|humandate }} · {{ check.duration_ms }} мс{% if not current %} · проверка была до последних изменений статуса{% endif %}</p>
+            {% if check.reasons %}
+              <ul class="mod-reasons">{% for reason in check.reasons %}<li>{% icon "triangle-alert" 16 %}{{ reason }}</li>{% endfor %}</ul>
+            {% elif check.rejection_reason %}
+              <p class="mod-item__rejection">{% icon "circle-x" 16 %}{{ check.rejection_reason }}</p>
+            {% else %}
+              <p class="mod-ok">{% icon "circle-check" 16 %}Замечаний нет</p>
+            {% endif %}
+            <dl class="mod-facts">
+              <div><dt>Текст</dt><dd>{{ check|text_label }}{% if check.text_confidence is not None %} · {{ check.text_confidence|percent }}{% endif %}</dd></div>
+              <div><dt>Похоже на электронику</dt><dd>{{ check.electronics_score|percent }}</dd></div>
+              <div><dt>Правила</dt><dd>{% if check.rule_flags %}{% for flag in check.rule_flags %}<span class="badge badge--{% if flag.severity == 'reject' %}danger{% else %}warning{% endif %}">{{ flag.text }}</span>{% if flag.related_ad %} <a href="{% url 'moderation:ad' flag.related_ad %}">№ {{ flag.related_ad }}</a>{% endif %} {% endfor %}{% else %}без замечаний{% endif %}</dd></div>
+            </dl>
+          {% else %}
+            <p class="mod-section__note">Автопроверки ещё не было{% if ad.is_checking %}, она идёт прямо сейчас{% endif %}.</p>
+          {% endif %}
+        </section>
+      {% endwith %}
+
+      <section class="surface mod-section" aria-labelledby="photos-title">
+        <h2 id="photos-title">Фото</h2>
+        <ul class="mod-photos">
+          {% for photo in ad.ordered_photos %}
+            {% photo_score check photo as score %}
+            <li class="mod-photo{% if score.flagged or photo.is_flagged %} mod-photo--flagged{% endif %}">
+              <a href="{{ photo.image.url }}" target="_blank" rel="noopener"><img src="{{ photo.thumb.url }}" alt="Фото {{ forloop.counter }}" width="{{ photo.width }}" height="{{ photo.height }}" loading="lazy"></a>
+              <span class="mod-photo__score">{% if score %}{{ score.label }} · техника {{ score.score|percent }}{% else %}не проверено{% endif %}</span>
+            </li>
+          {% empty %}
+            <li class="muted">Фото нет</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="surface mod-section" aria-labelledby="text-title">
+        <h2 id="text-title">Описание</h2>
+        <div class="mod-text">{{ ad.description|highlight:check }}</div>
+        {% if ad.attribute_values.all %}
+          <dl class="mod-facts mod-facts--inline">
+            {% if ad.device_model %}<div><dt>Модель</dt><dd>{{ ad.device_model.full_name }}</dd></div>{% elif ad.custom_model_name %}<div><dt>Модель</dt><dd>{% if ad.brand %}{{ ad.brand.name }} {% endif %}{{ ad.custom_model_name }}</dd></div>{% endif %}
+            {% for value in ad.attribute_values.all %}<div><dt>{{ value.attribute.name }}</dt><dd>{{ value.display }}</dd></div>{% endfor %}
+          </dl>
+        {% endif %}
+      </section>
+
+      {% if complaints %}
+        <section class="surface mod-section" aria-labelledby="complaints-title">
+          <h2 id="complaints-title">Жалобы</h2>
+          <ul class="mod-complaints">
+            {% for complaint in complaints %}{% include "moderation/partials/complaint.html" %}{% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      <section class="surface mod-section" aria-labelledby="history-title">
+        <h2 id="history-title">История</h2>
+        {% if history %}
+          <ol class="mod-timeline">
+            {% for kind, moment, item in history %}
+              <li>
+                <span class="mod-timeline__time">{{ moment|humandate }}</span>
+                {% if kind == "check" %}
+                  <span>Автопроверка: <span class="badge badge--{{ item.verdict|verdict_tone }}">{{ item.get_verdict_display }}</span></span>
+                {% else %}
+                  <span>{{ item.get_action_display }} — {% if item.moderator %}{{ item.moderator.first_name }}{% else %}автоматически{% endif %}{% if item.reason_code %} · {{ item.get_reason_code_display }}{% endif %}{% if item.comment %} · {{ item.comment }}{% endif %}</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p class="muted">Пока ничего не происходило.</p>
+        {% endif %}
+      </section>
+    </div>
+
+    <aside class="mod-review__side stack">
+      <section class="surface mod-decision" id="decision" aria-labelledby="decision-title">
+        <h2 id="decision-title">Решение</h2>
+        {% if ad.status == "pending" or ad.status == "rejected" %}
+          <form method="post" action="{% url 'moderation:ad_decide' ad.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="decision" value="approve">
+            <button class="btn btn--primary btn--block" type="submit">{% icon "check" 18 %}Опубликовать</button>
+          </form>
+        {% endif %}
+        {% if ad.status == "pending" or ad.status == "active" %}
+          <form method="post" action="{% url 'moderation:ad_decide' ad.pk %}" class="form mod-decision__reject"{% if ad.status == "active" %} data-confirm="Снять объявление с публикации? Продавец получит причину." data-confirm-action="Снять"{% endif %}>
+            {% csrf_token %}
+            <input type="hidden" name="decision" value="reject">
+            {{ form }}
+            <button class="btn btn--danger btn--block" type="submit">{% icon "ban" 18 %}{% if ad.status == "active" %}Снять с публикации{% else %}Отклонить{% endif %}</button>
+          </form>
+        {% endif %}
+        {% if ad.status == "active" and ad.open_complaints and perms.moderation.handle_complaint %}
+          <form method="post" action="{% url 'moderation:complaints_dismiss' 'ad' ad.pk %}">
+            {% csrf_token %}
+            <button class="btn btn--secondary btn--block" type="submit">Жалобы необоснованны</button>
+          </form>
+        {% endif %}
+        {% if ad.status == "sold" or ad.status == "archived" %}
+          <p class="muted">Объявление {{ ad.get_status_display|lower }}, решение не требуется.</p>
+        {% endif %}
+      </section>
+
+      <section class="surface mod-seller" aria-labelledby="seller-title">
+        <h2 id="seller-title">Продавец</h2>
+        <a class="mod-seller__head" href="{% url 'moderation:user' ad.seller.pk %}">
+          {% include "components/avatar.html" with person=ad.seller size="sm" %}
+          <span><strong>{{ ad.seller.first_name }}</strong><span class="muted">{{ ad.seller.email }}</span></span>
+        </a>
+        {% if ad.seller.is_banned %}<p><span class="badge badge--danger">{% icon "ban" 14 %}Заблокирован</span></p>{% endif %}
+        <dl class="mod-facts">
+          <div><dt>На сайте</dt><dd>с {{ ad.seller.date_joined|date:"j E Y" }}</dd></div>
+          <div><dt>Объявлений</dt><dd>{{ seller_summary.total }}, активных {{ seller_summary.active }}</dd></div>
+          <div><dt>Отклонено модераторами</dt><dd>{{ seller_summary.taken_down }}</dd></div>
+          <div><dt>Жалоб</dt><dd>{{ seller_summary.complaints }}</dd></div>
+        </dl>
+      </section>
+
+      {% if ad.market_median %}
+        <section class="surface mod-market" aria-labelledby="market-title">
+          <h2 id="market-title">Рынок</h2>
+          <p>Обычно {{ ad.market_p25|price }} – {{ ad.market_p75|price }}, медиана {{ ad.market_median|price }}.</p>
+          <p class="muted">Эта цена — {{ ad.market_ratio|percent }} от медианы.</p>
+        </section>
+      {% endif %}
+    </aside>
+  </div>
+{% endblock %}

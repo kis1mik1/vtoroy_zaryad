@@ -21,6 +21,7 @@ urlpatterns = [
     path("compare/<int:pk>/", lists.compare_toggle, name="compare_toggle"),
     path("u/<int:pk>/", browse.user_profile, name="profile"),
     path("my/ads/", seller.my_ads, name="my_ads"),
+    path("my/ads/<int:pk>/row/", seller.my_ad_row, name="my_ad_row"),
     path("my/favorites/", lists.my_favorites, name="favorites"),
     path("my/searches/", lists.my_searches, name="saved_searches"),
     path("my/searches/save/", lists.saved_search_create, name="saved_search_create"),

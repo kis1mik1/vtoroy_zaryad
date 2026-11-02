@@ -19,7 +19,15 @@
         {% if sold_count %}<li>{% icon "hand-coins" 16 %}Продано: {{ sold_count|count_plural:"товар,товара,товаров" }}</li>{% endif %}
       </ul>
       {% if seller.about %}<p class="profile__about">{{ seller.about|linebreaksbr }}</p>{% endif %}
-      {% if user.pk == seller.pk %}<a class="btn btn--secondary btn--block" href="{% url 'accounts:settings' %}">{% icon "pencil" 16 %}Редактировать профиль</a>{% endif %}
+      {% if user.pk == seller.pk %}
+        <a class="btn btn--secondary btn--block" href="{% url 'accounts:settings' %}">{% icon "pencil" 16 %}Редактировать профиль</a>
+      {% else %}
+        <div class="profile__complain">
+          {% url 'moderation:complain_user' seller.pk as complain_url %}
+          {% include "moderation/partials/complain_link.html" with url=complain_url label="Пожаловаться на пользователя" %}
+        </div>
+      {% endif %}
+      {% if perms.moderation.review_ad %}<a class="btn btn--ghost btn--block" href="{% url 'moderation:user' seller.pk %}">{% icon "shield-check" 16 %}Открыть в модерации</a>{% endif %}
     </aside>
     <section class="profile__ads">
       <h2>{{ page_obj.paginator.count|count_plural:"объявление,объявления,объявлений" }}</h2>

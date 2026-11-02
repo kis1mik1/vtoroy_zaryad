@@ -1,0 +1,43 @@
+{% load moderation %}
+{% with check=ad|current_check photo=ad.ordered_photos|first %}
+<li class="mod-item card">
+  <a class="mod-item__photo" href="{% url 'moderation:ad' ad.pk %}" tabindex="-1" aria-hidden="true">
+    {% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="240" height="180" loading="lazy">{% else %}{% icon "image" 28 %}{% endif %}
+    {% if ad.ordered_photos|length > 1 %}<span class="mod-item__count">{{ ad.ordered_photos|length }} фото</span>{% endif %}
+  </a>
+  <div class="mod-item__body">
+    <div class="mod-item__top">
+      <h2 class="mod-item__title"><a href="{% url 'moderation:ad' ad.pk %}">{{ ad.title }}</a></h2>
+      <span class="mod-item__price">{{ ad.price|price }}</span>
+    </div>
+    <div class="mod-item__meta">
+      <span>{{ ad.category.name }}</span>
+      <span>{{ ad.city.name }}</span>
+      <span>{% icon "user" 14 %}{{ ad.seller.first_name }}</span>
+      {% if waiting %}<span>{% icon "clock" 14 %}{{ ad.status_changed_at|humandate }}</span>{% endif %}
+      {% if ad.open_complaints %}<span class="badge badge--danger">{% icon "flag" 14 %}{{ ad.open_complaints|count_plural:"жалоба,жалобы,жалоб" }}</span>{% endif %}
+    </div>
+    {% if reason_text %}
+      <p class="mod-item__rejection">{% icon "circle-x" 16 %}{{ ad.rejection_reason }}</p>
+    {% elif check.reasons %}
+      <ul class="mod-reasons">
+        {% for reason in check.reasons|slice:":3" %}<li>{% icon "triangle-alert" 16 %}{{ reason }}</li>{% endfor %}
+        {% if check.reasons|length > 3 %}<li class="mod-reasons__more">и ещё {{ check.reasons|length|add:"-3" }}</li>{% endif %}
+      </ul>
+    {% elif ad.open_complaints %}
+      <p class="mod-item__note">Скрыто после жалоб покупателей.</p>
+    {% else %}
+      <p class="mod-item__note">Автопроверка не завершилась, посмотрите вручную.</p>
+    {% endif %}
+  </div>
+  <div class="mod-item__actions">
+    <form method="post" action="{% url 'moderation:ad_decide' ad.pk %}">
+      {% csrf_token %}
+      <input type="hidden" name="decision" value="approve">
+      {% if next_page %}<input type="hidden" name="next" value="{{ next_page }}">{% endif %}
+      <button class="btn btn--primary btn--sm" type="submit">{% icon "check" 16 %}Опубликовать</button>
+    </form>
+    <a class="btn btn--secondary btn--sm" href="{% url 'moderation:ad' ad.pk %}">Разобрать</a>
+  </div>
+</li>
+{% endwith %}

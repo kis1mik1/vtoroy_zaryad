@@ -48,3 +48,8 @@
   gap: var(--space-4);
   min-width: 0;
 }
+
+.profile__complain {
+  display: flex;
+  justify-content: center;
+}

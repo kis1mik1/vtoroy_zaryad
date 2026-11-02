@@ -500,3 +500,8 @@
     order: 2;
   }
 }
+
+.ad-complain {
+  display: flex;
+  justify-content: center;
+}

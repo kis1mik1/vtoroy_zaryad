@@ -103,6 +103,23 @@
   font-size: var(--text-sm);
 }
 
+.my-ad__note--progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-info);
+}
+
+.my-ad__note--progress .icon {
+  animation: spin 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .my-ad__note--progress .icon {
+    animation: none;
+  }
+}
+
 .my-ad__actions {
   display: flex;
   flex-wrap: wrap;

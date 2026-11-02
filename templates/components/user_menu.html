@@ -25,6 +25,9 @@
       <a class="dropdown__item" role="menuitem" href="{% url 'ads:saved_searches' %}">{% icon "search" 18 %}Сохранённые поиски</a>
       <a class="dropdown__item" role="menuitem" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
       <a class="dropdown__item" role="menuitem" href="{% url 'notifications:list' %}">{% icon "bell" 18 %}Уведомления</a>
+      {% if moderation_counts %}
+        <a class="dropdown__item" role="menuitem" href="{% url 'moderation:queue' %}">{% icon "shield-check" 18 %}Модерация{% if moderation_counts.queue %}<span class="counter">{{ moderation_counts.queue }}</span>{% endif %}</a>
+      {% endif %}
       {% if user.is_staff %}
         <a class="dropdown__item" role="menuitem" href="{% url 'admin:index' %}">{% icon "lock" 18 %}Управление сайтом</a>
       {% endif %}

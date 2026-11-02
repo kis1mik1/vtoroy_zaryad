@@ -1,0 +1,22 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}{% if ad %}Жалоба на объявление{% else %}Жалоба на пользователя{% endif %}{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/moderation.css' %}">{% endblock %}
+
+{% block content %}
+  <section class="surface narrow-panel">
+    <header class="page-header">
+      <h1>{% if ad %}Пожаловаться на объявление{% else %}Пожаловаться на {{ person.first_name }}{% endif %}</h1>
+    </header>
+    <form method="post" class="form stack">
+      {% csrf_token %}
+      {% include "moderation/partials/complaint_fields.html" %}
+      <div class="form__actions">
+        <button class="btn btn--danger" type="submit">Отправить жалобу</button>
+        <a class="btn btn--ghost" href="{{ target_url }}">Отмена</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}

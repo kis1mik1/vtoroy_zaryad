@@ -1,0 +1,18 @@
+{% extends "layouts/moderation.html" %}
+
+{% block title %}Отклонены автоматически{% endblock %}
+
+{% block panel %}
+  <header class="page-header">
+    <h1>Отклонены автоматически</h1>
+    <p>Решения автопроверки за последнюю неделю, которые ещё никто не пересматривал. Если проверка ошиблась, опубликуйте объявление — продавец получит уведомление.</p>
+  </header>
+  {% if page_obj.object_list %}
+    <ul class="mod-list">
+      {% for ad in page_obj %}{% include "moderation/partials/queue_item.html" with reason_text=True next_page="rejected" %}{% endfor %}
+    </ul>
+    {% pagination page_obj %}
+  {% else %}
+    {% include "components/empty_state.html" with icon_name="circle-check" title="Автоматических отказов нет" text="За последнюю неделю автопроверка никого не отклонила." %}
+  {% endif %}
+{% endblock %}

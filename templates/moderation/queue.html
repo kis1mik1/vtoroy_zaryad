@@ -1,0 +1,26 @@
+{% extends "layouts/moderation.html" %}
+
+{% block title %}Очередь модерации{% endblock %}
+
+{% block panel %}
+  <header class="page-header">
+    <h1>Очередь проверки</h1>
+    <p>Объявления, в которых засомневалась автопроверка, и те, на которые пожаловались покупатели. Сверху самые давние.</p>
+  </header>
+
+  <dl class="mod-stats">
+    <div><dt>Проверено сегодня</dt><dd>{{ stats.checked }}</dd></div>
+    <div><dt>Опубликовано сразу</dt><dd>{{ stats.approved }}</dd></div>
+    <div><dt>Передано модератору</dt><dd>{{ stats.manual }}</dd></div>
+    <div><dt>Отклонено автоматически</dt><dd>{{ stats.rejected }}</dd></div>
+  </dl>
+
+  {% if page_obj.object_list %}
+    <ul class="mod-list">
+      {% for ad in page_obj %}{% include "moderation/partials/queue_item.html" with waiting=True %}{% endfor %}
+    </ul>
+    {% pagination page_obj %}
+  {% else %}
+    {% include "components/empty_state.html" with icon_name="circle-check" title="Очередь пуста" text="Всё проверено. Новые объявления появятся здесь, если автопроверка в них засомневается или покупатели пожалуются." %}
+  {% endif %}
+{% endblock %}

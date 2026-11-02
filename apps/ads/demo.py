@@ -15,6 +15,8 @@ from apps.accounts.models import ContactMode, User
 from apps.catalog.models import AttributeKind, Category, DeviceModel
 from apps.core.images import fit_within, to_webp
 from apps.core.models import City
+from apps.moderation import services as moderation
+from apps.moderation.models import ComplaintReason
 
 from .market import recalculate_price_stats
 from .models import Ad, AdPhoto, AdStatus, Condition, Favorite, PriceChange
@@ -111,6 +113,44 @@ CLOSINGS = (
     "Без предоплаты, только личная встреча.",
     "Отправлю фото дополнительно по запросу.",
 )
+
+
+PROBLEM_ADS = (
+    (
+        "smartphones",
+        "iPhone 13",
+        "Продаю айфон, всё работает, батарея 86%. Звоните +7 914 123-45-67 "
+        "или пишите в телеграм @iphone_vl, отвечу быстрее.",
+        38000,
+    ),
+    (
+        "smartphones",
+        "",
+        "Кроссовки почти новые, размер 42, надевал пару раз. Отдам с коробкой.",
+        6500,
+    ),
+    (
+        "laptops",
+        "MacBook Air 13 M2",
+        "Новый, не вскрывался. Только предоплата 100% на карту, отправлю после оплаты. "
+        "Торга нет, на звонки не отвечаю.",
+        24000,
+    ),
+    (
+        "smartphones",
+        "Galaxy S23",
+        "Телефон на запчасти, заблокирован по IMEI, экран целый. Забирать в Артёме.",
+        5000,
+    ),
+)
+CUSTOM_PROBLEM_TITLE = "Кроссовки Nike Air Max, 42 размер"
+COMPLAINT_COMMENTS = {
+    ComplaintReason.FRAUD: "Просит предоплату на карту, на встречу не соглашается.",
+    ComplaintReason.WRONG_PRICE: "В переписке называет цену на 10 тысяч больше.",
+    ComplaintReason.SOLD: "Продавец написал, что уже продал, а объявление висит.",
+    ComplaintReason.SPAM: "Такое же объявление уже было у этого продавца.",
+    ComplaintReason.OTHER: "Фото явно из интернета, свои показать отказался.",
+}
 
 
 @dataclass
@@ -285,6 +325,7 @@ class DemoBuilder:
     @transaction.atomic
     def ads(self, sellers: list[User], count: int) -> list[Ad]:
         photos = _prepare_photos(self.rng)
+        self.photo_pool = photos
         models_by_category = {}
         for slug in CATEGORY_WEIGHTS:
             models_by_category[slug] = list(
@@ -392,6 +433,66 @@ class DemoBuilder:
         for _, ad_id in pairs:
             Ad.objects.filter(pk=ad_id).update(favorites_count=F("favorites_count") + 1)
         return len(pairs)
+
+    @transaction.atomic
+    def problem_ads(self, sellers: list[User]) -> int:
+        categories = {c.slug: c for c in Category.objects.filter(slug__in=CATEGORY_WEIGHTS)}
+        created = 0
+        for slug, model_name, description, price in PROBLEM_ADS:
+            model = (
+                DeviceModel.objects.filter(category__slug=slug, name__icontains=model_name)
+                .select_related("brand", "category")
+                .first()
+                if model_name
+                else None
+            )
+            seller = self.rng.choice(sellers)
+            draft = AdDraft(
+                fields={
+                    "category": categories[slug],
+                    "brand": model.brand if model else None,
+                    "device_model": model,
+                    "custom_model_name": "" if model else CUSTOM_PROBLEM_TITLE,
+                    "title": "" if model else CUSTOM_PROBLEM_TITLE,
+                    "description": description,
+                    "price": price,
+                    "is_negotiable": False,
+                    "condition": Condition.USED,
+                    "city": seller.city,
+                },
+                attributes=_attributes(self.rng, model) if model else [],
+                condition=_condition_report(self.rng, categories[slug], Condition.USED),
+                photos=self._photos(seller, self.photo_pool.get(slug, [])),
+            )
+            create_ad(seller, draft)
+            created += 1
+        return created
+
+    def complaints(self, users: list[User], ads: list[Ad]) -> int:
+        if len(users) < 4:
+            return 0
+        active = list(
+            Ad.objects.filter(pk__in=[a.pk for a in ads], status=AdStatus.ACTIVE).order_by("pk")
+        )
+        targets = self.rng.sample(active, min(len(active), 7))
+        filed = 0
+        for index, ad in enumerate(targets):
+            authors = [u for u in users if u.pk != ad.seller_id]
+            count = 3 if index == 0 else self.rng.randint(1, 2)
+            for author in self.rng.sample(authors, count):
+                reason = self.rng.choice(list(COMPLAINT_COMMENTS))
+                moderation.file_complaint(
+                    author, ad=ad, reason=reason, comment=COMPLAINT_COMMENTS[reason]
+                )
+                filed += 1
+        target, author = self.rng.sample(users, 2)
+        moderation.file_complaint(
+            author,
+            user=target,
+            reason=ComplaintReason.FRAUD,
+            comment="Взял залог за доставку и перестал отвечать.",
+        )
+        return filed + 1
 
     def finish(self, ads: list[Ad]) -> int:
         for ad in ads:

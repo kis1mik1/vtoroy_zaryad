@@ -1,4 +1,4 @@
-<li class="my-ad card">
+<li class="my-ad card" id="my-ad-{{ ad.pk }}"{% if ad.is_checking %} hx-get="{% url 'ads:my_ad_row' ad.pk %}" hx-trigger="every 3s" hx-swap="outerHTML"{% endif %}>
   <div class="my-ad__photo">
     {% with photo=ad.photos.all|first %}
       {% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="240" height="180" loading="lazy">{% else %}{% icon "image" 28 %}{% endif %}
@@ -22,8 +22,10 @@
     </div>
     {% if ad.status == "rejected" and ad.rejection_reason %}
       <p class="my-ad__reason">{% icon "circle-x" 16 %}{{ ad.rejection_reason }}</p>
+    {% elif ad.is_checking %}
+      <p class="my-ad__note my-ad__note--progress">{% icon "refresh-cw" 16 %}Идёт автоматическая проверка, обычно она занимает несколько секунд.</p>
     {% elif ad.status == "pending" %}
-      <p class="my-ad__note">Модератор проверит объявление в течение рабочего дня. Мы пришлём уведомление.</p>
+      <p class="my-ad__note">Объявление проверяет модератор, обычно в течение рабочего дня. Мы пришлём уведомление.</p>
     {% endif %}
   </div>
   <div class="my-ad__actions">

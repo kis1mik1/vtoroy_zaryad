@@ -11,6 +11,7 @@
         <a class="dropdown__item" href="{% url 'ads:saved_searches' %}">{% icon "search" 18 %}Сохранённые поиски</a>
         <a class="dropdown__item" href="{% url 'ads:compare' %}">{% icon "scale" 18 %}Сравнение</a>
         <a class="dropdown__item" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
+        {% if moderation_counts %}<a class="dropdown__item" href="{% url 'moderation:queue' %}">{% icon "shield-check" 18 %}Модерация{% if moderation_counts.queue %}<span class="counter">{{ moderation_counts.queue }}</span>{% endif %}</a>{% endif %}
         {% if user.is_staff %}<a class="dropdown__item" href="{% url 'admin:index' %}">{% icon "lock" 18 %}Управление сайтом</a>{% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}
