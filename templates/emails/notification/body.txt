@@ -1,0 +1,9 @@
+{{ user.first_name }}, здравствуйте!
+
+{{ notification.title }}
+{% if notification.body %}
+{{ notification.body }}
+{% endif %}{% if url %}
+{{ url }}
+{% endif %}
+Настроить письма: {{ settings_url }}

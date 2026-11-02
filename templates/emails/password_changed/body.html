@@ -1,0 +1,6 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">Пароль изменён</h1>
+<p style="margin:0 0 16px;">{{ user.first_name }}, пароль от вашего аккаунта на «{{ site_name }}» только что изменён.</p>
+<p style="margin:0;">Если это сделали не вы, <a href="{{ reset_url }}" style="color:#1f5fd6;">восстановите доступ</a>.</p>
+{% endblock %}

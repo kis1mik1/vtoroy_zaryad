@@ -1,0 +1,7 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">Восстановление пароля</h1>
+<p style="margin:0 0 8px;">{{ user.first_name }}, чтобы задать новый пароль, нажмите на кнопку.</p>
+{% include "emails/button.html" with url=url label="Задать новый пароль" %}
+<p style="margin:0;color:#5b636e;font-size:14px;">Ссылка действует 3 дня и сработает один раз. Если вы не запрашивали восстановление, удалите письмо — пароль останется прежним.</p>
+{% endblock %}

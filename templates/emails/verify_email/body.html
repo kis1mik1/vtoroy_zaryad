@@ -1,0 +1,7 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">{{ user.first_name }}, здравствуйте!</h1>
+<p style="margin:0 0 8px;">Чтобы размещать объявления и писать продавцам, подтвердите адрес почты.</p>
+{% include "emails/button.html" with url=url label="Подтвердить почту" %}
+<p style="margin:0;color:#5b636e;font-size:14px;">Ссылка действует 3 дня. Если вы не регистрировались на «{{ site_name }}», просто удалите это письмо.</p>
+{% endblock %}

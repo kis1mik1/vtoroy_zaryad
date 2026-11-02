@@ -1,0 +1,7 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">{{ notification.title }}</h1>
+{% if notification.body %}<p style="margin:0 0 8px;white-space:pre-line;">{{ notification.body }}</p>{% endif %}
+{% if url %}{% include "emails/button.html" with url=url label="Открыть на сайте" %}{% endif %}
+{% endblock %}
+{% block footer %}Вы получили письмо, потому что включили такие уведомления. <a href="{{ settings_url }}" style="color:#5b636e;">Настроить письма</a>.{% endblock %}

@@ -1,6 +1,11 @@
+import json
+
 from django.contrib.messages import get_messages
+from django.http import HttpResponse
+from django.shortcuts import render
 from django.template.loader import render_to_string
 
+from .ratelimit import RateLimited
 from .selectors import get_city_by_slug, get_default_city
 
 CITY_SESSION_KEY = "city"
@@ -47,4 +52,27 @@ class HtmxMessagesMiddleware:
         response.write(
             render_to_string("components/toasts.html", {"messages": storage, "oob": True})
         )
+        return response
+
+
+class RateLimitMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        return self.get_response(request)
+
+    def process_exception(self, request, exception):
+        if not isinstance(exception, RateLimited):
+            return None
+        if getattr(request, "htmx", False):
+            response = HttpResponse(status=429)
+            response["HX-Trigger"] = json.dumps(
+                {"toast": {"level": "error", "text": exception.message}}
+            )
+        else:
+            response = render(
+                request, "errors/429.html", {"message": exception.message}, status=429
+            )
+        response["Retry-After"] = str(exception.retry_after)
         return response

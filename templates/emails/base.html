@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>{{ site_name }}</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f5f7;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:#14171b;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:24px 12px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;">
+        <tr>
+          <td style="background:#16191d;border-radius:16px 16px 0 0;padding:20px 28px;">
+            <a href="{{ site_url }}/" style="color:#eef0f2;font-size:18px;font-weight:800;text-decoration:none;"><span style="display:inline-block;background:#d4ff3f;color:#16191d;border-radius:6px;padding:0 7px;margin-right:8px;">&#9889;</span>{{ site_name }}</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#ffffff;border-radius:0 0 16px 16px;padding:32px 28px;font-size:16px;line-height:1.55;">
+            {% block content %}{% endblock %}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 28px;color:#7d8590;font-size:13px;line-height:1.5;">
+            {% block footer %}Письмо отправлено автоматически, отвечать на него не нужно. Вопросы — на <a href="mailto:{{ support_email }}" style="color:#5b636e;">{{ support_email }}</a>.{% endblock %}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

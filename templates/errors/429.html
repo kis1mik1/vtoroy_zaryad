@@ -1,0 +1,5 @@
+{% extends "errors/base_error.html" %}
+{% block title %}Слишком много попыток{% endblock %}
+{% block code %}429{% endblock %}
+{% block heading %}Слишком много попыток{% endblock %}
+{% block text %}{{ message }} Это защита от подбора паролей и рассылки спама.{% endblock %}

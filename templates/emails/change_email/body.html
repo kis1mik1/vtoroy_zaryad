@@ -1,0 +1,7 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">Подтвердите новый адрес</h1>
+<p style="margin:0 0 8px;">{{ user.first_name }}, вы указали <b>{{ new_email }}</b> как новый адрес для входа на «{{ site_name }}».</p>
+{% include "emails/button.html" with url=url label="Подтвердить адрес" %}
+<p style="margin:0;color:#5b636e;font-size:14px;">Ссылка действует 3 дня. Если вы ничего не меняли, удалите письмо — адрес останется прежним.</p>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">Адрес почты изменён</h1>
+<p style="margin:0 0 16px;">{{ user.first_name }}, адрес для входа на «{{ site_name }}» изменён на <b>{{ new_email }}</b>. Письма теперь будут приходить туда.</p>
+<p style="margin:0;">Если это сделали не вы, срочно напишите нам: <a href="mailto:{{ support_email }}" style="color:#1f5fd6;">{{ support_email }}</a>.</p>
+{% endblock %}
