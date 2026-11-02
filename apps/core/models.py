@@ -13,6 +13,12 @@ class TimeStampedModel(models.Model):
 class City(models.Model):
     name = models.CharField("название", max_length=100)
     slug = models.SlugField("адрес в ссылке", max_length=100, unique=True)
+    name_in = models.CharField(
+        "где (во Владивостоке)",
+        max_length=120,
+        blank=True,
+        help_text="С предлогом: «во Владивостоке».",
+    )
     region = models.CharField("регион", max_length=100)
     sort_order = models.PositiveSmallIntegerField("порядок", default=0)
     is_default = models.BooleanField("город по умолчанию", default=False)
@@ -31,3 +37,7 @@ class City(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def where(self) -> str:
+        return self.name_in or f"в городе {self.name}"

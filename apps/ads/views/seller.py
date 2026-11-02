@@ -13,10 +13,11 @@ from apps.catalog.selectors import brands_for, get_category_tree, model_with_spe
 from apps.core.decorators import ratelimit
 from apps.core.ratelimit import Rate, hit
 
-from . import services
-from .forms import OTHER_MODEL, AdForm, AttributesForm, ConditionForm
-from .models import MAX_PHOTOS, Ad, AdPhoto, AdStatus, Condition
-from .photos import resolve_photos, upload_photo
+from .. import services
+from ..forms import OTHER_MODEL, AdForm, AttributesForm, ConditionForm
+from ..market import price_hint
+from ..models import MAX_PHOTOS, Ad, AdPhoto, AdStatus, Condition
+from ..photos import resolve_photos, upload_photo
 
 CREATE_RATE = Rate(limit=20, period=24 * 60 * 60)
 PHOTO_RATE = Rate(limit=100, period=60 * 60)
@@ -124,6 +125,9 @@ class AdFormState:
             "models": models,
             "other_model": OTHER_MODEL,
             "max_photos": MAX_PHOTOS,
+            "price_hint": price_hint(
+                self.device_model, self.condition, self.attributes_form.price_key()
+            ),
         }
 
 

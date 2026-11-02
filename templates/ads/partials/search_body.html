@@ -1,0 +1,16 @@
+<div class="search-layout" id="search-body">
+<form class="filters" id="search-form" method="get" action="{{ request.path }}" aria-label="Фильтры" data-filters
+      hx-get="{{ request.path }}" hx-target="#search-body" hx-swap="outerHTML" hx-push-url="true"
+      hx-trigger="change delay:200ms, submit, change from:#id_sort" hx-indicator="#search-body">
+  <div class="filters__header">
+    <h2>Фильтры</h2>
+    <button class="btn btn--ghost btn--icon btn--sm filters__close" type="button" data-filters-close aria-label="Закрыть фильтры">{% icon "x" %}</button>
+  </div>
+  {% include "ads/partials/filters.html" %}
+  <div class="filters__footer">
+    <button class="btn btn--primary btn--block" type="submit" data-filters-close>Показать</button>
+    <a class="btn btn--ghost btn--block" href="{{ request.path }}{% if query %}?q={{ query|urlencode }}{% endif %}">Сбросить</a>
+  </div>
+</form>
+{% include "ads/partials/search_results.html" %}
+</div>

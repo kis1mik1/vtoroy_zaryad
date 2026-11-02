@@ -2,7 +2,7 @@ from django.core.cache import cache
 
 from .models import City
 
-CITIES_CACHE_KEY = "core:cities:v1"
+CITIES_CACHE_KEY = "core:cities:v2"
 
 
 def get_cities() -> list[City]:

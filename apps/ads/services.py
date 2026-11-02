@@ -1,7 +1,9 @@
 from dataclasses import dataclass, field
 from datetime import timedelta
 
+from django.core.cache import cache
 from django.db import transaction
+from django.db.models import F
 from django.urls import reverse
 from django.utils import timezone
 
@@ -12,6 +14,8 @@ from apps.notifications.services import notify
 
 from .models import Ad, AdAttributeValue, AdStatus, ConditionReport, PriceChange
 from .photos import attach_photos
+from .search import index_ad
+from .tasks import notify_price_drop_task
 
 ARCHIVE_AFTER = timedelta(days=30)
 MODERATED_FIELDS = (
@@ -112,6 +116,7 @@ def create_ad(seller, draft: AdDraft) -> Ad:
     _apply_attributes(ad, draft.attributes)
     _apply_condition(ad, draft.condition)
     attach_photos(ad, draft.photos)
+    index_ad(ad)
     return ad
 
 
@@ -147,8 +152,11 @@ def update_ad(ad: Ad, draft: AdDraft) -> bool:
 
     if ad.price != old_price:
         PriceChange.objects.create(ad=ad, old_price=old_price, new_price=ad.price)
+        if ad.price < old_price and ad.status == AdStatus.ACTIVE:
+            transaction.on_commit(lambda: notify_price_drop_task.delay(ad.pk, old_price, ad.price))
     _apply_attributes(ad, draft.attributes)
     _apply_condition(ad, draft.condition)
+    index_ad(ad)
     return ad.status == AdStatus.PENDING
 
 
@@ -252,3 +260,27 @@ TRANSITIONS = {
     "restore": (restore, "Объявление снова опубликовано"),
     "delete": (delete, "Объявление удалено"),
 }
+
+
+VIEW_TTL = 60 * 60 * 24
+
+
+def register_view(request, ad: Ad) -> bool:
+    if request.user.is_authenticated and request.user.pk == ad.seller_id:
+        return False
+    if request.user.is_authenticated:
+        viewer = f"u{request.user.pk}"
+    else:
+        if not request.session.session_key:
+            request.session.save()
+        viewer = f"s{request.session.session_key}"
+    key = f"ads:view:{ad.pk}:{viewer}:{timezone.localdate():%Y%m%d}"
+    if not cache.add(key, 1, VIEW_TTL):
+        return False
+    Ad.objects.filter(pk=ad.pk).update(views_count=F("views_count") + 1)
+    ad.views_count += 1
+    return True
+
+
+def register_phone_reveal(ad: Ad) -> None:
+    Ad.objects.filter(pk=ad.pk).update(contacts_shown_count=F("contacts_shown_count") + 1)

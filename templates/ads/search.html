@@ -1,0 +1,24 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}{% if query %}«{{ query }}» — поиск{% elif category %}{{ category.name }} {% if city %}{{ city.where }}{% else %}на Дальнем Востоке{% endif %}{% else %}Все объявления {% if city %}{{ city.where }}{% else %}на Дальнем Востоке{% endif %}{% endif %}{% endblock %}
+{% block meta_description %}{% if category.seo_description %}{{ category.seo_description }}{% else %}Объявления о новой и б/у электронике {% if city %}{{ city.where }}{% else %}на Дальнем Востоке{% endif %}.{% endif %}{% endblock %}
+{% block meta_robots %}{% if query or form.active_filters_count or page_obj.number > 1 %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/search.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="search-head">
+    <h1>{% if query %}«{{ query }}»{% elif category %}{{ category.name }}{% else %}Все объявления{% endif %} <span class="search-head__where">{% if city %}{{ city.where }}{% else %}на Дальнем Востоке{% endif %}</span></h1>
+    {% if children %}
+      <nav class="search-head__children" aria-label="Подкатегории">
+        {% for child in children %}<a class="chip" href="{% url 'ads:category' child.slug %}">{{ child.name }}</a>{% endfor %}
+      </nav>
+    {% elif tree and not query %}
+      <nav class="search-head__children" aria-label="Категории">
+        {% for node in tree %}<a class="chip" href="{% url 'ads:category' node.category.slug %}">{% if node.category.icon %}{% icon node.category.icon 16 %}{% endif %}{{ node.category.name }}</a>{% endfor %}
+      </nav>
+    {% endif %}
+  </header>
+
+  {% include "ads/partials/search_body.html" %}
+{% endblock %}

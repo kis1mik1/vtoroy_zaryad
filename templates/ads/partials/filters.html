@@ -1,0 +1,74 @@
+{% load ads %}
+<div class="filters__body">
+  <input type="hidden" name="q" value="{{ form.q.value|default:'' }}">
+  <fieldset class="filters__group">
+    <legend>Город</legend>
+    <select name="city" class="input" aria-label="Город">
+      <option value="all"{% if not city %} selected{% endif %}>Все города</option>
+      {% for region, cities in regions %}
+        <optgroup label="{{ region }}">
+          {% for item in cities %}<option value="{{ item.slug }}"{% if city and city.pk == item.pk %} selected{% endif %}>{{ item.name }}</option>{% endfor %}
+        </optgroup>
+      {% endfor %}
+    </select>
+  </fieldset>
+  <fieldset class="filters__group">
+    <legend>Цена, ₽</legend>
+    <div class="filters__range">
+      <input class="input" type="number" name="price_min" inputmode="numeric" min="0" placeholder="от" value="{{ form.price_min.value|default_if_none:'' }}" aria-label="Цена от">
+      <input class="input" type="number" name="price_max" inputmode="numeric" min="0" placeholder="до" value="{{ form.price_max.value|default_if_none:'' }}" aria-label="Цена до">
+    </div>
+  </fieldset>
+  <fieldset class="filters__group">
+    <legend>Состояние</legend>
+    <div class="filters__options">
+      {% for value, label in form.fields.condition.choices %}
+        <label class="chip"><input type="radio" name="condition" value="{{ value }}"{% if form.condition.value|default:'' == value %} checked{% endif %}><span>{{ label }}</span></label>
+      {% endfor %}
+    </div>
+  </fieldset>
+  {% if form.fields.brand.choices %}
+    <fieldset class="filters__group" data-collapsible>
+      <legend>Бренд</legend>
+      <div class="filters__checks{% if form.fields.brand.choices|length > 8 %} filters__checks--scroll{% endif %}">
+        {% for value, label in form.fields.brand.choices %}
+          <label class="check"><input type="checkbox" name="brand" value="{{ value }}"{% if value in form.brand.value %} checked{% endif %}><span>{{ label }}</span></label>
+        {% endfor %}
+      </div>
+    </fieldset>
+  {% endif %}
+  {% if form.fields.model.choices|length > 1 %}
+    <fieldset class="filters__group">
+      <legend>Модель</legend>
+      <select name="model" class="input" aria-label="Модель">
+        {% for value, label in form.fields.model.choices %}<option value="{{ value }}"{% if form.model.value == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+      </select>
+    </fieldset>
+  {% endif %}
+  {% for attribute, names in form.attribute_fields %}
+    <fieldset class="filters__group">
+      <legend>{{ attribute.name }}{% if attribute.unit %}, {{ attribute.unit }}{% endif %}</legend>
+      {% if attribute.kind == "choice" %}
+        {% with field=form|field_named:names.0 %}
+          <div class="filters__checks{% if field.field.choices|length > 8 %} filters__checks--scroll{% endif %}">
+            {% for value, label in field.field.choices %}
+              <label class="check"><input type="checkbox" name="{{ field.html_name }}" value="{{ value }}"{% if value in field.value %} checked{% endif %}><span>{{ label }}</span></label>
+            {% endfor %}
+          </div>
+        {% endwith %}
+      {% elif attribute.kind == "number" %}
+        <div class="filters__range">
+          {% with low=form|field_named:names.0 high=form|field_named:names.1 %}
+            <input class="input" type="text" inputmode="decimal" name="{{ low.html_name }}" placeholder="от" value="{{ low.value|default_if_none:'' }}" aria-label="{{ attribute.name }} от">
+            <input class="input" type="text" inputmode="decimal" name="{{ high.html_name }}" placeholder="до" value="{{ high.value|default_if_none:'' }}" aria-label="{{ attribute.name }} до">
+          {% endwith %}
+        </div>
+      {% else %}
+        {% with field=form|field_named:names.0 %}
+          <label class="switch switch--row"><span>Есть</span><input type="checkbox" name="{{ field.html_name }}" value="on"{% if field.value %} checked{% endif %}></label>
+        {% endwith %}
+      {% endif %}
+    </fieldset>
+  {% endfor %}
+  <label class="switch switch--row filters__photo"><span>Только с фото</span><input type="checkbox" name="with_photo" value="on"{% if form.with_photo.value %} checked{% endif %}></label>
+</div>

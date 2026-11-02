@@ -1,0 +1,31 @@
+<section class="results" id="search-results" aria-live="polite">
+  <div class="results__toolbar">
+    <p class="results__count">{% if page_obj.paginator.count %}{{ page_obj.paginator.count|count_plural:"объявление,объявления,объявлений" }}{% else %}Ничего не найдено{% endif %}</p>
+    <div class="results__controls">
+      <button class="btn btn--secondary btn--sm results__filters" type="button" data-filters-open>{% icon "sliders-horizontal" 16 %}Фильтры{% if form.active_filters_count %} <span class="counter">{{ form.active_filters_count }}</span>{% endif %}</button>
+      <label class="visually-hidden" for="id_sort">Сортировка</label>
+      <select class="input input--sm" name="sort" id="id_sort" form="search-form">
+        {% for value, label in form.fields.sort.choices %}<option value="{{ value }}"{% if form.sort_key == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+      </select>
+      {% include "ads/partials/saved_button.html" %}
+    </div>
+  </div>
+
+  {% if page_obj.object_list %}
+    <div class="ad-grid">
+      {% for ad in page_obj %}{% include "components/ad_card.html" %}{% endfor %}
+    </div>
+    {% pagination page_obj %}
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-state__icon">{% icon "search-x" 32 %}</div>
+      <h2>По вашему запросу пока ничего нет</h2>
+      <p>Попробуйте убрать часть фильтров{% if city %}, поискать во всех городах{% endif %} или написать запрос иначе — например, «айфон 13» вместо «iPhone 13 Pro Max 256».</p>
+      <div class="cluster">
+        {% if city %}<a class="btn btn--secondary" href="{{ request.path }}?{% if query_string %}{{ query_string }}&amp;{% endif %}city=all">Искать во всех городах</a>{% endif %}
+        <a class="btn btn--ghost" href="{{ request.path }}">Сбросить фильтры</a>
+      </div>
+      <p class="muted">Сохраните поиск — пришлём уведомление, когда появится подходящее объявление.</p>
+    </div>
+  {% endif %}
+</section>
