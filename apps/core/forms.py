@@ -1,6 +1,7 @@
 from django import forms
 from django.forms.renderers import TemplatesSetting
 
+from . import captcha
 from .selectors import get_cities, get_cities_by_region
 
 
@@ -35,3 +36,11 @@ class CityChoiceField(forms.ChoiceField):
 
     def valid_value(self, value):
         return any(city.pk == getattr(value, "pk", None) for city in get_cities())
+
+
+class CaptchaMixin:
+    captcha_message = "Подтвердите, что вы не робот."
+
+    def validate_captcha(self, ip: str) -> None:
+        if not captcha.verify(self.data.get(captcha.TOKEN_FIELD, ""), ip):
+            raise forms.ValidationError(self.captcha_message, code="captcha")

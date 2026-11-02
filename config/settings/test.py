@@ -16,3 +16,6 @@ STORAGES = {
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
 LOGGING = {"version": 1, "disable_existing_loggers": False}
+
+SMARTCAPTCHA_CLIENT_KEY = ""
+SMARTCAPTCHA_SERVER_KEY = ""

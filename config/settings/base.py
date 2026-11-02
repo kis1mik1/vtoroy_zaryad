@@ -53,6 +53,9 @@ MIDDLEWARE = [
 
 CLIENT_IP_HEADER = env("CLIENT_IP_HEADER", default="")
 
+SMARTCAPTCHA_CLIENT_KEY = env("SMARTCAPTCHA_CLIENT_KEY", default="")
+SMARTCAPTCHA_SERVER_KEY = env("SMARTCAPTCHA_SERVER_KEY", default="")
+
 ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"

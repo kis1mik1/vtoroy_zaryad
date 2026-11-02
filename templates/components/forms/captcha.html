@@ -1,0 +1,12 @@
+<div class="field captcha">
+  {% if test_mode %}
+    <label class="captcha__test">
+      <input type="checkbox" name="{{ token_field }}" value="{{ test_token }}">
+      <span>Я не робот</span>
+      <span class="captcha__note">тестовый режим SmartCaptcha</span>
+    </label>
+  {% else %}
+    <div class="smart-captcha" data-sitekey="{{ site_key }}" data-hl="ru"></div>
+    <script src="{{ script_url }}" defer></script>
+  {% endif %}
+</div>

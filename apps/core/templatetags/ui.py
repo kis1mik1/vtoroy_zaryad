@@ -1,7 +1,9 @@
 from django import template
+from django.conf import settings
 from django.templatetags.static import static
 from django.utils.html import format_html
 
+from apps.core import captcha as smartcaptcha
 from apps.core import text
 
 register = template.Library()
@@ -82,3 +84,14 @@ def page_url(context, number, param="page"):
         query[param] = number
     encoded = query.urlencode()
     return f"?{encoded}" if encoded else context["request"].path
+
+
+@register.inclusion_tag("components/forms/captcha.html")
+def captcha():
+    return {
+        "test_mode": smartcaptcha.is_test_mode(),
+        "site_key": settings.SMARTCAPTCHA_CLIENT_KEY,
+        "script_url": smartcaptcha.SCRIPT_URL,
+        "token_field": smartcaptcha.TOKEN_FIELD,
+        "test_token": smartcaptcha.TEST_TOKEN,
+    }
