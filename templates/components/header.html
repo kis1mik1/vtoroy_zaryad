@@ -1,8 +1,8 @@
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="logo" href="{% url 'core:home' %}" aria-label="{{ site_name }} — на главную">
+    <a class="logo" href="{% url 'core:home' %}" aria-label="{{ project_name }} — на главную">
       {% include "components/logo.html" %}
-      <span class="logo__text">{{ site_name }}</span>
+      <span class="logo__text">{{ project_name }}</span>
     </a>
     <a class="header-control site-header__city"
        href="{% url 'core:city_select' %}?next={{ request.get_full_path|urlencode }}"

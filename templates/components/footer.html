@@ -5,7 +5,7 @@
       <div class="site-footer__brand">
         <a class="logo" href="{% url 'core:home' %}">
           {% include "components/logo.html" %}
-          <span>{{ site_name }}</span>
+          <span>{{ project_name }}</span>
         </a>
         <p>{{ site_slogan }}. Объявления о технике во Владивостоке, Приморье и на Дальнем Востоке.</p>
       </div>
@@ -27,7 +27,7 @@
       </nav>
     </div>
     <div class="site-footer__bottom">
-      <span>© {{ year }} {{ site_name }}</span>
+      <span>© {{ year }} {{ project_name }}</span>
       <span>Владивосток</span>
     </div>
   </div>

@@ -20,6 +20,16 @@ def login(client, email, password=PASSWORD, ip="127.0.0.1", **extra):
     )
 
 
+@pytest.mark.parametrize(
+    "name", ["accounts:login", "accounts:password_reset", "accounts:password_reset_done"]
+)
+def test_auth_pages_show_project_name(client, name):
+    html = client.get(reverse(name)).content.decode()
+
+    assert "Второй заряд" in html
+    assert "testserver" not in html
+
+
 def test_login_by_email_in_any_case(client):
     user = UserFactory(email="ivan@example.com")
 
