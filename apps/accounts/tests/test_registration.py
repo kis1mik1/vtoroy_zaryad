@@ -1,4 +1,5 @@
 import time
+from unittest import mock
 
 import pytest
 from django.core import mail
@@ -6,6 +7,7 @@ from django.urls import reverse
 
 from apps.accounts import tokens
 from apps.accounts.models import User
+from apps.core.captcha import TEST_TOKEN
 from apps.notifications.models import Notification
 
 from .factories import PASSWORD, UserFactory
@@ -21,6 +23,7 @@ def registration_data(**overrides):
         "password1": "Primorye-2026",
         "password2": "Primorye-2026",
         "agree": "on",
+        "smart-token": TEST_TOKEN,
         **overrides,
     }
 
@@ -58,6 +61,33 @@ def test_register_requires_agreement_and_city(client):
     assert "agree" in form.errors
     assert "city" in form.errors
     assert not User.objects.exists()
+
+
+def test_register_requires_captcha(client, ussuriysk):
+    data = registration_data(city=ussuriysk.pk, **{"smart-token": ""})
+
+    response = client.post(reverse("accounts:register"), data)
+
+    assert "Подтвердите, что вы не робот" in str(response.context["form"].non_field_errors())
+    assert not User.objects.exists()
+
+
+def test_register_checks_captcha_with_client_ip(client, ussuriysk):
+    with mock.patch("apps.core.forms.captcha.verify", return_value=False) as verify:
+        client.post(
+            reverse("accounts:register"),
+            registration_data(city=ussuriysk.pk, **{"smart-token": "real-token"}),
+            REMOTE_ADDR="198.51.100.4",
+        )
+
+    verify.assert_called_once_with("real-token", "198.51.100.4")
+    assert not User.objects.exists()
+
+
+def test_register_page_shows_captcha(client):
+    html = client.get(reverse("accounts:register")).content.decode()
+
+    assert 'name="smart-token"' in html
 
 
 def test_register_rejects_taken_email_in_any_case(client, ussuriysk):

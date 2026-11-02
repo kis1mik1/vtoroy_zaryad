@@ -24,7 +24,7 @@ def _normalize(email: str) -> str:
     return User.objects.normalize_email(email)
 
 
-class RegistrationForm(BaseUserCreationForm):
+class RegistrationForm(CaptchaMixin, BaseUserCreationForm):
     city = CityChoiceField()
     agree = forms.BooleanField(
         label="Согласен с правилами",
@@ -41,7 +41,8 @@ class RegistrationForm(BaseUserCreationForm):
             "email": forms.EmailInput(attrs={"autocomplete": "email"}),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, ip="", **kwargs):
+        self.ip = ip
         super().__init__(*args, **kwargs)
         self.fields["password1"].label = "Пароль"
         self.fields[
@@ -62,6 +63,11 @@ class RegistrationForm(BaseUserCreationForm):
                 "Пользователь с такой почтой уже зарегистрирован. Войдите или восстановите пароль."
             )
         return email
+
+    def clean(self):
+        cleaned = super().clean()
+        self.validate_captcha(self.ip)
+        return cleaned
 
 
 class LoginForm(CaptchaMixin, AuthenticationForm):

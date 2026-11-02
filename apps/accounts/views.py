@@ -63,6 +63,9 @@ class RegisterView(FormView):
     def get_initial(self):
         return {"city": self.request.city}
 
+    def get_form_kwargs(self):
+        return {**super().get_form_kwargs(), "ip": client_ip(self.request)}
+
     def form_valid(self, form):
         user = services.register_user(
             email=form.cleaned_data["email"],
