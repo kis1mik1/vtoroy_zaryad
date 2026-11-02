@@ -9,14 +9,15 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from apps.core.email import send_templated_email
-from apps.core.forms import CityChoiceField
-from apps.core.ratelimit import Rate, RateLimited, hit, is_limited, reset
+from apps.core.forms import CaptchaMixin, CityChoiceField
+from apps.core.ratelimit import FailureCounter, client_ip
 
 from .images import open_image
 from .models import ContactMode, User
 from .phone import normalize_phone
 
-LOGIN_EMAIL_RATE = Rate(limit=5, period=15 * 60)
+LOGIN_FAILURES = FailureCounter("login-failures", ttl=60 * 60)
+CAPTCHA_AFTER_FAILURES = 3
 
 
 def _normalize(email: str) -> str:
@@ -63,7 +64,7 @@ class RegistrationForm(BaseUserCreationForm):
         return email
 
 
-class LoginForm(AuthenticationForm):
+class LoginForm(CaptchaMixin, AuthenticationForm):
     username = forms.EmailField(
         label="Электронная почта",
         widget=forms.EmailInput(attrs={"autofocus": True, "autocomplete": "email"}),
@@ -75,22 +76,27 @@ class LoginForm(AuthenticationForm):
         "inactive": "Этот аккаунт удалён.",
     }
 
+    def __init__(self, request=None, *args, **kwargs):
+        super().__init__(request, *args, **kwargs)
+        self.ip = client_ip(request) if request else ""
+        self.captcha_required = self.is_bound and self._failures() >= CAPTCHA_AFTER_FAILURES
+
+    def _ident(self) -> str:
+        return f"{_normalize(self.data.get('username', ''))}|{self.ip}"
+
+    def _failures(self) -> int:
+        return LOGIN_FAILURES.count(self._ident())
+
     def clean(self):
-        email = _normalize(self.data.get("username", ""))
-        if email and is_limited("login-email", email, LOGIN_EMAIL_RATE):
-            raise forms.ValidationError(
-                "Слишком много неудачных попыток входа. Подождите 15 минут или восстановите пароль."
-            )
+        if self.captcha_required:
+            self.validate_captcha(self.ip)
         try:
             cleaned = super().clean()
         except forms.ValidationError:
-            if email:
-                try:
-                    hit("login-email", email, LOGIN_EMAIL_RATE)
-                except RateLimited as exc:
-                    raise forms.ValidationError(exc.message) from None
+            failures = LOGIN_FAILURES.add(self._ident())
+            self.captcha_required = failures >= CAPTCHA_AFTER_FAILURES
             raise
-        reset("login-email", email, LOGIN_EMAIL_RATE)
+        LOGIN_FAILURES.clear(self._ident())
         return cleaned
 
 

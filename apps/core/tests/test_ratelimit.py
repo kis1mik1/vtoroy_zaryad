@@ -4,7 +4,7 @@ import pytest
 from django.http import HttpResponse
 from django.test import RequestFactory
 
-from apps.core.ratelimit import Rate, RateLimited, client_ip, hit, is_limited, reset
+from apps.core.ratelimit import FailureCounter, Rate, RateLimited, client_ip, hit
 
 
 def test_hit_raises_after_limit():
@@ -25,9 +25,18 @@ def test_limits_are_per_identity_and_scope():
     hit("test", "b", rate)
     hit("other", "a", rate)
 
-    assert is_limited("test", "a", rate)
-    reset("test", "a", rate)
-    assert not is_limited("test", "a", rate)
+    with pytest.raises(RateLimited):
+        hit("test", "a", rate)
+
+
+def test_failure_counter():
+    counter = FailureCounter("test-failures", ttl=60)
+
+    assert counter.add("a") == 1
+    assert counter.add("a") == 2
+    assert counter.count("b") == 0
+    counter.clear("a")
+    assert counter.count("a") == 0
 
 
 def test_client_ip_header(settings):

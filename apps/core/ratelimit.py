@@ -39,27 +39,36 @@ def _key(scope: str, ident: str, window: int) -> str:
     return f"rl:{scope}:{digest}:{window}"
 
 
+def _increment(key: str, timeout: int) -> int:
+    if cache.add(key, 1, timeout):
+        return 1
+    try:
+        return cache.incr(key)
+    except ValueError:
+        cache.set(key, 1, timeout)
+        return 1
+
+
 def hit(scope: str, ident: str, rate: Rate) -> None:
     now = time.time()
     window = int(now // rate.period)
-    key = _key(scope, ident, window)
-    if cache.add(key, 1, rate.period):
-        count = 1
-    else:
-        try:
-            count = cache.incr(key)
-        except ValueError:
-            cache.set(key, 1, rate.period)
-            count = 1
-    if count > rate.limit:
+    if _increment(_key(scope, ident, window), rate.period) > rate.limit:
         raise RateLimited(int((window + 1) * rate.period - now) + 1)
 
 
-def is_limited(scope: str, ident: str, rate: Rate) -> bool:
-    window = int(time.time() // rate.period)
-    return (cache.get(_key(scope, ident, window)) or 0) >= rate.limit
+class FailureCounter:
+    def __init__(self, scope: str, ttl: int):
+        self.scope = scope
+        self.ttl = ttl
 
+    def _key(self, ident: str) -> str:
+        return _key(self.scope, ident, 0)
 
-def reset(scope: str, ident: str, rate: Rate) -> None:
-    window = int(time.time() // rate.period)
-    cache.delete(_key(scope, ident, window))
+    def count(self, ident: str) -> int:
+        return cache.get(self._key(ident)) or 0
+
+    def add(self, ident: str) -> int:
+        return _increment(self._key(ident), self.ttl)
+
+    def clear(self, ident: str) -> None:
+        cache.delete(self._key(ident))

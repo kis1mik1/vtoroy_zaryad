@@ -10,7 +10,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 from django.views.generic import FormView
 
 from apps.core.decorators import ratelimit
-from apps.core.ratelimit import Rate, hit
+from apps.core.ratelimit import Rate, RateLimited, client_ip, hit
 from apps.notifications.models import NotificationKind
 from apps.notifications.services import notify
 
@@ -27,7 +27,7 @@ from .forms import (
 from .tokens import InvalidToken
 
 REGISTER_RATE = Rate(limit=5, period=60 * 60)
-LOGIN_IP_RATE = Rate(limit=30, period=10 * 60)
+LOGIN_IP_RATE = Rate(limit=30, period=15 * 60)
 RESET_IP_RATE = Rate(limit=5, period=60 * 60)
 RESEND_SHORT_RATE = Rate(limit=1, period=60)
 RESEND_LONG_RATE = Rate(limit=5, period=60 * 60)
@@ -74,7 +74,6 @@ class RegisterView(FormView):
         return redirect("accounts:verify_sent")
 
 
-@method_decorator(ratelimit("login-ip", LOGIN_IP_RATE), name="post")
 class LoginView(auth_views.LoginView):
     template_name = "accounts/login.html"
     form_class = LoginForm
@@ -82,6 +81,16 @@ class LoginView(auth_views.LoginView):
 
     def get_initial(self):
         return {"username": self.request.GET.get("email", "")}
+
+    def post(self, request, *args, **kwargs):
+        try:
+            hit("login-ip", f"ip:{client_ip(request)}", LOGIN_IP_RATE)
+        except RateLimited as exc:
+            context = self.get_context_data(form=self.get_form(), rate_limited=exc.message)
+            response = self.render_to_response(context, status=429)
+            response["Retry-After"] = str(exc.retry_after)
+            return response
+        return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         response = super().form_valid(form)

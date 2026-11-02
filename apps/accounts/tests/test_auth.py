@@ -5,15 +5,18 @@ from django.core import mail
 from django.urls import reverse
 
 from apps.accounts.models import User
+from apps.core.captcha import TEST_TOKEN
 
 from .factories import PASSWORD, UserFactory
 
 pytestmark = pytest.mark.django_db
 
 
-def login(client, email, password=PASSWORD, **extra):
+def login(client, email, password=PASSWORD, ip="127.0.0.1", **extra):
     return client.post(
-        reverse("accounts:login"), {"username": email, "password": password, **extra}
+        reverse("accounts:login"),
+        {"username": email, "password": password, **extra},
+        REMOTE_ADDR=ip,
     )
 
 
@@ -52,29 +55,87 @@ def test_login_wrong_password(client):
     assert "Неверная почта или пароль" in response.content.decode()
 
 
-def test_login_blocked_after_five_failures(client):
+def fail_login(client, email, times, ip="127.0.0.1"):
+    for _ in range(times):
+        login(client, email, "wrong-password", ip=ip)
+
+
+def test_no_captcha_before_three_failures(client):
     UserFactory(email="ivan@example.com")
-    for _ in range(5):
-        login(client, "ivan@example.com", "wrong-password")
+    fail_login(client, "ivan@example.com", 1)
+
+    response = login(client, "ivan@example.com", "wrong-password")
+
+    assert not response.context["form"].captcha_required
+    assert "smart-token" not in response.content.decode()
+
+
+def test_captcha_and_reset_link_after_three_failures(client):
+    UserFactory(email="ivan@example.com")
+    fail_login(client, "ivan@example.com", 2)
+
+    response = login(client, "ivan@example.com", "wrong-password")
+
+    html = response.content.decode()
+    assert response.context["form"].captcha_required
+    assert 'name="smart-token"' in html
+    assert "Не получается войти?" in html
+    assert reverse("accounts:password_reset") in html
+
+
+def test_correct_password_without_captcha_rejected_after_failures(client):
+    UserFactory(email="ivan@example.com")
+    fail_login(client, "ivan@example.com", 3)
 
     response = login(client, "ivan@example.com")
 
     assert "_auth_user_id" not in client.session
-    assert "Слишком много неудачных попыток" in response.content.decode()
+    assert "Подтвердите, что вы не робот" in response.content.decode()
 
 
-def test_successful_login_resets_failures(client):
+def test_owner_logs_in_with_captcha_and_counter_resets(client):
     UserFactory(email="ivan@example.com")
-    for _ in range(4):
-        login(client, "ivan@example.com", "wrong-password")
-    login(client, "ivan@example.com")
-    client.logout()
+    fail_login(client, "ivan@example.com", 5)
 
-    for _ in range(4):
-        login(client, "ivan@example.com", "wrong-password")
-    response = login(client, "ivan@example.com")
+    response = login(client, "ivan@example.com", **{"smart-token": TEST_TOKEN})
 
     assert response.status_code == 302
+    client.logout()
+    assert not login(client, "ivan@example.com", "wrong").context["form"].captcha_required
+
+
+def test_wrong_password_with_captcha_still_rejected(client):
+    UserFactory(email="ivan@example.com")
+    fail_login(client, "ivan@example.com", 3)
+
+    response = login(client, "ivan@example.com", "wrong", **{"smart-token": TEST_TOKEN})
+
+    assert "_auth_user_id" not in client.session
+    assert "Неверная почта или пароль" in response.content.decode()
+
+
+def test_failures_counted_per_email_and_ip(client):
+    UserFactory(email="ivan@example.com")
+    fail_login(client, "ivan@example.com", 3, ip="10.0.0.1")
+
+    other_ip = login(client, "ivan@example.com", ip="10.0.0.2")
+    assert other_ip.status_code == 302
+    client.logout()
+
+    other_email = login(client, "anna@example.com", "x", ip="10.0.0.1")
+    assert not other_email.context["form"].captcha_required
+
+
+def test_ip_limited_after_thirty_attempts(client):
+    UserFactory(email="ivan@example.com")
+    fail_login(client, "nobody@example.com", 30)
+
+    response = login(client, "ivan@example.com", **{"smart-token": TEST_TOKEN})
+
+    assert response.status_code == 429
+    assert "_auth_user_id" not in client.session
+    assert "Слишком много попыток. Повторите через" in response.content.decode()
+    assert int(response["Retry-After"]) <= 15 * 60 + 1
 
 
 def test_deleted_user_cannot_login(client):
