@@ -25,6 +25,20 @@ def test_cities_grouped_by_region_in_order():
     assert len(regions) == len(set(regions))
 
 
+def test_region_stays_in_one_group_when_city_sort_order_is_out_of_range():
+    CityFactory(name="Арсеньев-2", slug="arsenyev-2", region="Приморский край", sort_order=500)
+    CityFactory(name="Ванино", slug="vanino", region="Хабаровский край", sort_order=5)
+
+    grouped = dict(get_cities_by_region())
+    regions = list(grouped)
+
+    assert len(regions) == len(set(regions))
+    assert regions[:2] == ["Хабаровский край", "Приморский край"]
+    assert grouped["Хабаровский край"][0].slug == "vanino"
+    assert grouped["Приморский край"][-1].slug == "arsenyev-2"
+    assert len(grouped["Приморский край"]) == 12
+
+
 def test_only_one_default_city_allowed():
     with pytest.raises(Exception, match="city_single_default"):
         CityFactory(is_default=True)

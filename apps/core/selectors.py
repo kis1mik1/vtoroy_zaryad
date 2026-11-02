@@ -1,5 +1,3 @@
-from itertools import groupby
-
 from django.core.cache import cache
 
 from .models import City
@@ -25,7 +23,10 @@ def get_default_city() -> City | None:
 
 
 def get_cities_by_region() -> list[tuple[str, list[City]]]:
-    return [(region, list(items)) for region, items in groupby(get_cities(), lambda c: c.region)]
+    regions: dict[str, list[City]] = {}
+    for city in get_cities():
+        regions.setdefault(city.region, []).append(city)
+    return list(regions.items())
 
 
 def clear_cities_cache() -> None:
