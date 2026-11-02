@@ -10,9 +10,9 @@ from django.utils.safestring import mark_safe
 
 from apps.core.email import send_templated_email
 from apps.core.forms import CaptchaMixin, CityChoiceField
+from apps.core.images import open_image
 from apps.core.ratelimit import FailureCounter, client_ip
 
-from .images import open_image
 from .models import ContactMode, User
 from .phone import normalize_phone
 

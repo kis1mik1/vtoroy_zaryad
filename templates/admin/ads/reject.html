@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Разделы</a> ›
+  <a href="{% url 'admin:ads_ad_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a> ›
+  Отклонить
+</div>
+{% endblock %}
+
+{% block content %}
+  {% if ads %}
+    <p>Продавцы получат уведомление с причиной и смогут исправить объявления.</p>
+    <ul>{% for ad in ads %}<li>{{ ad.title }} — {{ ad.seller }}</li>{% endfor %}</ul>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      {% for ad in ads %}<input type="hidden" name="{{ action_checkbox_name }}" value="{{ ad.pk }}">{% endfor %}
+      <input type="hidden" name="action" value="reject_ads">
+      <input type="hidden" name="apply" value="1">
+      <input type="submit" value="Отклонить">
+      <a href="{% url 'admin:ads_ad_changelist' %}" class="button cancel-link">Отмена</a>
+    </form>
+  {% else %}
+    <p>Среди выбранных нет объявлений на проверке или активных.</p>
+    <a href="{% url 'admin:ads_ad_changelist' %}">Вернуться к списку</a>
+  {% endif %}
+{% endblock %}

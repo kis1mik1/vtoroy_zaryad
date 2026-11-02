@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "apps.accounts",
     "apps.notifications",
     "apps.catalog",
+    "apps.ads",
 ]
 
 MIDDLEWARE = [
@@ -114,7 +115,13 @@ CELERY_TASK_IGNORE_RESULT = True
 CELERY_TASK_ACKS_LATE = True
 CELERY_WORKER_PREFETCH_MULTIPLIER = 1
 CELERY_TIMEZONE = "Asia/Vladivostok"
-CELERY_BEAT_SCHEDULE = {}
+CELERY_BEAT_SCHEDULE = {
+    "archive-stale-ads": {"task": "apps.ads.tasks.archive_stale_ads", "schedule": 60 * 60},
+    "remove-orphan-photos": {
+        "task": "apps.ads.tasks.remove_orphan_photos",
+        "schedule": 6 * 60 * 60,
+    },
+}
 
 AUTH_USER_MODEL = "accounts.User"
 LOGIN_URL = "accounts:login"
