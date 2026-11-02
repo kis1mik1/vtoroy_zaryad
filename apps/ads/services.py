@@ -15,6 +15,7 @@ from apps.notifications.services import notify
 from .models import Ad, AdAttributeValue, AdStatus, ConditionReport, PriceChange
 from .photos import attach_photos
 from .search import index_ad
+from .signals import ad_submitted
 from .tasks import notify_price_drop_task
 
 ARCHIVE_AFTER = timedelta(days=30)
@@ -117,6 +118,7 @@ def create_ad(seller, draft: AdDraft) -> Ad:
     _apply_condition(ad, draft.condition)
     attach_photos(ad, draft.photos)
     index_ad(ad)
+    ad_submitted.send(sender=Ad, ad=ad)
     return ad
 
 
@@ -143,11 +145,17 @@ def update_ad(ad: Ad, draft: AdDraft) -> bool:
     moderated_changed = photos_changed or any(
         getattr(ad, name) != value for name, value in before.items()
     )
-    needs_review = moderated_changed and ad.status in (AdStatus.ACTIVE, AdStatus.REJECTED)
-    if needs_review or ad.status == AdStatus.REJECTED:
+    resubmit = ad.status == AdStatus.REJECTED or (
+        moderated_changed and ad.status in (AdStatus.ACTIVE, AdStatus.PENDING)
+    )
+    if resubmit:
         ad.status = AdStatus.PENDING
         ad.status_changed_at = timezone.now()
         ad.rejection_reason = ""
+        ad.review_queued_at = None
+    elif moderated_changed and ad.status == AdStatus.ARCHIVED:
+        ad.published_at = None
+        ad.bumped_at = None
     ad.save()
 
     if ad.price != old_price:
@@ -157,6 +165,8 @@ def update_ad(ad: Ad, draft: AdDraft) -> bool:
     _apply_attributes(ad, draft.attributes)
     _apply_condition(ad, draft.condition)
     index_ad(ad)
+    if resubmit:
+        ad_submitted.send(sender=Ad, ad=ad)
     return ad.status == AdStatus.PENDING
 
 
@@ -169,15 +179,16 @@ def _set_status(ad: Ad, status: str, **extra) -> None:
 
 
 @transaction.atomic
-def approve(ad: Ad, moderator=None) -> None:
+def approve(ad: Ad) -> Ad:
     ad = Ad.objects.select_for_update().get(pk=ad.pk)
-    if ad.status != AdStatus.PENDING:
-        raise TransitionError("Одобрить можно только объявление на проверке.")
+    if ad.status not in (AdStatus.PENDING, AdStatus.REJECTED):
+        raise TransitionError("Опубликовать можно объявление на проверке или отклонённое.")
     now = timezone.now()
     _set_status(
         ad,
         AdStatus.ACTIVE,
         rejection_reason="",
+        review_queued_at=None,
         published_at=ad.published_at or now,
         bumped_at=ad.bumped_at or now,
     )
@@ -188,14 +199,15 @@ def approve(ad: Ad, moderator=None) -> None:
         "Его уже видят покупатели.",
         url=_ad_url(ad),
     )
+    return ad
 
 
 @transaction.atomic
-def reject(ad: Ad, reason: str, moderator=None) -> None:
+def reject(ad: Ad, reason: str) -> Ad:
     ad = Ad.objects.select_for_update().get(pk=ad.pk)
     if ad.status not in (AdStatus.PENDING, AdStatus.ACTIVE):
         raise TransitionError("Отклонить можно только объявление на проверке или активное.")
-    _set_status(ad, AdStatus.REJECTED, rejection_reason=reason)
+    _set_status(ad, AdStatus.REJECTED, rejection_reason=reason, review_queued_at=None)
     notify(
         ad.seller,
         NotificationKind.MODERATION,
@@ -203,13 +215,41 @@ def reject(ad: Ad, reason: str, moderator=None) -> None:
         f"Причина: {reason}\nИсправьте объявление и отправьте его на проверку снова.",
         url=_ad_url(ad),
     )
+    return ad
+
+
+@transaction.atomic
+def queue_for_review(ad: Ad) -> Ad:
+    ad = Ad.objects.select_for_update().get(pk=ad.pk)
+    if ad.status != AdStatus.PENDING:
+        raise TransitionError("Передать модератору можно только объявление на проверке.")
+    if ad.review_queued_at is None:
+        ad.review_queued_at = timezone.now()
+        ad.save(update_fields=["review_queued_at", "updated_at"])
+    return ad
+
+
+@transaction.atomic
+def send_to_review(ad: Ad, explanation: str) -> Ad:
+    ad = Ad.objects.select_for_update().get(pk=ad.pk)
+    if ad.status != AdStatus.ACTIVE:
+        raise TransitionError("Вернуть на проверку можно только активное объявление.")
+    _set_status(ad, AdStatus.PENDING, review_queued_at=timezone.now())
+    notify(
+        ad.seller,
+        NotificationKind.MODERATION,
+        f"Объявление снова на проверке: {ad.title}",
+        f"{explanation}\nПока идёт проверка, покупатели его не видят.",
+        url=_ad_url(ad),
+    )
+    return ad
 
 
 @transaction.atomic
 def withdraw(ad: Ad) -> None:
     if ad.status not in (AdStatus.ACTIVE, AdStatus.PENDING):
         raise TransitionError("Снять с публикации можно только активное объявление.")
-    _set_status(ad, AdStatus.ARCHIVED)
+    _set_status(ad, AdStatus.ARCHIVED, review_queued_at=None)
 
 
 @transaction.atomic
@@ -221,10 +261,13 @@ def mark_sold(ad: Ad) -> None:
 
 @transaction.atomic
 def restore(ad: Ad) -> None:
+    locked = Ad.objects.select_for_update().get(pk=ad.pk)
+    ad.published_at, ad.status = locked.published_at, locked.status
     if ad.status != AdStatus.ARCHIVED:
         raise TransitionError("Вернуть можно только объявление из архива.")
     if ad.published_at is None:
-        _set_status(ad, AdStatus.PENDING)
+        _set_status(ad, AdStatus.PENDING, review_queued_at=None)
+        ad_submitted.send(sender=Ad, ad=ad)
     else:
         _set_status(ad, AdStatus.ACTIVE, bumped_at=timezone.now())
 

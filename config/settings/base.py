@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "apps.notifications",
     "apps.catalog",
     "apps.ads",
+    "apps.moderation",
 ]
 
 MIDDLEWARE = [
@@ -76,6 +77,7 @@ TEMPLATES = [
                 "apps.core.context_processors.site",
                 "apps.notifications.context_processors.notifications",
                 "apps.ads.context_processors.compare",
+                "apps.moderation.context_processors.moderation",
             ],
             "builtins": ["apps.core.templatetags.ui"],
         },
@@ -163,6 +165,21 @@ SUPPORT_EMAIL = env("SUPPORT_EMAIL", default="support@vtoroy-zaryad.ru")
 ADMINS = [("Admin", email) for email in env.list("ADMINS", default=[])]
 
 MESSAGE_TAGS = {40: "error"}
+
+ML_MODELS_DIR = Path(env.str("ML_MODELS_DIR", default=str(BASE_DIR / "var" / "models")))
+MODERATION_TEXT_MODEL = ML_MODELS_DIR / "text-classifier.joblib"
+MODERATION_CLIP_ENABLED = env.bool("MODERATION_CLIP_ENABLED", default=True)
+MODERATION_CLIP_MODEL = env.str("MODERATION_CLIP_MODEL", default="ViT-B-32")
+MODERATION_CLIP_WEIGHTS = env.str("MODERATION_CLIP_WEIGHTS", default="laion2b_s34b_b79k")
+MODERATION_CLIP_DIR = ML_MODELS_DIR / "clip"
+MODERATION_CLIP_THREADS = env.int("MODERATION_CLIP_THREADS", default=2)
+MODERATION_THRESHOLDS = {
+    "text_electronics": env.float("MODERATION_TEXT_ELECTRONICS", default=0.75),
+    "text_other": env.float("MODERATION_TEXT_OTHER", default=0.85),
+    "category_min": env.float("MODERATION_CATEGORY_MIN", default=0.2),
+    "photo_electronics": env.float("MODERATION_PHOTO_ELECTRONICS", default=0.6),
+    "photo_other": env.float("MODERATION_PHOTO_OTHER", default=0.3),
+}
 
 CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 

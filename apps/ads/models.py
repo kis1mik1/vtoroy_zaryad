@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.indexes import GinIndex
@@ -11,6 +13,7 @@ from apps.core.models import TimeStampedModel
 
 MAX_PRICE = 10_000_000
 MAX_PHOTOS = 10
+CHECK_TIMEOUT = timedelta(minutes=10)
 
 
 class AdStatus(models.TextChoices):
@@ -83,6 +86,7 @@ class Ad(TimeStampedModel):
     published_at = models.DateTimeField("опубликовано", null=True, blank=True)
     bumped_at = models.DateTimeField("поднято", null=True, blank=True)
     status_changed_at = models.DateTimeField("статус изменён", default=timezone.now)
+    review_queued_at = models.DateTimeField("ждёт модератора с", null=True, blank=True)
     highlighted_until = models.DateTimeField("выделено до", null=True, blank=True)
     pinned_until = models.DateTimeField("закреплено до", null=True, blank=True)
 
@@ -108,6 +112,11 @@ class Ad(TimeStampedModel):
             models.Index(fields=["seller", "status"], name="ad_seller_status_idx"),
             models.Index(fields=["status", "-pinned_until", "-bumped_at"], name="ad_feed_idx"),
             models.Index(fields=["device_model", "condition", "price_key"], name="ad_market_idx"),
+            models.Index(
+                fields=["review_queued_at"],
+                condition=Q(status="pending"),
+                name="ad_review_queue_idx",
+            ),
             GinIndex(fields=["search_vector"], name="ad_search_vector_idx"),
             GinIndex(fields=["search_text"], opclasses=["gin_trgm_ops"], name="ad_search_trgm_idx"),
         ]
@@ -138,6 +147,14 @@ class Ad(TimeStampedModel):
     @property
     def is_editable(self) -> bool:
         return not self.is_deleted and self.status != AdStatus.SOLD
+
+    @property
+    def is_checking(self) -> bool:
+        return (
+            self.status == AdStatus.PENDING
+            and self.review_queued_at is None
+            and timezone.now() - self.status_changed_at < CHECK_TIMEOUT
+        )
 
 
 def photo_image_path(instance, filename):

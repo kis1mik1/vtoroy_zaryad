@@ -6,4 +6,4 @@ class AdsConfig(AppConfig):
     verbose_name = "Объявления"
 
     def ready(self):
-        from . import signals  # noqa: F401
+        from . import receivers  # noqa: F401
