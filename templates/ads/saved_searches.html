@@ -1,0 +1,32 @@
+{% extends "layouts/default.html" %}
+
+{% block title %}Сохранённые поиски{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>Сохранённые поиски</h1>
+    <p>Раз в час проверяем новые объявления и присылаем уведомление, если что-то нашлось.</p>
+  </header>
+  {% if searches %}
+    <ul class="saved-list">
+      {% for search in searches %}
+        <li class="saved-item card">
+          <a class="saved-item__name" href="{{ search.query_string }}">{{ search.name }}</a>
+          <span class="saved-item__meta">сохранён {{ search.created_at|humandate }}</span>
+          <div class="saved-item__actions">
+            <form method="post" action="{% url 'ads:saved_search_update' search.pk 'notify' %}">{% csrf_token %}
+              <button class="btn btn--ghost btn--sm" type="submit">{% if search.notify %}{% icon "bell" 16 %}Уведомления включены{% else %}{% icon "bell" 16 %}Включить уведомления{% endif %}</button>
+            </form>
+            <form method="post" action="{% url 'ads:saved_search_update' search.pk 'delete' %}" data-confirm="Удалить сохранённый поиск?" data-confirm-action="Удалить">{% csrf_token %}
+              <button class="btn btn--ghost btn--sm my-ad__danger" type="submit">{% icon "trash-2" 16 %}Удалить</button>
+            </form>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% url 'ads:search' as search_url %}
+    {% include "components/empty_state.html" with icon_name="bell" title="Сохранённых поисков нет" text="Настройте фильтры в поиске и нажмите «Сохранить поиск» — сообщим о новых объявлениях." action_url=search_url action_label="Перейти к поиску" %}
+  {% endif %}
+{% endblock %}

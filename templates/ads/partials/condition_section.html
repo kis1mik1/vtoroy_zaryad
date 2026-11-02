@@ -1,7 +1,10 @@
 <section class="ad-step surface" id="ad-condition-section" aria-labelledby="step-condition" data-condition-section{% if oob %} hx-swap-oob="true"{% endif %}>
   <h2 id="step-condition"><span class="ad-step__number">3</span>Состояние</h2>
   <div class="form">
-    {{ form.condition.as_field_group }}
+    <div hx-get="{% url 'ads:form_section' %}" hx-trigger="change" hx-target="#ad-model-section" hx-swap="outerHTML"
+         hx-include="[name=category]:checked, [name=brand], [name=device_model], [name=custom_model_name], [name=ad], [name^=attr_], [name=condition]:checked">
+      {{ form.condition.as_field_group }}
+    </div>
     {% with report=condition_form %}
       <div class="condition-group" data-condition-only="used">
         <p class="condition-group__lead">Честное описание экономит время: покупатель приедет, зная, что увидит.</p>

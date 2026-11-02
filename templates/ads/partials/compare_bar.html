@@ -1,0 +1,3 @@
+<div class="compare-bar" id="compare-bar"{% if not compare_count or request.resolver_match.url_name == "compare" %} hidden{% endif %}{% if oob %} hx-swap-oob="true"{% endif %}>
+  <a class="compare-bar__link" href="{% url 'ads:compare' %}">{% icon "scale" 18 %}Сравнить <span class="counter">{{ compare_count }}</span></a>
+</div>

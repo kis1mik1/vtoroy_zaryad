@@ -1,0 +1,49 @@
+{% extends "layouts/default.html" %}
+{% load static ads %}
+
+{% block title %}Сравнение объявлений{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/compare.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header compare-head">
+    <h1>Сравнение</h1>
+    {% if ads %}
+      <form method="post" action="{% url 'ads:compare_clear' %}">{% csrf_token %}<button class="btn btn--ghost btn--sm" type="submit">{% icon "trash-2" 16 %}Очистить</button></form>
+    {% endif %}
+  </header>
+  {% if ads %}
+    <p class="muted compare-hint">Строки с отличиями подсвечены.</p>
+    <div class="compare-scroll">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th scope="col"><span class="visually-hidden">Характеристика</span></th>
+            {% for ad in ads %}
+              {% with photo=ad|main_photo label=ad|market %}
+                <th scope="col" class="compare__ad">
+                  <a href="{% url 'ads:detail' ad.pk ad.slug %}" class="compare__photo">{% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="240" height="180">{% else %}{% icon "image" 28 %}{% endif %}</a>
+                  <a href="{% url 'ads:detail' ad.pk ad.slug %}" class="compare__title">{{ ad.title }}</a>
+                  <span class="compare__price">{{ ad.price|price }}</span>
+                  {% if label %}<span class="badge badge--{{ label.tone }}">{{ label.text }}</span>{% endif %}
+                  <form method="post" action="{% url 'ads:compare_toggle' ad.pk %}">{% csrf_token %}<input type="hidden" name="next" value="{{ request.path }}"><button class="btn btn--ghost btn--sm" type="submit">{% icon "x" 14 %}Убрать</button></form>
+                </th>
+              {% endwith %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for name, cells, differs in rows %}
+            <tr{% if differs %} class="compare__diff"{% endif %}>
+              <th scope="row">{{ name }}</th>
+              {% for cell in cells %}<td>{{ cell }}</td>{% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    {% url 'ads:search' as search_url %}
+    {% include "components/empty_state.html" with icon_name="scale" title="Нечего сравнивать" text="Добавьте до трёх объявлений кнопкой с весами на карточке или в объявлении." action_url=search_url action_label="Перейти к объявлениям" %}
+  {% endif %}
+{% endblock %}

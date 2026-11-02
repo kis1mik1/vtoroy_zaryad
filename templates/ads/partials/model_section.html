@@ -21,7 +21,7 @@
               <label class="field__label" for="id_device_model">Модель</label>
               <select name="device_model" id="id_device_model" data-model-select
                       hx-get="{% url 'ads:form_section' %}" hx-trigger="change" hx-target="#ad-model-section" hx-swap="outerHTML"
-                      hx-include="[name=category]:checked, [name=brand], [name=device_model], [name=custom_model_name], [name=ad], [name^=attr_]">
+                      hx-include="[name=category]:checked, [name=brand], [name=device_model], [name=custom_model_name], [name=ad], [name^=attr_], [name=condition]:checked">
                 <option value="">Выберите модель</option>
                 {% for model in models %}<option value="{{ model.pk }}"{% if state.model_value == model.pk|stringformat:"d" %} selected{% endif %}>{{ model.name }}{% if model.release_year %} ({{ model.release_year }}){% endif %}</option>{% endfor %}
                 <option value="{{ other_model }}"{% if state.model_value == other_model %} selected{% endif %}>Другая модель — нет в списке</option>
@@ -48,8 +48,20 @@
       {% endif %}
 
       {% if attributes_form.fields %}
-        <div class="ad-attributes">
+        <div class="ad-attributes"
+             hx-get="{% url 'ads:form_section' %}" hx-trigger="change from:[data-price-key]" hx-target="#ad-model-section" hx-swap="outerHTML"
+             hx-include="[name=category]:checked, [name=brand], [name=device_model], [name=custom_model_name], [name=ad], [name^=attr_], [name=condition]:checked">
           {% for field in attributes_form %}{{ field.as_field_group }}{% endfor %}
+        </div>
+      {% endif %}
+
+      {% if price_hint %}
+        <div class="price-hint">
+          {% icon "scale" 18 %}
+          <div>
+            <div class="price-hint__title">Рыночная цена: {{ price_hint.p25|price }} – {{ price_hint.p75|price }}</div>
+            <div class="price-hint__text">{{ state.device_model.name }}{% if price_hint.key_option %}, {{ price_hint.key_option.value }}{% endif %}, {% if state.condition == "new" %}новые{% else %}б/у{% endif %}. Медиана {{ price_hint.median|price }} по {{ price_hint.sample_size|count_plural:"объявлению,объявлениям,объявлениям" }} за полгода.</div>
+          </div>
         </div>
       {% endif %}
     </div>

@@ -1,0 +1,10 @@
+<form method="post" action="{% url 'ads:compare_toggle' ad.pk %}" class="inline-form" hx-post="{% url 'ads:compare_toggle' ad.pk %}" hx-swap="outerHTML">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+  <input type="hidden" name="variant" value="{{ variant|default:'icon' }}">
+  {% if variant == "full" %}
+    <button class="btn btn--secondary{% if in_compare %} is-active{% endif %}" type="submit" aria-pressed="{{ in_compare|yesno:'true,false' }}">{% icon "scale" 18 %}{% if in_compare %}В сравнении{% else %}Сравнить{% endif %}</button>
+  {% else %}
+    <button class="icon-button{% if in_compare %} is-active{% endif %}" type="submit" aria-pressed="{{ in_compare|yesno:'true,false' }}" aria-label="{% if in_compare %}Убрать из сравнения{% else %}Добавить к сравнению{% endif %}">{% icon "scale" 18 %}</button>
+  {% endif %}
+</form>

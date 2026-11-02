@@ -1,0 +1,34 @@
+{% extends "layouts/default.html" %}
+
+{% block title %}Избранное{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>Избранное</h1>
+    <p>Если продавец снизит цену, мы пришлём уведомление.</p>
+  </header>
+  {% if page_obj.object_list %}
+    <div class="ad-grid">
+      {% for ad in page_obj %}
+        {% if ad.status == "active" %}
+          {% include "components/ad_card.html" %}
+        {% else %}
+          <article class="ad-card ad-card--gone">
+            <div class="ad-card__media">{% icon "archive" 32 %}</div>
+            <div class="ad-card__actions">{% include "ads/partials/favorite_button.html" with is_favorite=True %}</div>
+            <div class="ad-card__body">
+              <span class="badge">{% if ad.status == "sold" %}Продано{% else %}Снято с публикации{% endif %}</span>
+              <h3 class="ad-card__title">{{ ad.title }}</h3>
+              <p class="ad-card__meta">{{ ad.price|price }} · {{ ad.city.name }}</p>
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% pagination page_obj %}
+  {% else %}
+    {% url 'ads:search' as search_url %}
+    {% include "components/empty_state.html" with icon_name="heart" title="В избранном пусто" text="Нажимайте на сердечко в объявлениях, чтобы сохранить их и следить за ценой." action_url=search_url action_label="Найти технику" %}
+  {% endif %}
+{% endblock %}

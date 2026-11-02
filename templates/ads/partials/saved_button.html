@@ -1,0 +1,11 @@
+{% if saved %}
+  <span class="btn btn--secondary btn--sm is-active" id="saved-search">{% icon "check" 16 %}Поиск сохранён</span>
+{% elif user.is_authenticated %}
+  <form method="post" action="{% url 'ads:saved_search_create' %}" id="saved-search" hx-post="{% url 'ads:saved_search_create' %}" hx-swap="outerHTML">
+    {% csrf_token %}
+    <input type="hidden" name="url" value="{{ request.get_full_path }}">
+    <button class="btn btn--secondary btn--sm" type="submit">{% icon "bell" 16 %}Сохранить поиск</button>
+  </form>
+{% else %}
+  <a class="btn btn--secondary btn--sm" id="saved-search" href="{% url 'accounts:login' %}?next={{ request.get_full_path|urlencode }}">{% icon "bell" 16 %}Сохранить поиск</a>
+{% endif %}

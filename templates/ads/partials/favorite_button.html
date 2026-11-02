@@ -1,0 +1,10 @@
+<form method="post" action="{% url 'ads:favorite' ad.pk %}" class="inline-form" hx-post="{% url 'ads:favorite' ad.pk %}" hx-swap="outerHTML">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+  <input type="hidden" name="variant" value="{{ variant|default:'icon' }}">
+  {% if variant == "full" %}
+    <button class="btn btn--secondary{% if is_favorite %} is-active{% endif %}" type="submit" aria-pressed="{{ is_favorite|yesno:'true,false' }}">{% icon "heart" 18 "icon-heart" %}{% if is_favorite %}В избранном{% else %}В избранное{% endif %}</button>
+  {% else %}
+    <button class="icon-button{% if is_favorite %} is-active{% endif %}" type="submit" aria-pressed="{{ is_favorite|yesno:'true,false' }}" aria-label="{% if is_favorite %}Убрать из избранного{% else %}Добавить в избранное{% endif %}">{% icon "heart" 18 "icon-heart" %}</button>
+  {% endif %}
+</form>

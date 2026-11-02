@@ -1,4 +1,4 @@
-{% url 'core:home' as home_url %}
+{% url 'ads:home' as home_url %}
 {% url 'core:city_select' as city_url %}
 <nav class="bottom-nav" aria-label="Основная навигация">
   <a class="bottom-nav__item" href="{{ home_url }}"{% if request.path == home_url %} aria-current="page"{% endif %}>

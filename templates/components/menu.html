@@ -7,6 +7,9 @@
     {% if user.is_authenticated %}
       <div class="menu-list">
         <a class="dropdown__item" href="{% url 'ads:my_ads' %}">{% icon "package" 18 %}Мои объявления</a>
+        <a class="dropdown__item" href="{% url 'ads:favorites' %}">{% icon "heart" 18 %}Избранное</a>
+        <a class="dropdown__item" href="{% url 'ads:saved_searches' %}">{% icon "search" 18 %}Сохранённые поиски</a>
+        <a class="dropdown__item" href="{% url 'ads:compare' %}">{% icon "scale" 18 %}Сравнение</a>
         <a class="dropdown__item" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
         {% if user.is_staff %}<a class="dropdown__item" href="{% url 'admin:index' %}">{% icon "lock" 18 %}Управление сайтом</a>{% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
@@ -19,6 +22,7 @@
       <div class="menu-list">
         <a class="dropdown__item" href="{% url 'accounts:login' %}">{% icon "log-in" 18 %}Войти</a>
         <a class="dropdown__item" href="{% url 'accounts:register' %}">{% icon "user" 18 %}Регистрация</a>
+        <a class="dropdown__item" href="{% url 'ads:compare' %}">{% icon "scale" 18 %}Сравнение</a>
       </div>
       <div class="dropdown__divider"></div>
     {% endif %}

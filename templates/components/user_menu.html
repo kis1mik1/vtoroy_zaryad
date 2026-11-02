@@ -21,6 +21,8 @@
       </div>
       <div class="dropdown__divider"></div>
       <a class="dropdown__item" role="menuitem" href="{% url 'ads:my_ads' %}">{% icon "package" 18 %}Мои объявления</a>
+      <a class="dropdown__item" role="menuitem" href="{% url 'ads:favorites' %}">{% icon "heart" 18 %}Избранное</a>
+      <a class="dropdown__item" role="menuitem" href="{% url 'ads:saved_searches' %}">{% icon "search" 18 %}Сохранённые поиски</a>
       <a class="dropdown__item" role="menuitem" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
       <a class="dropdown__item" role="menuitem" href="{% url 'notifications:list' %}">{% icon "bell" 18 %}Уведомления</a>
       {% if user.is_staff %}

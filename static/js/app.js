@@ -4,6 +4,8 @@ import { initConfirm } from "./modules/confirm.js";
 import { initDialogs } from "./modules/dialogs.js";
 import { initDropdowns } from "./modules/dropdown.js";
 import { initFilterList } from "./modules/filter-list.js";
+import { initFilters } from "./modules/filters.js";
+import { initGallery } from "./modules/gallery.js";
 import { initLive } from "./modules/live.js";
 import { initProgress } from "./modules/progress.js";
 import { initTabs } from "./modules/tabs.js";
@@ -23,6 +25,8 @@ initLive();
 initAvatarInput();
 initAdForm();
 initUploader();
+initFilters();
+initGallery();
 
 document.addEventListener("htmx:load", (event) => {
   initTabs(event.detail.elt);

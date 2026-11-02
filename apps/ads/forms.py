@@ -186,6 +186,8 @@ class AttributesForm(forms.Form):
             else:
                 field = forms.ChoiceField(choices=[("", "Не выбрано"), *choices], **common)
             field.option_map = {str(o.pk): o for o in options}
+            if attribute.is_price_key:
+                field.widget.attrs["data-price-key"] = ""
             return field
         if attribute.kind == AttributeKind.NUMBER:
             label = f"{attribute.name}, {attribute.unit}" if attribute.unit else attribute.name
@@ -218,6 +220,20 @@ class AttributesForm(forms.Form):
             else:
                 values.append(AttributeValue(attribute, flag=raw == "yes"))
         return values
+
+    def price_key(self) -> int:
+        for value in self.fixed:
+            if value.attribute.is_price_key and value.option is not None:
+                return value.option.pk
+        for attribute in self.attributes:
+            name = self.field_name(attribute)
+            if not attribute.is_price_key or name not in self.fields:
+                continue
+            raw = self.data.get(name) if self.is_bound else self.initial.get(name)
+            if raw and str(raw).isdigit() and str(raw) in self.fields[name].option_map:
+                return int(raw)
+            return 0
+        return 0
 
     @classmethod
     def initial_from_ad(cls, ad) -> dict:
