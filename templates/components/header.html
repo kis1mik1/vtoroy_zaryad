@@ -14,6 +14,7 @@
     </a>
     <div class="site-header__spacer"></div>
     <div class="site-header__actions">
+      <a class="btn btn--primary btn--sm site-header__post hide-mobile" href="{% url 'ads:create' %}">{% icon "plus" 18 %}Разместить объявление</a>
       {% include "components/theme_switcher.html" %}
       {% include "components/user_menu.html" %}
     </div>

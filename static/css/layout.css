@@ -207,6 +207,19 @@
   .bottom-nav__item[aria-current="page"] .icon {
     color: var(--color-accent-text);
   }
+
+  .bottom-nav__plus {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent);
+  }
+
+  .bottom-nav__item .bottom-nav__plus .icon {
+    color: var(--color-on-accent);
+  }
 }
 
 .side-nav {

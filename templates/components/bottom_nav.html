@@ -4,17 +4,23 @@
   <a class="bottom-nav__item" href="{{ home_url }}"{% if request.path == home_url %} aria-current="page"{% endif %}>
     {% icon "house" 22 %}<span>Главная</span>
   </a>
-  <a class="bottom-nav__item" href="{{ city_url }}?next={{ request.get_full_path|urlencode }}"{% if request.path == city_url %} aria-current="page"{% endif %}>
-    {% icon "map-pin" 22 %}<span>{% if current_city %}{{ current_city.name|truncatechars:12 }}{% else %}Все города{% endif %}</span>
+  {% if not user.is_authenticated %}
+    <a class="bottom-nav__item" href="{{ city_url }}?next={{ request.get_full_path|urlencode }}"{% if request.path == city_url %} aria-current="page"{% endif %}>
+      {% icon "map-pin" 22 %}<span>{% if current_city %}{{ current_city.name|truncatechars:12 }}{% else %}Все города{% endif %}</span>
+    </a>
+  {% endif %}
+  {% url 'ads:create' as create_url %}
+  <a class="bottom-nav__item bottom-nav__item--post" href="{{ create_url }}"{% if request.path == create_url %} aria-current="page"{% endif %}>
+    <span class="bottom-nav__plus">{% icon "plus" 22 %}</span><span>Разместить</span>
   </a>
   {% if user.is_authenticated %}
     {% url 'notifications:list' as notifications_url %}
     <a class="bottom-nav__item" href="{{ notifications_url }}"{% if request.path == notifications_url %} aria-current="page"{% endif %}>
       <span class="bottom-nav__icon">{% icon "bell" 22 %}{% include "notifications/partials/badge.html" %}</span><span>Уведомления</span>
     </a>
-    {% url 'accounts:settings' as settings_url %}
-    <a class="bottom-nav__item" href="{{ settings_url }}"{% if request.path|slice:":9" == "/account/" %} aria-current="page"{% endif %}>
-      {% icon "user" 22 %}<span>Профиль</span>
+    {% url 'ads:my_ads' as my_ads_url %}
+    <a class="bottom-nav__item" href="{{ my_ads_url }}"{% if request.path == my_ads_url or request.path|slice:":9" == "/account/" %} aria-current="page"{% endif %}>
+      {% icon "user" 22 %}<span>Кабинет</span>
     </a>
   {% else %}
     {% url 'accounts:login' as login_url %}

@@ -6,6 +6,7 @@
   <div class="modal__body stack">
     {% if user.is_authenticated %}
       <div class="menu-list">
+        <a class="dropdown__item" href="{% url 'ads:my_ads' %}">{% icon "package" 18 %}Мои объявления</a>
         <a class="dropdown__item" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
         {% if user.is_staff %}<a class="dropdown__item" href="{% url 'admin:index' %}">{% icon "lock" 18 %}Управление сайтом</a>{% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
@@ -21,6 +22,9 @@
       </div>
       <div class="dropdown__divider"></div>
     {% endif %}
+    <div class="menu-list">
+      <a class="dropdown__item" href="{% url 'core:city_select' %}?next={{ request.get_full_path|urlencode }}">{% icon "map-pin" 18 %}Город: {% if current_city %}{{ current_city.name }}{% else %}все города{% endif %}</a>
+    </div>
     <nav class="menu-list" aria-label="Разделы">
       <a class="dropdown__item" href="{% url 'core:rules' %}">{% icon "file-text" 18 %}Правила размещения</a>
       <a class="dropdown__item" href="{% url 'core:safety' %}">{% icon "shield-check" 18 %}Безопасная сделка</a>

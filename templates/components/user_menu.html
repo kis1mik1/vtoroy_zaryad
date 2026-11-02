@@ -20,6 +20,7 @@
         <span class="dropdown__profile-email">{{ user.email }}</span>
       </div>
       <div class="dropdown__divider"></div>
+      <a class="dropdown__item" role="menuitem" href="{% url 'ads:my_ads' %}">{% icon "package" 18 %}Мои объявления</a>
       <a class="dropdown__item" role="menuitem" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
       <a class="dropdown__item" role="menuitem" href="{% url 'notifications:list' %}">{% icon "bell" 18 %}Уведомления</a>
       {% if user.is_staff %}

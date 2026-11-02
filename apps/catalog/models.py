@@ -144,7 +144,10 @@ class Attribute(models.Model):
     def format_number(self, value) -> str:
         text = f"{value.normalize():f}" if hasattr(value, "normalize") else str(value)
         text = text.replace(".", ",")
-        return f"{text} {self.unit}" if self.unit else text
+        if not self.unit:
+            return text
+        separator = "" if self.unit in ("″", "%") else "\u00a0"
+        return f"{text}{separator}{self.unit}"
 
 
 class AttributeOption(models.Model):
