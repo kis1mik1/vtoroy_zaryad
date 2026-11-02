@@ -1,0 +1,23 @@
+{
+  "category": "keyboards-mice",
+  "brands": {
+    "Logitech": [
+      {"name": "MX Master 3S", "year": 2022, "specs": {"device": "Мышь", "connection": "Беспроводное"}},
+      {"name": "MX Keys S", "year": 2023, "specs": {"device": "Клавиатура", "connection": "Беспроводное"}},
+      {"name": "G Pro X Superlight", "year": 2020, "specs": {"device": "Мышь", "connection": "Беспроводное"}},
+      {"name": "G305", "year": 2018, "specs": {"device": "Мышь", "connection": "Беспроводное"}},
+      {"name": "G102 Lightsync", "year": 2020, "specs": {"device": "Мышь", "connection": "Проводное"}}
+    ],
+    "Razer": [
+      {"name": "DeathAdder V3", "year": 2022, "specs": {"device": "Мышь", "connection": "Проводное"}},
+      {"name": "Viper V2 Pro", "year": 2022, "specs": {"device": "Мышь", "connection": "Беспроводное"}}
+    ],
+    "Apple": [
+      {"name": "Magic Keyboard", "year": 2021, "specs": {"device": "Клавиатура", "connection": "Беспроводное"}},
+      {"name": "Magic Mouse", "year": 2021, "specs": {"device": "Мышь", "connection": "Беспроводное"}}
+    ],
+    "Keychron": [
+      {"name": "K2", "year": 2020, "specs": {"device": "Клавиатура", "connection": "Беспроводное"}}
+    ]
+  }
+}

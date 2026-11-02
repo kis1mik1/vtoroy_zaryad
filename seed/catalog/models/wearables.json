@@ -1,0 +1,44 @@
+{
+  "category": "wearables",
+  "brands": {
+    "Apple": [
+      {"name": "Watch SE (2-го поколения)", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["40 мм", "44 мм"]}},
+      {"name": "Watch Series 7", "year": 2021, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["41 мм", "45 мм"]}},
+      {"name": "Watch Series 8", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["41 мм", "45 мм"]}},
+      {"name": "Watch Series 9", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["41 мм", "45 мм"]}},
+      {"name": "Watch Series 10", "year": 2024, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["42 мм", "46 мм"]}},
+      {"name": "Watch Ultra", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS + Cellular"], "size": ["49 мм"]}},
+      {"name": "Watch Ultra 2", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS + Cellular"], "size": ["49 мм"]}}
+    ],
+    "Samsung": [
+      {"name": "Galaxy Watch4", "year": 2021, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["40 мм", "44 мм"]}},
+      {"name": "Galaxy Watch4 Classic", "year": 2021, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["42 мм", "46 мм"]}},
+      {"name": "Galaxy Watch5", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["40 мм", "44 мм"]}},
+      {"name": "Galaxy Watch5 Pro", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["45 мм"]}},
+      {"name": "Galaxy Watch6", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["40 мм", "44 мм"]}},
+      {"name": "Galaxy Watch6 Classic", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["43 мм", "47 мм"]}},
+      {"name": "Galaxy Watch7", "year": 2024, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS", "GPS + Cellular"], "size": ["40 мм", "44 мм"]}},
+      {"name": "Galaxy Watch Ultra", "year": 2024, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS + Cellular"], "size": ["47 мм"]}}
+    ],
+    "Xiaomi": [
+      {"name": "Smart Band 7", "year": 2022, "specs": {"type": "Фитнес-браслет"}, "options": {"connectivity": ["Bluetooth"]}},
+      {"name": "Smart Band 8", "year": 2023, "specs": {"type": "Фитнес-браслет"}, "options": {"connectivity": ["Bluetooth"]}},
+      {"name": "Smart Band 9", "year": 2024, "specs": {"type": "Фитнес-браслет"}, "options": {"connectivity": ["Bluetooth"]}},
+      {"name": "Redmi Watch 4", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS"]}}
+    ],
+    "Huawei": [
+      {"name": "Watch GT 4", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS"], "size": ["41 мм", "46 мм"]}},
+      {"name": "Watch GT 5", "year": 2024, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS"], "size": ["41 мм", "46 мм"]}},
+      {"name": "Band 8", "year": 2023, "specs": {"type": "Фитнес-браслет"}, "options": {"connectivity": ["Bluetooth"]}},
+      {"name": "Band 9", "year": 2024, "specs": {"type": "Фитнес-браслет"}, "options": {"connectivity": ["Bluetooth"]}}
+    ],
+    "Amazfit": [
+      {"name": "GTR 4", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS"]}},
+      {"name": "Bip 5", "year": 2023, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS"]}}
+    ],
+    "Garmin": [
+      {"name": "Forerunner 255", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS"], "size": ["46 мм"]}},
+      {"name": "Fenix 7", "year": 2022, "specs": {"type": "Смарт-часы"}, "options": {"connectivity": ["GPS"], "size": ["47 мм"]}}
+    ]
+  }
+}

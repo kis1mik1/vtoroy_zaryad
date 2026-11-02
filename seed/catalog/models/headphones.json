@@ -1,0 +1,57 @@
+{
+  "category": "headphones",
+  "brands": {
+    "Apple": [
+      {"name": "AirPods (2-го поколения)", "year": 2019, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": false}},
+      {"name": "AirPods (3-го поколения)", "year": 2021, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": false}},
+      {"name": "AirPods 4", "year": 2024, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": false}},
+      {"name": "AirPods 4 с шумоподавлением", "year": 2024, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "AirPods Pro", "year": 2019, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "AirPods Pro 2", "year": 2022, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "AirPods Max", "year": 2020, "specs": {"type": "Полноразмерные", "connection": "Bluetooth", "anc": true}}
+    ],
+    "Sony": [
+      {"name": "WH-1000XM4", "year": 2020, "specs": {"type": "Полноразмерные", "connection": "Bluetooth", "anc": true}},
+      {"name": "WH-1000XM5", "year": 2022, "specs": {"type": "Полноразмерные", "connection": "Bluetooth", "anc": true}},
+      {"name": "WF-1000XM4", "year": 2021, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "WF-1000XM5", "year": 2023, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "WH-CH520", "year": 2023, "specs": {"type": "Накладные", "connection": "Bluetooth", "anc": false}}
+    ],
+    "Samsung": [
+      {"name": "Galaxy Buds2", "year": 2021, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "Galaxy Buds2 Pro", "year": 2022, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "Galaxy Buds FE", "year": 2023, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "Galaxy Buds3 Pro", "year": 2024, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}}
+    ],
+    "JBL": [
+      {"name": "Tune 520BT", "year": 2023, "specs": {"type": "Накладные", "connection": "Bluetooth", "anc": false}},
+      {"name": "Tune 770NC", "year": 2023, "specs": {"type": "Накладные", "connection": "Bluetooth", "anc": true}},
+      {"name": "Live Pro 2", "year": 2022, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}}
+    ],
+    "Xiaomi": [
+      {"name": "Redmi Buds 4 Pro", "year": 2022, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "Redmi Buds 5", "year": 2023, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}},
+      {"name": "Redmi Buds 6 Active", "year": 2024, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": false}}
+    ],
+    "Marshall": [
+      {"name": "Major IV", "year": 2020, "specs": {"type": "Накладные", "connection": "Bluetooth", "anc": false}},
+      {"name": "Major V", "year": 2023, "specs": {"type": "Накладные", "connection": "Bluetooth", "anc": false}}
+    ],
+    "Bose": [
+      {"name": "QuietComfort 45", "year": 2021, "specs": {"type": "Полноразмерные", "connection": "Bluetooth", "anc": true}},
+      {"name": "QuietComfort Ultra Headphones", "year": 2023, "specs": {"type": "Полноразмерные", "connection": "Bluetooth", "anc": true}}
+    ],
+    "Sennheiser": [
+      {"name": "Momentum 4 Wireless", "year": 2022, "specs": {"type": "Полноразмерные", "connection": "Bluetooth", "anc": true}}
+    ],
+    "Huawei": [
+      {"name": "FreeBuds Pro 3", "year": 2023, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}}
+    ],
+    "Nothing": [
+      {"name": "Ear (2)", "year": 2023, "specs": {"type": "Беспроводные TWS", "connection": "Bluetooth", "anc": true}}
+    ],
+    "Beats": [
+      {"name": "Studio Pro", "year": 2023, "specs": {"type": "Полноразмерные", "connection": "Bluetooth", "anc": true}}
+    ]
+  }
+}

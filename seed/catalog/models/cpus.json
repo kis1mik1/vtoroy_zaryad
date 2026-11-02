@@ -1,0 +1,37 @@
+{
+  "category": "cpus",
+  "brands": {
+    "Intel": [
+      {"name": "Core i3-12100F", "year": 2022, "specs": {"socket": "LGA1700", "cores": 4}},
+      {"name": "Core i5-10400F", "year": 2020, "specs": {"socket": "LGA1200", "cores": 6}},
+      {"name": "Core i5-12400F", "year": 2022, "specs": {"socket": "LGA1700", "cores": 6}},
+      {"name": "Core i5-13400F", "year": 2023, "specs": {"socket": "LGA1700", "cores": 10}},
+      {"name": "Core i5-12600K", "year": 2021, "specs": {"socket": "LGA1700", "cores": 10}},
+      {"name": "Core i5-13600K", "year": 2022, "specs": {"socket": "LGA1700", "cores": 14}},
+      {"name": "Core i5-14600K", "year": 2023, "specs": {"socket": "LGA1700", "cores": 14}},
+      {"name": "Core i7-12700K", "year": 2021, "specs": {"socket": "LGA1700", "cores": 12}},
+      {"name": "Core i7-13700K", "year": 2022, "specs": {"socket": "LGA1700", "cores": 16}},
+      {"name": "Core i7-14700K", "year": 2023, "specs": {"socket": "LGA1700", "cores": 20}},
+      {"name": "Core i9-13900K", "year": 2022, "specs": {"socket": "LGA1700", "cores": 24}},
+      {"name": "Core i9-14900K", "year": 2023, "specs": {"socket": "LGA1700", "cores": 24}},
+      {"name": "Core Ultra 5 245K", "year": 2024, "specs": {"socket": "LGA1851", "cores": 14}},
+      {"name": "Core Ultra 7 265K", "year": 2024, "specs": {"socket": "LGA1851", "cores": 20}}
+    ],
+    "AMD": [
+      {"name": "Ryzen 5 3600", "year": 2019, "specs": {"socket": "AM4", "cores": 6}},
+      {"name": "Ryzen 5 5500", "year": 2022, "specs": {"socket": "AM4", "cores": 6}},
+      {"name": "Ryzen 5 5600", "year": 2022, "specs": {"socket": "AM4", "cores": 6}},
+      {"name": "Ryzen 5 5600X", "year": 2020, "specs": {"socket": "AM4", "cores": 6}},
+      {"name": "Ryzen 7 5700X", "year": 2022, "specs": {"socket": "AM4", "cores": 8}},
+      {"name": "Ryzen 7 5800X3D", "year": 2022, "specs": {"socket": "AM4", "cores": 8}},
+      {"name": "Ryzen 5 7500F", "year": 2023, "specs": {"socket": "AM5", "cores": 6}},
+      {"name": "Ryzen 5 7600", "year": 2023, "specs": {"socket": "AM5", "cores": 6}},
+      {"name": "Ryzen 7 7700", "year": 2023, "specs": {"socket": "AM5", "cores": 8}},
+      {"name": "Ryzen 7 7800X3D", "year": 2023, "specs": {"socket": "AM5", "cores": 8}},
+      {"name": "Ryzen 9 7950X", "year": 2022, "specs": {"socket": "AM5", "cores": 16}},
+      {"name": "Ryzen 5 9600X", "year": 2024, "specs": {"socket": "AM5", "cores": 6}},
+      {"name": "Ryzen 7 9700X", "year": 2024, "specs": {"socket": "AM5", "cores": 8}},
+      {"name": "Ryzen 7 9800X3D", "year": 2024, "specs": {"socket": "AM5", "cores": 8}}
+    ]
+  }
+}

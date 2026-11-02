@@ -1,0 +1,72 @@
+{
+  "category": "laptops",
+  "brands": {
+    "Apple": [
+      {"name": "MacBook Air 13 M1", "year": 2020, "specs": {"screen": "13,3″"}, "options": {"cpu": ["Apple M1"], "ram": ["8 ГБ", "16 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Air 13 M2", "year": 2022, "specs": {"screen": "13,6″"}, "options": {"cpu": ["Apple M2"], "ram": ["8 ГБ", "16 ГБ", "24 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Air 15 M2", "year": 2023, "specs": {"screen": "15,3″"}, "options": {"cpu": ["Apple M2"], "ram": ["8 ГБ", "16 ГБ", "24 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Air 13 M3", "year": 2024, "specs": {"screen": "13,6″"}, "options": {"cpu": ["Apple M3"], "ram": ["8 ГБ", "16 ГБ", "24 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Air 15 M3", "year": 2024, "specs": {"screen": "15,3″"}, "options": {"cpu": ["Apple M3"], "ram": ["8 ГБ", "16 ГБ", "24 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Air 13 M4", "year": 2025, "specs": {"screen": "13,6″"}, "options": {"cpu": ["Apple M4"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Air 15 M4", "year": 2025, "specs": {"screen": "15,3″"}, "options": {"cpu": ["Apple M4"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 13 M1", "year": 2020, "specs": {"screen": "13,3″"}, "options": {"cpu": ["Apple M1"], "ram": ["8 ГБ", "16 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 13 M2", "year": 2022, "specs": {"screen": "13,3″"}, "options": {"cpu": ["Apple M2"], "ram": ["8 ГБ", "16 ГБ", "24 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 14 (2021)", "year": 2021, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M1 Pro", "Apple M1 Max"], "ram": ["16 ГБ", "32 ГБ", "64 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 16 (2021)", "year": 2021, "specs": {"screen": "16,2″"}, "options": {"cpu": ["Apple M1 Pro", "Apple M1 Max"], "ram": ["16 ГБ", "32 ГБ", "64 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 14 (2023, M2)", "year": 2023, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M2 Pro", "Apple M2 Max"], "ram": ["16 ГБ", "32 ГБ", "64 ГБ", "96 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 16 (2023, M2)", "year": 2023, "specs": {"screen": "16,2″"}, "options": {"cpu": ["Apple M2 Pro", "Apple M2 Max"], "ram": ["16 ГБ", "32 ГБ", "64 ГБ", "96 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 14 (2023, M3)", "year": 2023, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M3", "Apple M3 Pro", "Apple M3 Max"], "ram": ["8 ГБ", "16 ГБ", "18 ГБ", "24 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "96 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 16 (2023, M3)", "year": 2023, "specs": {"screen": "16,2″"}, "options": {"cpu": ["Apple M3 Pro", "Apple M3 Max"], "ram": ["18 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "96 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 14 (2024, M4)", "year": 2024, "specs": {"screen": "14,2″"}, "options": {"cpu": ["Apple M4", "Apple M4 Pro", "Apple M4 Max"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}},
+      {"name": "MacBook Pro 16 (2024, M4)", "year": 2024, "specs": {"screen": "16,2″"}, "options": {"cpu": ["Apple M4 Pro", "Apple M4 Max"], "ram": ["24 ГБ", "36 ГБ", "48 ГБ", "64 ГБ", "128 ГБ"], "storage": ["512 ГБ", "1 ТБ", "2 ТБ", "4 ТБ", "8 ТБ"], "gpu": ["Встроенная"]}}
+    ],
+    "ASUS": [
+      {"name": "TUF Gaming F15", "year": 2022, "specs": {"screen": "15,6″"}},
+      {"name": "TUF Gaming A15", "year": 2023, "specs": {"screen": "15,6″"}},
+      {"name": "ROG Strix G16", "year": 2023, "specs": {"screen": "16″"}},
+      {"name": "ROG Zephyrus G14", "year": 2023, "specs": {"screen": "14″"}},
+      {"name": "Vivobook 15", "year": 2023, "specs": {"screen": "15,6″"}},
+      {"name": "Zenbook 14 OLED", "year": 2023, "specs": {"screen": "14″"}}
+    ],
+    "Lenovo": [
+      {"name": "IdeaPad Slim 3 15", "year": 2023, "specs": {"screen": "15,6″"}},
+      {"name": "IdeaPad Gaming 3 15", "year": 2022, "specs": {"screen": "15,6″"}},
+      {"name": "Legion 5 15", "year": 2022, "specs": {"screen": "15,6″"}},
+      {"name": "Legion 5 Pro 16", "year": 2022, "specs": {"screen": "16″"}},
+      {"name": "LOQ 15", "year": 2023, "specs": {"screen": "15,6″"}},
+      {"name": "ThinkPad E14", "year": 2023, "specs": {"screen": "14″"}},
+      {"name": "ThinkPad T14", "year": 2023, "specs": {"screen": "14″"}},
+      {"name": "Yoga Slim 7 14", "year": 2023, "specs": {"screen": "14″"}}
+    ],
+    "HP": [
+      {"name": "Victus 15", "year": 2023, "specs": {"screen": "15,6″"}},
+      {"name": "Pavilion 15", "year": 2022, "specs": {"screen": "15,6″"}},
+      {"name": "OMEN 16", "year": 2023, "specs": {"screen": "16,1″"}},
+      {"name": "250 G9", "year": 2022, "specs": {"screen": "15,6″"}}
+    ],
+    "Acer": [
+      {"name": "Aspire 5", "year": 2022, "specs": {"screen": "15,6″"}},
+      {"name": "Nitro 5", "year": 2022, "specs": {"screen": "15,6″"}},
+      {"name": "Swift Go 14", "year": 2023, "specs": {"screen": "14″"}},
+      {"name": "Predator Helios Neo 16", "year": 2023, "specs": {"screen": "16″"}}
+    ],
+    "MSI": [
+      {"name": "Katana 15", "year": 2023, "specs": {"screen": "15,6″"}},
+      {"name": "Thin GF63", "year": 2023, "specs": {"screen": "15,6″"}},
+      {"name": "Cyborg 15", "year": 2023, "specs": {"screen": "15,6″"}}
+    ],
+    "Huawei": [
+      {"name": "MateBook D 15", "year": 2022, "specs": {"screen": "15,6″"}},
+      {"name": "MateBook D 16", "year": 2023, "specs": {"screen": "16″"}},
+      {"name": "MateBook 14", "year": 2023, "specs": {"screen": "14,2″"}}
+    ],
+    "Honor": [
+      {"name": "MagicBook 14", "year": 2023, "specs": {"screen": "14″"}},
+      {"name": "MagicBook X 16", "year": 2023, "specs": {"screen": "16″"}}
+    ],
+    "Dell": [
+      {"name": "Inspiron 15 3520", "year": 2022, "specs": {"screen": "15,6″"}},
+      {"name": "XPS 13", "year": 2022, "specs": {"screen": "13,4″"}}
+    ]
+  }
+}

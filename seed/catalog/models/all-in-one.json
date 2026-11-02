@@ -1,0 +1,10 @@
+{
+  "category": "all-in-one",
+  "brands": {
+    "Apple": [
+      {"name": "iMac 24 M1", "year": 2021, "specs": {"screen": 23.5}, "options": {"cpu": ["Apple M1"], "ram": ["8 ГБ", "16 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"]}},
+      {"name": "iMac 24 M3", "year": 2023, "specs": {"screen": 23.5}, "options": {"cpu": ["Apple M3"], "ram": ["8 ГБ", "16 ГБ", "24 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"]}},
+      {"name": "iMac 24 M4", "year": 2024, "specs": {"screen": 23.5}, "options": {"cpu": ["Apple M4"], "ram": ["16 ГБ", "24 ГБ", "32 ГБ"], "storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"]}}
+    ]
+  }
+}

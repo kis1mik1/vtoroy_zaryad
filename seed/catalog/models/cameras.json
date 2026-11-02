@@ -1,0 +1,38 @@
+{
+  "category": "cameras",
+  "brands": {
+    "Canon": [
+      {"name": "EOS R6 Mark II", "year": 2022, "specs": {"type": "Беззеркальный", "sensor": "Полнокадровая", "megapixels": 24.2}},
+      {"name": "EOS R8", "year": 2023, "specs": {"type": "Беззеркальный", "sensor": "Полнокадровая", "megapixels": 24.2}},
+      {"name": "EOS RP", "year": 2019, "specs": {"type": "Беззеркальный", "sensor": "Полнокадровая", "megapixels": 26.2}},
+      {"name": "EOS R10", "year": 2022, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 24.2}},
+      {"name": "EOS R50", "year": 2023, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 24.2}},
+      {"name": "EOS 90D", "year": 2019, "specs": {"type": "Зеркальный", "sensor": "APS-C", "megapixels": 32.5}},
+      {"name": "EOS 250D", "year": 2019, "specs": {"type": "Зеркальный", "sensor": "APS-C", "megapixels": 24.1}},
+      {"name": "EOS 2000D", "year": 2018, "specs": {"type": "Зеркальный", "sensor": "APS-C", "megapixels": 24.1}}
+    ],
+    "Sony": [
+      {"name": "Alpha 7 III", "year": 2018, "specs": {"type": "Беззеркальный", "sensor": "Полнокадровая", "megapixels": 24.2}, "aliases": ["a7 III", "a7 3", "а7 3"]},
+      {"name": "Alpha 7 IV", "year": 2021, "specs": {"type": "Беззеркальный", "sensor": "Полнокадровая", "megapixels": 33}, "aliases": ["a7 IV", "a7 4", "а7 4"]},
+      {"name": "Alpha 6400", "year": 2019, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 24.2}, "aliases": ["a6400", "а6400"]},
+      {"name": "Alpha 6700", "year": 2023, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 26}, "aliases": ["a6700", "а6700"]},
+      {"name": "ZV-E10", "year": 2021, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 24.2}}
+    ],
+    "Nikon": [
+      {"name": "Z6 II", "year": 2020, "specs": {"type": "Беззеркальный", "sensor": "Полнокадровая", "megapixels": 24.5}},
+      {"name": "Z5", "year": 2020, "specs": {"type": "Беззеркальный", "sensor": "Полнокадровая", "megapixels": 24.3}},
+      {"name": "Z50", "year": 2019, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 20.9}},
+      {"name": "D7500", "year": 2017, "specs": {"type": "Зеркальный", "sensor": "APS-C", "megapixels": 20.9}},
+      {"name": "D3500", "year": 2018, "specs": {"type": "Зеркальный", "sensor": "APS-C", "megapixels": 24.2}}
+    ],
+    "Fujifilm": [
+      {"name": "X-T5", "year": 2022, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 40.2}},
+      {"name": "X-S20", "year": 2023, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 26.1}},
+      {"name": "X-T30 II", "year": 2021, "specs": {"type": "Беззеркальный", "sensor": "APS-C", "megapixels": 26.1}},
+      {"name": "X100VI", "year": 2024, "specs": {"type": "Компактный", "sensor": "APS-C", "megapixels": 40.2}}
+    ],
+    "Panasonic": [
+      {"name": "Lumix S5 II", "year": 2023, "specs": {"type": "Беззеркальный", "sensor": "Полнокадровая", "megapixels": 24.2}}
+    ]
+  }
+}

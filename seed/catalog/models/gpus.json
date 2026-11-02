@@ -1,0 +1,49 @@
+{
+  "category": "gpus",
+  "brands": {
+    "NVIDIA": [
+      {"name": "GeForce GTX 1650", "year": 2019, "specs": {"memory": "4 ГБ"}},
+      {"name": "GeForce GTX 1660 Super", "year": 2019, "specs": {"memory": "6 ГБ"}},
+      {"name": "GeForce RTX 2060", "year": 2019, "specs": {"memory": "6 ГБ"}},
+      {"name": "GeForce RTX 3050", "year": 2022, "specs": {"memory": "8 ГБ"}},
+      {"name": "GeForce RTX 3060", "year": 2021, "specs": {"memory": "12 ГБ"}},
+      {"name": "GeForce RTX 3060 Ti", "year": 2020, "specs": {"memory": "8 ГБ"}},
+      {"name": "GeForce RTX 3070", "year": 2020, "specs": {"memory": "8 ГБ"}},
+      {"name": "GeForce RTX 3070 Ti", "year": 2021, "specs": {"memory": "8 ГБ"}},
+      {"name": "GeForce RTX 3080", "year": 2020, "specs": {"memory": "10 ГБ"}},
+      {"name": "GeForce RTX 3090", "year": 2020, "specs": {"memory": "24 ГБ"}},
+      {"name": "GeForce RTX 4060", "year": 2023, "specs": {"memory": "8 ГБ"}},
+      {"name": "GeForce RTX 4060 Ti 8 ГБ", "year": 2023, "specs": {"memory": "8 ГБ"}},
+      {"name": "GeForce RTX 4060 Ti 16 ГБ", "year": 2023, "specs": {"memory": "16 ГБ"}},
+      {"name": "GeForce RTX 4070", "year": 2023, "specs": {"memory": "12 ГБ"}},
+      {"name": "GeForce RTX 4070 Super", "year": 2024, "specs": {"memory": "12 ГБ"}},
+      {"name": "GeForce RTX 4070 Ti", "year": 2023, "specs": {"memory": "12 ГБ"}},
+      {"name": "GeForce RTX 4070 Ti Super", "year": 2024, "specs": {"memory": "16 ГБ"}},
+      {"name": "GeForce RTX 4080", "year": 2022, "specs": {"memory": "16 ГБ"}},
+      {"name": "GeForce RTX 4080 Super", "year": 2024, "specs": {"memory": "16 ГБ"}},
+      {"name": "GeForce RTX 4090", "year": 2022, "specs": {"memory": "24 ГБ"}},
+      {"name": "GeForce RTX 5070", "year": 2025, "specs": {"memory": "12 ГБ"}},
+      {"name": "GeForce RTX 5080", "year": 2025, "specs": {"memory": "16 ГБ"}},
+      {"name": "GeForce RTX 5090", "year": 2025, "specs": {"memory": "32 ГБ"}}
+    ],
+    "AMD": [
+      {"name": "Radeon RX 580", "year": 2017, "specs": {"memory": "8 ГБ"}},
+      {"name": "Radeon RX 6600", "year": 2021, "specs": {"memory": "8 ГБ"}},
+      {"name": "Radeon RX 6650 XT", "year": 2022, "specs": {"memory": "8 ГБ"}},
+      {"name": "Radeon RX 6700 XT", "year": 2021, "specs": {"memory": "12 ГБ"}},
+      {"name": "Radeon RX 6800", "year": 2020, "specs": {"memory": "16 ГБ"}},
+      {"name": "Radeon RX 6800 XT", "year": 2020, "specs": {"memory": "16 ГБ"}},
+      {"name": "Radeon RX 7600", "year": 2023, "specs": {"memory": "8 ГБ"}},
+      {"name": "Radeon RX 7700 XT", "year": 2023, "specs": {"memory": "12 ГБ"}},
+      {"name": "Radeon RX 7800 XT", "year": 2023, "specs": {"memory": "16 ГБ"}},
+      {"name": "Radeon RX 7900 XT", "year": 2022, "specs": {"memory": "20 ГБ"}},
+      {"name": "Radeon RX 7900 XTX", "year": 2022, "specs": {"memory": "24 ГБ"}},
+      {"name": "Radeon RX 9070 XT", "year": 2025, "specs": {"memory": "16 ГБ"}}
+    ],
+    "Intel": [
+      {"name": "Arc A750", "year": 2022, "specs": {"memory": "8 ГБ"}},
+      {"name": "Arc A770 16 ГБ", "year": 2022, "specs": {"memory": "16 ГБ"}},
+      {"name": "Arc B580", "year": 2024, "specs": {"memory": "12 ГБ"}}
+    ]
+  }
+}

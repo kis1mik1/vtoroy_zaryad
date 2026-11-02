@@ -1,0 +1,28 @@
+{
+  "category": "speakers",
+  "brands": {
+    "JBL": [
+      {"name": "Flip 5", "year": 2019, "specs": {"type": "Портативная"}},
+      {"name": "Flip 6", "year": 2021, "specs": {"type": "Портативная"}},
+      {"name": "Charge 5", "year": 2021, "specs": {"type": "Портативная"}},
+      {"name": "Go 3", "year": 2020, "specs": {"type": "Портативная"}},
+      {"name": "Clip 4", "year": 2020, "specs": {"type": "Портативная"}},
+      {"name": "Xtreme 3", "year": 2020, "specs": {"type": "Портативная"}},
+      {"name": "Boombox 3", "year": 2022, "specs": {"type": "Портативная"}},
+      {"name": "PartyBox 110", "year": 2021, "specs": {"type": "Акустическая система"}}
+    ],
+    "Яндекс": [
+      {"name": "Станция Мини (2-го поколения)", "year": 2021, "specs": {"type": "Умная колонка"}},
+      {"name": "Станция Лайт", "year": 2021, "specs": {"type": "Умная колонка"}},
+      {"name": "Станция 2", "year": 2022, "specs": {"type": "Умная колонка"}},
+      {"name": "Станция Макс", "year": 2020, "specs": {"type": "Умная колонка"}}
+    ],
+    "Marshall": [
+      {"name": "Emberton II", "year": 2022, "specs": {"type": "Портативная"}},
+      {"name": "Stanmore III", "year": 2022, "specs": {"type": "Акустическая система"}}
+    ],
+    "Apple": [
+      {"name": "HomePod mini", "year": 2020, "specs": {"type": "Умная колонка"}}
+    ]
+  }
+}

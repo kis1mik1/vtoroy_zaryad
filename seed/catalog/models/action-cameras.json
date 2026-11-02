@@ -1,0 +1,23 @@
+{
+  "category": "action-cameras",
+  "brands": {
+    "GoPro": [
+      {"name": "HERO9 Black", "year": 2020, "specs": {"video": "5K"}},
+      {"name": "HERO10 Black", "year": 2021, "specs": {"video": "5,3K"}},
+      {"name": "HERO11 Black", "year": 2022, "specs": {"video": "5,3K"}},
+      {"name": "HERO12 Black", "year": 2023, "specs": {"video": "5,3K"}},
+      {"name": "HERO13 Black", "year": 2024, "specs": {"video": "5,3K"}}
+    ],
+    "DJI": [
+      {"name": "Osmo Action 3", "year": 2022, "specs": {"video": "4K"}},
+      {"name": "Osmo Action 4", "year": 2023, "specs": {"video": "4K"}},
+      {"name": "Osmo Action 5 Pro", "year": 2024, "specs": {"video": "4K"}},
+      {"name": "Osmo Pocket 3", "year": 2023, "specs": {"video": "4K"}}
+    ],
+    "Insta360": [
+      {"name": "X3", "year": 2022, "specs": {"video": "5,7K"}},
+      {"name": "X4", "year": 2024, "specs": {"video": "8K"}},
+      {"name": "Ace Pro", "year": 2023, "specs": {"video": "4K"}}
+    ]
+  }
+}

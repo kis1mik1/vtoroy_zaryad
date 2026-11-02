@@ -1,0 +1,22 @@
+{
+  "category": "gaming-accessories",
+  "brands": {
+    "Sony": [
+      {"name": "DualSense", "year": 2020, "specs": {"type": "Геймпад", "platform": "PlayStation 5"}},
+      {"name": "DualSense Edge", "year": 2023, "specs": {"type": "Геймпад", "platform": "PlayStation 5"}},
+      {"name": "DualShock 4 v2", "year": 2016, "specs": {"type": "Геймпад", "platform": "PlayStation 4"}},
+      {"name": "PlayStation VR2", "year": 2023, "specs": {"type": "VR-шлем", "platform": "PlayStation 5"}}
+    ],
+    "Microsoft": [
+      {"name": "Xbox Wireless Controller", "year": 2020, "specs": {"type": "Геймпад", "platform": "Xbox Series X|S"}},
+      {"name": "Xbox Elite Series 2", "year": 2019, "specs": {"type": "Геймпад", "platform": "Xbox Series X|S"}}
+    ],
+    "Nintendo": [
+      {"name": "Switch Pro Controller", "year": 2017, "specs": {"type": "Геймпад", "platform": "Nintendo Switch"}},
+      {"name": "Joy-Con (пара)", "year": 2017, "specs": {"type": "Геймпад", "platform": "Nintendo Switch"}}
+    ],
+    "8BitDo": [
+      {"name": "Ultimate", "year": 2022, "specs": {"type": "Геймпад", "platform": "ПК"}}
+    ]
+  }
+}

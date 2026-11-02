@@ -1,0 +1,51 @@
+{
+  "category": "tablets",
+  "brands": {
+    "Apple": [
+      {"name": "iPad 9 (2021)", "year": 2021, "specs": {"type": "Планшет", "screen": 10.2}, "options": {"storage": ["64 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad 10 (2022)", "year": 2022, "specs": {"type": "Планшет", "screen": 10.9}, "options": {"storage": ["64 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad A16 (2025)", "year": 2025, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad mini 6 (2021)", "year": 2021, "specs": {"type": "Планшет", "screen": 8.3}, "options": {"storage": ["64 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad mini A17 Pro (2024)", "year": 2024, "specs": {"type": "Планшет", "screen": 8.3}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Air 5 M1 (2022)", "year": 2022, "specs": {"type": "Планшет", "screen": 10.9}, "options": {"storage": ["64 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Air 11 M2 (2024)", "year": 2024, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Air 13 M2 (2024)", "year": 2024, "specs": {"type": "Планшет", "screen": 13}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Pro 11 M2 (2022)", "year": 2022, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Pro 12.9 M2 (2022)", "year": 2022, "specs": {"type": "Планшет", "screen": 12.9}, "options": {"storage": ["128 ГБ", "256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Pro 11 M4 (2024)", "year": 2024, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "iPad Pro 13 M4 (2024)", "year": 2024, "specs": {"type": "Планшет", "screen": 13}, "options": {"storage": ["256 ГБ", "512 ГБ", "1 ТБ", "2 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}}
+    ],
+    "Samsung": [
+      {"name": "Galaxy Tab S8", "year": 2022, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "Galaxy Tab S9", "year": 2023, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "Galaxy Tab S9 FE", "year": 2023, "specs": {"type": "Планшет", "screen": 10.9}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "Galaxy Tab S9 Ultra", "year": 2023, "specs": {"type": "Планшет", "screen": 14.6}, "options": {"storage": ["256 ГБ", "512 ГБ", "1 ТБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "Galaxy Tab A9", "year": 2023, "specs": {"type": "Планшет", "screen": 8.7}, "options": {"storage": ["64 ГБ", "128 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}},
+      {"name": "Galaxy Tab A9+", "year": 2023, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["64 ГБ", "128 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}}
+    ],
+    "Xiaomi": [
+      {"name": "Xiaomi Pad 6", "year": 2023, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi"]}},
+      {"name": "Xiaomi Pad 7", "year": 2024, "specs": {"type": "Планшет", "screen": 11.2}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi"]}},
+      {"name": "Redmi Pad SE", "year": 2023, "specs": {"type": "Планшет", "screen": 11}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi"]}},
+      {"name": "Redmi Pad Pro", "year": 2024, "specs": {"type": "Планшет", "screen": 12.1}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi"]}}
+    ],
+    "Huawei": [
+      {"name": "MatePad 11.5", "year": 2023, "specs": {"type": "Планшет", "screen": 11.5}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi"]}}
+    ],
+    "Lenovo": [
+      {"name": "Tab P11 (2-го поколения)", "year": 2022, "specs": {"type": "Планшет", "screen": 11.5}, "options": {"storage": ["128 ГБ"], "connectivity": ["Wi-Fi", "Wi-Fi + LTE"]}}
+    ],
+    "Honor": [
+      {"name": "Honor Pad 9", "year": 2023, "specs": {"type": "Планшет", "screen": 12.1}, "options": {"storage": ["128 ГБ", "256 ГБ"], "connectivity": ["Wi-Fi"]}}
+    ],
+    "PocketBook": [
+      {"name": "629 Verse", "year": 2023, "specs": {"type": "Электронная книга", "screen": 6}, "options": {"storage": ["8 ГБ"], "connectivity": ["Wi-Fi"]}},
+      {"name": "634 Verse Pro", "year": 2023, "specs": {"type": "Электронная книга", "screen": 6}, "options": {"storage": ["16 ГБ"], "connectivity": ["Wi-Fi"]}},
+      {"name": "743 InkPad 4", "year": 2023, "specs": {"type": "Электронная книга", "screen": 7.8}, "options": {"storage": ["32 ГБ"], "connectivity": ["Wi-Fi"]}}
+    ],
+    "Amazon": [
+      {"name": "Kindle Paperwhite (2021)", "year": 2021, "specs": {"type": "Электронная книга", "screen": 6.8}, "options": {"storage": ["8 ГБ", "16 ГБ"], "connectivity": ["Wi-Fi"]}},
+      {"name": "Kindle (2022)", "year": 2022, "specs": {"type": "Электронная книга", "screen": 6}, "options": {"storage": ["16 ГБ"], "connectivity": ["Wi-Fi"]}}
+    ]
+  }
+}

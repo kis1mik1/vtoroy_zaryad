@@ -1,0 +1,1696 @@
+[
+ {
+  "name": "Телефоны",
+  "slug": "phones",
+  "icon": "smartphone",
+  "children": [
+   {
+    "name": "Смартфоны",
+    "slug": "smartphones",
+    "battery": true,
+    "screen": true,
+    "seo": "Купить и продать смартфон б/у или новый: iPhone, Samsung, Xiaomi и другие.",
+    "attributes": [
+     {
+      "code": "storage",
+      "name": "Встроенная память",
+      "kind": "choice",
+      "options": [
+       "16 ГБ",
+       "32 ГБ",
+       "64 ГБ",
+       "128 ГБ",
+       "256 ГБ",
+       "512 ГБ",
+       "1 ТБ",
+       "2 ТБ"
+      ],
+      "variant": true,
+      "required": true,
+      "filter": true,
+      "price_key": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "ram",
+      "name": "Оперативная память",
+      "kind": "choice",
+      "options": [
+       "2 ГБ",
+       "3 ГБ",
+       "4 ГБ",
+       "6 ГБ",
+       "8 ГБ",
+       "12 ГБ",
+       "16 ГБ"
+      ],
+      "variant": true,
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "color",
+      "name": "Цвет",
+      "kind": "choice",
+      "options": [
+       "чёрный",
+       "белый",
+       "серый",
+       "серебристый",
+       "золотой",
+       "синий",
+       "голубой",
+       "зелёный",
+       "красный",
+       "фиолетовый",
+       "розовый",
+       "жёлтый",
+       "бежевый",
+       "оранжевый"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "screen",
+      "name": "Диагональ экрана",
+      "kind": "number",
+      "unit": "″",
+      "filter": true,
+      "widget": "range"
+     },
+     {
+      "code": "nfc",
+      "name": "NFC",
+      "kind": "boolean",
+      "filter": true,
+      "widget": "toggle"
+     }
+    ]
+   },
+   {
+    "name": "Кнопочные телефоны",
+    "slug": "feature-phones",
+    "battery": true,
+    "screen": true,
+    "seo": "Кнопочные телефоны и звонилки: Nokia, Philips, F+ и другие.",
+    "attributes": [
+     {
+      "code": "sim",
+      "name": "Количество SIM-карт",
+      "kind": "choice",
+      "options": [
+       "1 SIM",
+       "2 SIM"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "color",
+      "name": "Цвет",
+      "kind": "choice",
+      "options": [
+       "чёрный",
+       "белый",
+       "серый",
+       "серебристый",
+       "золотой",
+       "синий",
+       "голубой",
+       "зелёный",
+       "красный",
+       "фиолетовый",
+       "розовый",
+       "жёлтый",
+       "бежевый",
+       "оранжевый"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Ноутбуки",
+  "slug": "laptops",
+  "icon": "laptop",
+  "battery": true,
+  "screen": true,
+  "seo": "Ноутбуки б/у и новые: MacBook, игровые, для учёбы и работы.",
+  "attributes": [
+   {
+    "code": "screen",
+    "name": "Диагональ экрана",
+    "kind": "choice",
+    "options": [
+     "11,6″",
+     "13,3″",
+     "13,4″",
+     "13,6″",
+     "14″",
+     "14,2″",
+     "15,3″",
+     "15,6″",
+     "16″",
+     "16,1″",
+     "16,2″",
+     "17,3″",
+     "18″"
+    ],
+    "filter": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "cpu",
+    "name": "Процессор",
+    "kind": "choice",
+    "options": [
+     "Apple M1",
+     "Apple M1 Pro",
+     "Apple M1 Max",
+     "Apple M2",
+     "Apple M2 Pro",
+     "Apple M2 Max",
+     "Apple M3",
+     "Apple M3 Pro",
+     "Apple M3 Max",
+     "Apple M4",
+     "Apple M4 Pro",
+     "Apple M4 Max",
+     "Intel Celeron",
+     "Intel Pentium",
+     "Intel Core i3",
+     "Intel Core i5",
+     "Intel Core i7",
+     "Intel Core i9",
+     "Intel Core Ultra 5",
+     "Intel Core Ultra 7",
+     "Intel Core Ultra 9",
+     "AMD Ryzen 3",
+     "AMD Ryzen 5",
+     "AMD Ryzen 7",
+     "AMD Ryzen 9",
+     "Qualcomm Snapdragon X"
+    ],
+    "variant": true,
+    "required": true,
+    "filter": true,
+    "in_title": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "ram",
+    "name": "Оперативная память",
+    "kind": "choice",
+    "options": [
+     "4 ГБ",
+     "8 ГБ",
+     "12 ГБ",
+     "16 ГБ",
+     "18 ГБ",
+     "24 ГБ",
+     "32 ГБ",
+     "36 ГБ",
+     "48 ГБ",
+     "64 ГБ",
+     "96 ГБ",
+     "128 ГБ"
+    ],
+    "variant": true,
+    "required": true,
+    "filter": true,
+    "price_key": true,
+    "in_title": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "storage",
+    "name": "Накопитель",
+    "kind": "choice",
+    "options": [
+     "128 ГБ",
+     "256 ГБ",
+     "512 ГБ",
+     "1 ТБ",
+     "2 ТБ",
+     "4 ТБ",
+     "8 ТБ"
+    ],
+    "variant": true,
+    "required": true,
+    "filter": true,
+    "price_key": true,
+    "in_title": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "gpu",
+    "name": "Видеокарта",
+    "kind": "choice",
+    "options": [
+     "Встроенная",
+     "NVIDIA GeForce MX",
+     "NVIDIA GeForce RTX 2050",
+     "NVIDIA GeForce GTX 1650",
+     "NVIDIA GeForce RTX 3050",
+     "NVIDIA GeForce RTX 3050 Ti",
+     "NVIDIA GeForce RTX 3060",
+     "NVIDIA GeForce RTX 3070",
+     "NVIDIA GeForce RTX 3070 Ti",
+     "NVIDIA GeForce RTX 3080",
+     "NVIDIA GeForce RTX 4050",
+     "NVIDIA GeForce RTX 4060",
+     "NVIDIA GeForce RTX 4070",
+     "NVIDIA GeForce RTX 4080",
+     "NVIDIA GeForce RTX 4090",
+     "NVIDIA GeForce RTX 5060",
+     "NVIDIA GeForce RTX 5070",
+     "AMD Radeon RX"
+    ],
+    "variant": true,
+    "filter": true,
+    "widget": "checkboxes"
+   }
+  ]
+ },
+ {
+  "name": "Компьютеры",
+  "slug": "computers",
+  "icon": "monitor",
+  "children": [
+   {
+    "name": "Системные блоки",
+    "slug": "desktops",
+    "seo": "Готовые компьютеры и игровые сборки б/у.",
+    "attributes": [
+     {
+      "code": "cpu",
+      "name": "Процессор",
+      "kind": "choice",
+      "options": [
+       "Apple M1",
+       "Apple M2",
+       "Apple M2 Pro",
+       "Apple M3",
+       "Apple M4",
+       "Apple M4 Pro",
+       "Intel Core i3",
+       "Intel Core i5",
+       "Intel Core i7",
+       "Intel Core i9",
+       "Intel Core Ultra 5",
+       "Intel Core Ultra 7",
+       "Intel Core Ultra 9",
+       "AMD Ryzen 3",
+       "AMD Ryzen 5",
+       "AMD Ryzen 7",
+       "AMD Ryzen 9"
+      ],
+      "variant": true,
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "gpu",
+      "name": "Видеокарта",
+      "kind": "choice",
+      "options": [
+       "Встроенная",
+       "NVIDIA GeForce GTX 1650",
+       "NVIDIA GeForce GTX 1660",
+       "NVIDIA GeForce RTX 2060",
+       "NVIDIA GeForce RTX 3050",
+       "NVIDIA GeForce RTX 3060",
+       "NVIDIA GeForce RTX 3060 Ti",
+       "NVIDIA GeForce RTX 3070",
+       "NVIDIA GeForce RTX 3080",
+       "NVIDIA GeForce RTX 4060",
+       "NVIDIA GeForce RTX 4060 Ti",
+       "NVIDIA GeForce RTX 4070",
+       "NVIDIA GeForce RTX 4070 Super",
+       "NVIDIA GeForce RTX 4070 Ti",
+       "NVIDIA GeForce RTX 4080",
+       "NVIDIA GeForce RTX 4090",
+       "NVIDIA GeForce RTX 5070",
+       "NVIDIA GeForce RTX 5080",
+       "AMD Radeon RX 6600",
+       "AMD Radeon RX 6700 XT",
+       "AMD Radeon RX 7600",
+       "AMD Radeon RX 7800 XT",
+       "AMD Radeon RX 7900 XTX",
+       "Intel Arc"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "ram",
+      "name": "Оперативная память",
+      "kind": "choice",
+      "options": [
+       "8 ГБ",
+       "16 ГБ",
+       "24 ГБ",
+       "32 ГБ",
+       "64 ГБ",
+       "128 ГБ"
+      ],
+      "variant": true,
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "storage",
+      "name": "Накопитель",
+      "kind": "choice",
+      "options": [
+       "256 ГБ",
+       "512 ГБ",
+       "1 ТБ",
+       "2 ТБ",
+       "4 ТБ",
+       "8 ТБ"
+      ],
+      "variant": true,
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Моноблоки",
+    "slug": "all-in-one",
+    "screen": true,
+    "seo": "Моноблоки iMac и другие: компьютер и монитор в одном корпусе.",
+    "attributes": [
+     {
+      "code": "screen",
+      "name": "Диагональ экрана",
+      "kind": "number",
+      "unit": "″",
+      "filter": true,
+      "widget": "range"
+     },
+     {
+      "code": "cpu",
+      "name": "Процессор",
+      "kind": "choice",
+      "options": [
+       "Apple M1",
+       "Apple M2",
+       "Apple M2 Pro",
+       "Apple M3",
+       "Apple M4",
+       "Apple M4 Pro",
+       "Intel Core i3",
+       "Intel Core i5",
+       "Intel Core i7",
+       "Intel Core i9",
+       "Intel Core Ultra 5",
+       "Intel Core Ultra 7",
+       "Intel Core Ultra 9",
+       "AMD Ryzen 3",
+       "AMD Ryzen 5",
+       "AMD Ryzen 7",
+       "AMD Ryzen 9"
+      ],
+      "variant": true,
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "ram",
+      "name": "Оперативная память",
+      "kind": "choice",
+      "options": [
+       "8 ГБ",
+       "16 ГБ",
+       "24 ГБ",
+       "32 ГБ",
+       "64 ГБ"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "storage",
+      "name": "Накопитель",
+      "kind": "choice",
+      "options": [
+       "256 ГБ",
+       "512 ГБ",
+       "1 ТБ",
+       "2 ТБ"
+      ],
+      "variant": true,
+      "filter": true,
+      "price_key": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "color",
+      "name": "Цвет",
+      "kind": "choice",
+      "options": [
+       "чёрный",
+       "белый",
+       "серый",
+       "серебристый",
+       "золотой",
+       "синий",
+       "голубой",
+       "зелёный",
+       "красный",
+       "фиолетовый",
+       "розовый",
+       "жёлтый",
+       "бежевый",
+       "оранжевый"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Мониторы",
+    "slug": "monitors",
+    "screen": true,
+    "seo": "Мониторы для работы и игр: 24, 27, 34 дюйма, 144 Гц и выше.",
+    "attributes": [
+     {
+      "code": "diagonal",
+      "name": "Диагональ",
+      "kind": "choice",
+      "options": [
+       "21,5″",
+       "23,8″",
+       "24″",
+       "27″",
+       "31,5″",
+       "34″",
+       "38″",
+       "49″"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "resolution",
+      "name": "Разрешение",
+      "kind": "choice",
+      "options": [
+       "Full HD",
+       "2K (QHD)",
+       "4K (UHD)",
+       "Ultrawide QHD",
+       "5K"
+      ],
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "refresh",
+      "name": "Частота обновления",
+      "kind": "choice",
+      "options": [
+       "60 Гц",
+       "75 Гц",
+       "100 Гц",
+       "120 Гц",
+       "144 Гц",
+       "165 Гц",
+       "180 Гц",
+       "240 Гц",
+       "360 Гц"
+      ],
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "panel",
+      "name": "Тип матрицы",
+      "kind": "choice",
+      "options": [
+       "IPS",
+       "VA",
+       "TN",
+       "OLED"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Клавиатуры и мыши",
+    "slug": "keyboards-mice",
+    "seo": "Клавиатуры, мыши и комплекты: игровые и для работы.",
+    "attributes": [
+     {
+      "code": "device",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "Клавиатура",
+       "Мышь",
+       "Комплект"
+      ],
+      "required": true,
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "connection",
+      "name": "Подключение",
+      "kind": "choice",
+      "options": [
+       "Проводное",
+       "Беспроводное"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "color",
+      "name": "Цвет",
+      "kind": "choice",
+      "options": [
+       "чёрный",
+       "белый",
+       "серый",
+       "серебристый",
+       "золотой",
+       "синий",
+       "голубой",
+       "зелёный",
+       "красный",
+       "фиолетовый",
+       "розовый",
+       "жёлтый",
+       "бежевый",
+       "оранжевый"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Комплектующие",
+  "slug": "components",
+  "icon": "cpu",
+  "children": [
+   {
+    "name": "Видеокарты",
+    "slug": "gpus",
+    "seo": "Видеокарты NVIDIA GeForce, AMD Radeon и Intel Arc б/у и новые.",
+    "attributes": [
+     {
+      "code": "memory",
+      "name": "Видеопамять",
+      "kind": "choice",
+      "options": [
+       "4 ГБ",
+       "6 ГБ",
+       "8 ГБ",
+       "10 ГБ",
+       "12 ГБ",
+       "16 ГБ",
+       "20 ГБ",
+       "24 ГБ",
+       "32 ГБ"
+      ],
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "vendor",
+      "name": "Производитель карты",
+      "kind": "choice",
+      "options": [
+       "ASUS",
+       "MSI",
+       "Gigabyte",
+       "Palit",
+       "Gainward",
+       "Zotac",
+       "Inno3D",
+       "KFA2",
+       "Colorful",
+       "PNY",
+       "Sapphire",
+       "PowerColor",
+       "XFX",
+       "ASRock",
+       "Acer",
+       "Референсная"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Процессоры",
+    "slug": "cpus",
+    "seo": "Процессоры Intel Core и AMD Ryzen для сборки компьютера.",
+    "attributes": [
+     {
+      "code": "socket",
+      "name": "Сокет",
+      "kind": "choice",
+      "options": [
+       "LGA1200",
+       "LGA1700",
+       "LGA1851",
+       "AM4",
+       "AM5"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "cores",
+      "name": "Количество ядер",
+      "kind": "number",
+      "filter": true,
+      "widget": "range"
+     },
+     {
+      "code": "package",
+      "name": "Комплектация",
+      "kind": "choice",
+      "options": [
+       "BOX",
+       "OEM"
+      ],
+      "variant": true,
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Оперативная память",
+    "slug": "ram",
+    "seo": "Оперативная память DDR4 и DDR5 для компьютеров и ноутбуков.",
+    "attributes": [
+     {
+      "code": "type",
+      "name": "Тип памяти",
+      "kind": "choice",
+      "options": [
+       "DDR3",
+       "DDR4",
+       "DDR5"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "form",
+      "name": "Форм-фактор",
+      "kind": "choice",
+      "options": [
+       "DIMM (для ПК)",
+       "SO-DIMM (для ноутбука)"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "capacity",
+      "name": "Объём",
+      "kind": "choice",
+      "options": [
+       "4 ГБ",
+       "8 ГБ",
+       "16 ГБ",
+       "32 ГБ",
+       "48 ГБ",
+       "64 ГБ",
+       "96 ГБ",
+       "128 ГБ"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "frequency",
+      "name": "Частота",
+      "kind": "number",
+      "unit": "МГц",
+      "filter": true,
+      "widget": "range"
+     }
+    ]
+   },
+   {
+    "name": "Накопители",
+    "slug": "storage",
+    "seo": "SSD и жёсткие диски: M.2 NVMe, SATA, внешние.",
+    "attributes": [
+     {
+      "code": "type",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "SSD M.2 NVMe",
+       "SSD SATA 2,5″",
+       "HDD 3,5″",
+       "HDD 2,5″",
+       "Внешний SSD",
+       "Внешний HDD"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "capacity",
+      "name": "Объём",
+      "kind": "choice",
+      "options": [
+       "120 ГБ",
+       "128 ГБ",
+       "240 ГБ",
+       "256 ГБ",
+       "480 ГБ",
+       "500 ГБ",
+       "512 ГБ",
+       "1 ТБ",
+       "2 ТБ",
+       "4 ТБ",
+       "6 ТБ",
+       "8 ТБ",
+       "12 ТБ",
+       "16 ТБ",
+       "20 ТБ"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Материнские платы",
+    "slug": "motherboards",
+    "seo": "Материнские платы под Intel и AMD.",
+    "attributes": [
+     {
+      "code": "socket",
+      "name": "Сокет",
+      "kind": "choice",
+      "options": [
+       "LGA1200",
+       "LGA1700",
+       "LGA1851",
+       "AM4",
+       "AM5"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "form",
+      "name": "Форм-фактор",
+      "kind": "choice",
+      "options": [
+       "ATX",
+       "Micro-ATX",
+       "Mini-ITX",
+       "E-ATX"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "memory",
+      "name": "Тип памяти",
+      "kind": "choice",
+      "options": [
+       "DDR4",
+       "DDR5"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Блоки питания",
+    "slug": "psu",
+    "seo": "Блоки питания для компьютера от 400 до 1600 Вт.",
+    "attributes": [
+     {
+      "code": "power",
+      "name": "Мощность",
+      "kind": "number",
+      "unit": "Вт",
+      "required": true,
+      "filter": true,
+      "widget": "range"
+     },
+     {
+      "code": "certificate",
+      "name": "Сертификат",
+      "kind": "choice",
+      "options": [
+       "Нет",
+       "80 Plus",
+       "80 Plus Bronze",
+       "80 Plus Silver",
+       "80 Plus Gold",
+       "80 Plus Platinum",
+       "80 Plus Titanium"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "modular",
+      "name": "Модульные кабели",
+      "kind": "boolean",
+      "filter": true,
+      "widget": "toggle"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Планшеты и электронные книги",
+  "slug": "tablets",
+  "icon": "tablet",
+  "battery": true,
+  "screen": true,
+  "seo": "Планшеты iPad, Samsung Galaxy Tab, Xiaomi Pad и электронные книги.",
+  "attributes": [
+   {
+    "code": "type",
+    "name": "Тип",
+    "kind": "choice",
+    "options": [
+     "Планшет",
+     "Электронная книга"
+    ],
+    "filter": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "storage",
+    "name": "Встроенная память",
+    "kind": "choice",
+    "options": [
+     "8 ГБ",
+     "16 ГБ",
+     "32 ГБ",
+     "64 ГБ",
+     "128 ГБ",
+     "256 ГБ",
+     "512 ГБ",
+     "1 ТБ",
+     "2 ТБ"
+    ],
+    "variant": true,
+    "filter": true,
+    "price_key": true,
+    "in_title": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "connectivity",
+    "name": "Связь",
+    "kind": "choice",
+    "options": [
+     "Wi-Fi",
+     "Wi-Fi + LTE"
+    ],
+    "variant": true,
+    "filter": true,
+    "in_title": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "color",
+    "name": "Цвет",
+    "kind": "choice",
+    "options": [
+     "чёрный",
+     "белый",
+     "серый",
+     "серебристый",
+     "золотой",
+     "синий",
+     "голубой",
+     "зелёный",
+     "красный",
+     "фиолетовый",
+     "розовый",
+     "жёлтый",
+     "бежевый",
+     "оранжевый"
+    ],
+    "variant": true,
+    "filter": true,
+    "in_title": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "screen",
+    "name": "Диагональ экрана",
+    "kind": "number",
+    "unit": "″",
+    "filter": true,
+    "widget": "range"
+   }
+  ]
+ },
+ {
+  "name": "Аудио",
+  "slug": "audio",
+  "icon": "headphones",
+  "children": [
+   {
+    "name": "Наушники",
+    "slug": "headphones",
+    "battery": true,
+    "seo": "Наушники AirPods, Sony, JBL, Samsung: беспроводные и проводные.",
+    "attributes": [
+     {
+      "code": "type",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "Беспроводные TWS",
+       "Полноразмерные",
+       "Накладные",
+       "Внутриканальные",
+       "Вкладыши"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "connection",
+      "name": "Подключение",
+      "kind": "choice",
+      "options": [
+       "Bluetooth",
+       "Проводное"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "anc",
+      "name": "Активное шумоподавление",
+      "kind": "boolean",
+      "filter": true,
+      "widget": "toggle"
+     },
+     {
+      "code": "color",
+      "name": "Цвет",
+      "kind": "choice",
+      "options": [
+       "чёрный",
+       "белый",
+       "серый",
+       "серебристый",
+       "золотой",
+       "синий",
+       "голубой",
+       "зелёный",
+       "красный",
+       "фиолетовый",
+       "розовый",
+       "жёлтый",
+       "бежевый",
+       "оранжевый"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Колонки",
+    "slug": "speakers",
+    "seo": "Портативные и умные колонки: JBL, Яндекс Станция, Marshall.",
+    "attributes": [
+     {
+      "code": "type",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "Портативная",
+       "Умная колонка",
+       "Акустическая система",
+       "Саундбар"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "color",
+      "name": "Цвет",
+      "kind": "choice",
+      "options": [
+       "чёрный",
+       "белый",
+       "серый",
+       "серебристый",
+       "золотой",
+       "синий",
+       "голубой",
+       "зелёный",
+       "красный",
+       "фиолетовый",
+       "розовый",
+       "жёлтый",
+       "бежевый",
+       "оранжевый"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "ТВ и видео",
+  "slug": "tv-video",
+  "icon": "tv",
+  "children": [
+   {
+    "name": "Телевизоры",
+    "slug": "tvs",
+    "screen": true,
+    "seo": "Телевизоры Samsung, LG, Xiaomi, Sony: Smart TV, 4K, OLED.",
+    "attributes": [
+     {
+      "code": "diagonal",
+      "name": "Диагональ",
+      "kind": "choice",
+      "options": [
+       "24″",
+       "32″",
+       "40″",
+       "43″",
+       "50″",
+       "55″",
+       "58″",
+       "65″",
+       "75″",
+       "85″"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "resolution",
+      "name": "Разрешение",
+      "kind": "choice",
+      "options": [
+       "HD",
+       "Full HD",
+       "4K",
+       "8K"
+      ],
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "panel",
+      "name": "Тип экрана",
+      "kind": "choice",
+      "options": [
+       "LED",
+       "QLED",
+       "OLED",
+       "Mini LED"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "smart",
+      "name": "Smart TV",
+      "kind": "boolean",
+      "filter": true,
+      "widget": "toggle"
+     }
+    ]
+   },
+   {
+    "name": "Проекторы",
+    "slug": "projectors",
+    "seo": "Проекторы для дома и офиса.",
+    "attributes": [
+     {
+      "code": "resolution",
+      "name": "Разрешение",
+      "kind": "choice",
+      "options": [
+       "HD",
+       "Full HD",
+       "4K"
+      ],
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "brightness",
+      "name": "Яркость",
+      "kind": "number",
+      "unit": "лм",
+      "filter": true,
+      "widget": "range"
+     }
+    ]
+   },
+   {
+    "name": "ТВ-приставки",
+    "slug": "tv-boxes",
+    "seo": "Смарт-приставки для телевизора: Xiaomi, Apple TV и другие.",
+    "attributes": [
+     {
+      "code": "resolution",
+      "name": "Максимальное разрешение",
+      "kind": "choice",
+      "options": [
+       "Full HD",
+       "4K"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Игры и приставки",
+  "slug": "gaming",
+  "icon": "gamepad-2",
+  "children": [
+   {
+    "name": "Игровые приставки",
+    "slug": "consoles",
+    "seo": "PlayStation 5, Xbox Series, Nintendo Switch и Steam Deck б/у и новые.",
+    "attributes": [
+     {
+      "code": "storage",
+      "name": "Встроенная память",
+      "kind": "choice",
+      "options": [
+       "32 ГБ",
+       "64 ГБ",
+       "256 ГБ",
+       "500 ГБ",
+       "512 ГБ",
+       "825 ГБ",
+       "1 ТБ",
+       "2 ТБ"
+      ],
+      "variant": true,
+      "filter": true,
+      "price_key": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "color",
+      "name": "Цвет",
+      "kind": "choice",
+      "options": [
+       "чёрный",
+       "белый",
+       "серый",
+       "серебристый",
+       "золотой",
+       "синий",
+       "голубой",
+       "зелёный",
+       "красный",
+       "фиолетовый",
+       "розовый",
+       "жёлтый",
+       "бежевый",
+       "оранжевый"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Игры",
+    "slug": "games",
+    "seo": "Игры на дисках и картриджах для PlayStation, Xbox и Nintendo Switch.",
+    "attributes": [
+     {
+      "code": "platform",
+      "name": "Платформа",
+      "kind": "choice",
+      "options": [
+       "PlayStation 5",
+       "PlayStation 4",
+       "Xbox Series X|S",
+       "Xbox One",
+       "Nintendo Switch",
+       "Nintendo Switch 2",
+       "ПК"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "format",
+      "name": "Носитель",
+      "kind": "choice",
+      "options": [
+       "Диск",
+       "Картридж"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Геймпады и аксессуары",
+    "slug": "gaming-accessories",
+    "seo": "Геймпады DualSense, Xbox, Joy-Con, рули и VR-шлемы.",
+    "attributes": [
+     {
+      "code": "type",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "Геймпад",
+       "Руль",
+       "VR-шлем",
+       "Зарядная станция",
+       "Другое"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "platform",
+      "name": "Платформа",
+      "kind": "choice",
+      "options": [
+       "PlayStation 5",
+       "PlayStation 4",
+       "Xbox Series X|S",
+       "Xbox One",
+       "Nintendo Switch",
+       "Nintendo Switch 2",
+       "ПК"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "color",
+      "name": "Цвет",
+      "kind": "choice",
+      "options": [
+       "чёрный",
+       "белый",
+       "серый",
+       "серебристый",
+       "золотой",
+       "синий",
+       "голубой",
+       "зелёный",
+       "красный",
+       "фиолетовый",
+       "розовый",
+       "жёлтый",
+       "бежевый",
+       "оранжевый"
+      ],
+      "variant": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Фото и видео",
+  "slug": "photo-video",
+  "icon": "camera",
+  "children": [
+   {
+    "name": "Фотоаппараты",
+    "slug": "cameras",
+    "battery": true,
+    "screen": true,
+    "seo": "Беззеркальные и зеркальные фотоаппараты Canon, Sony, Nikon, Fujifilm.",
+    "attributes": [
+     {
+      "code": "type",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "Беззеркальный",
+       "Зеркальный",
+       "Компактный"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "sensor",
+      "name": "Матрица",
+      "kind": "choice",
+      "options": [
+       "Полнокадровая",
+       "APS-C",
+       "Micro 4/3",
+       "1″",
+       "Меньше 1″"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "megapixels",
+      "name": "Разрешение матрицы",
+      "kind": "number",
+      "unit": "Мп",
+      "filter": true,
+      "widget": "range"
+     },
+     {
+      "code": "kit",
+      "name": "Комплектация",
+      "kind": "choice",
+      "options": [
+       "Body (без объектива)",
+       "Kit (с объективом)"
+      ],
+      "variant": true,
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Объективы",
+    "slug": "lenses",
+    "seo": "Объективы для беззеркальных и зеркальных камер.",
+    "attributes": [
+     {
+      "code": "mount",
+      "name": "Байонет",
+      "kind": "choice",
+      "options": [
+       "Canon RF",
+       "Canon EF",
+       "Canon EF-S",
+       "Sony E",
+       "Nikon Z",
+       "Nikon F",
+       "Fujifilm X",
+       "Micro 4/3",
+       "L-Mount"
+      ],
+      "required": true,
+      "filter": true,
+      "in_title": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "type",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "Фикс",
+       "Зум"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Экшн-камеры",
+    "slug": "action-cameras",
+    "battery": true,
+    "screen": true,
+    "seo": "Экшн-камеры GoPro, DJI Osmo Action и Insta360.",
+    "attributes": [
+     {
+      "code": "video",
+      "name": "Максимальное разрешение видео",
+      "kind": "choice",
+      "options": [
+       "Full HD",
+       "4K",
+       "5K",
+       "5,3K",
+       "5,7K",
+       "8K"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Умные часы и браслеты",
+  "slug": "wearables",
+  "icon": "watch",
+  "battery": true,
+  "screen": true,
+  "seo": "Apple Watch, Samsung Galaxy Watch, Xiaomi Smart Band и другие.",
+  "attributes": [
+   {
+    "code": "type",
+    "name": "Тип",
+    "kind": "choice",
+    "options": [
+     "Смарт-часы",
+     "Фитнес-браслет"
+    ],
+    "filter": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "size",
+    "name": "Размер корпуса",
+    "kind": "choice",
+    "options": [
+     "40 мм",
+     "41 мм",
+     "42 мм",
+     "43 мм",
+     "44 мм",
+     "45 мм",
+     "46 мм",
+     "47 мм",
+     "49 мм"
+    ],
+    "variant": true,
+    "filter": true,
+    "in_title": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "connectivity",
+    "name": "Связь",
+    "kind": "choice",
+    "options": [
+     "Bluetooth",
+     "GPS",
+     "GPS + Cellular"
+    ],
+    "variant": true,
+    "filter": true,
+    "widget": "checkboxes"
+   },
+   {
+    "code": "color",
+    "name": "Цвет",
+    "kind": "choice",
+    "options": [
+     "чёрный",
+     "белый",
+     "серый",
+     "серебристый",
+     "золотой",
+     "синий",
+     "голубой",
+     "зелёный",
+     "красный",
+     "фиолетовый",
+     "розовый",
+     "жёлтый",
+     "бежевый",
+     "оранжевый"
+    ],
+    "variant": true,
+    "filter": true,
+    "in_title": true,
+    "widget": "checkboxes"
+   }
+  ]
+ },
+ {
+  "name": "Аксессуары",
+  "slug": "accessories",
+  "icon": "plug",
+  "children": [
+   {
+    "name": "Чехлы и стёкла",
+    "slug": "cases",
+    "seo": "Чехлы, защитные стёкла и плёнки для телефонов и планшетов.",
+    "attributes": [
+     {
+      "code": "type",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "Чехол",
+       "Защитное стекло",
+       "Плёнка"
+      ],
+      "required": true,
+      "filter": true,
+      "widget": "checkboxes"
+     }
+    ]
+   },
+   {
+    "name": "Зарядки и кабели",
+    "slug": "chargers",
+    "seo": "Зарядные устройства, кабели и беспроводные зарядки.",
+    "attributes": [
+     {
+      "code": "type",
+      "name": "Тип",
+      "kind": "choice",
+      "options": [
+       "Сетевое зарядное устройство",
+       "Беспроводная зарядка",
+       "Автомобильное зарядное устройство",
+       "Кабель"
+      ],
+      "required": true,
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "connector",
+      "name": "Разъём",
+      "kind": "choice",
+      "options": [
+       "USB-C",
+       "Lightning",
+       "MagSafe",
+       "micro-USB"
+      ],
+      "filter": true,
+      "widget": "checkboxes"
+     },
+     {
+      "code": "power",
+      "name": "Мощность",
+      "kind": "number",
+      "unit": "Вт",
+      "filter": true,
+      "widget": "range"
+     }
+    ]
+   },
+   {
+    "name": "Повербанки",
+    "slug": "power-banks",
+    "battery": true,
+    "seo": "Внешние аккумуляторы для телефона и ноутбука.",
+    "attributes": [
+     {
+      "code": "capacity",
+      "name": "Ёмкость",
+      "kind": "number",
+      "unit": "мА·ч",
+      "required": true,
+      "filter": true,
+      "widget": "range"
+     },
+     {
+      "code": "power",
+      "name": "Мощность",
+      "kind": "number",
+      "unit": "Вт",
+      "filter": true,
+      "widget": "range"
+     }
+    ]
+   }
+  ]
+ }
+]

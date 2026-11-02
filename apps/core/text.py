@@ -2,6 +2,7 @@ from datetime import date, datetime
 from decimal import Decimal
 
 from django.utils import timezone
+from django.utils.text import slugify
 
 NBSP = "\u00a0"
 NARROW_NBSP = "\u202f"
@@ -65,3 +66,17 @@ def human_datetime(value: datetime | date) -> str:
         if day.year != today.year or time is None:
             return label
     return f"{label} в {time}" if time else label
+
+
+TRANSLIT = {
+    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "e", "ж": "zh",
+    "з": "z", "и": "i", "й": "y", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
+    "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "kh", "ц": "ts",
+    "ч": "ch", "ш": "sh", "щ": "shch", "ъ": "", "ы": "y", "ь": "", "э": "e", "ю": "yu",
+    "я": "ya",
+}  # fmt: skip
+
+
+def slugify_ru(value: str, max_length: int = 80) -> str:
+    latin = "".join(TRANSLIT.get(char, char) for char in value.lower())
+    return slugify(latin)[:max_length].strip("-")

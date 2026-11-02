@@ -27,12 +27,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "django.contrib.humanize",
+    "django.contrib.postgres",
     "django.forms",
     "channels",
     "django_htmx",
     "apps.core",
     "apps.accounts",
     "apps.notifications",
+    "apps.catalog",
 ]
 
 MIDDLEWARE = [

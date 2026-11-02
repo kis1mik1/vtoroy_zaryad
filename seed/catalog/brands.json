@@ -1,0 +1,630 @@
+{
+ "Apple": {
+  "aliases": [
+   "эпл",
+   "эппл",
+   "апл",
+   "эпп"
+  ],
+  "categories": [
+   "tvs"
+  ]
+ },
+ "Samsung": {
+  "aliases": [
+   "самсунг",
+   "самсунк"
+  ],
+  "categories": [
+   "tvs",
+   "monitors",
+   "storage",
+   "chargers",
+   "cases"
+  ]
+ },
+ "Xiaomi": {
+  "aliases": [
+   "сяоми",
+   "ксиоми",
+   "шаоми",
+   "ксяоми",
+   "редми",
+   "поко"
+  ],
+  "categories": [
+   "tvs",
+   "monitors",
+   "projectors",
+   "power-banks",
+   "chargers",
+   "keyboards-mice",
+   "speakers"
+  ]
+ },
+ "Google": {
+  "aliases": [
+   "гугл"
+  ],
+  "categories": []
+ },
+ "Honor": {
+  "aliases": [
+   "хонор"
+  ],
+  "categories": []
+ },
+ "Huawei": {
+  "aliases": [
+   "хуавей",
+   "хуавэй"
+  ],
+  "categories": [
+   "monitors",
+   "speakers"
+  ]
+ },
+ "realme": {
+  "aliases": [
+   "реалми"
+  ],
+  "categories": []
+ },
+ "OnePlus": {
+  "aliases": [
+   "ванплас",
+   "ван плас"
+  ],
+  "categories": []
+ },
+ "Nothing": {
+  "aliases": [
+   "натинг"
+  ],
+  "categories": []
+ },
+ "Tecno": {
+  "aliases": [
+   "техно"
+  ],
+  "categories": []
+ },
+ "Infinix": {
+  "aliases": [
+   "инфиникс"
+  ],
+  "categories": []
+ },
+ "Nokia": {
+  "aliases": [
+   "нокиа",
+   "нокия"
+  ],
+  "categories": [
+   "feature-phones"
+  ]
+ },
+ "Philips": {
+  "aliases": [
+   "филипс"
+  ],
+  "categories": [
+   "feature-phones",
+   "tvs",
+   "monitors"
+  ]
+ },
+ "F+": {
+  "aliases": [],
+  "categories": [
+   "feature-phones"
+  ]
+ },
+ "ASUS": {
+  "aliases": [
+   "асус",
+   "азус"
+  ],
+  "categories": [
+   "monitors",
+   "motherboards",
+   "keyboards-mice",
+   "desktops"
+  ]
+ },
+ "Lenovo": {
+  "aliases": [
+   "леново"
+  ],
+  "categories": [
+   "desktops",
+   "all-in-one",
+   "monitors"
+  ]
+ },
+ "HP": {
+  "aliases": [
+   "хп",
+   "эйчпи"
+  ],
+  "categories": [
+   "desktops",
+   "all-in-one",
+   "monitors"
+  ]
+ },
+ "Acer": {
+  "aliases": [
+   "асер",
+   "эйсер"
+  ],
+  "categories": [
+   "monitors"
+  ]
+ },
+ "MSI": {
+  "aliases": [
+   "мси"
+  ],
+  "categories": [
+   "monitors",
+   "motherboards",
+   "desktops"
+  ]
+ },
+ "Dell": {
+  "aliases": [
+   "делл"
+  ],
+  "categories": [
+   "monitors"
+  ]
+ },
+ "LG": {
+  "aliases": [
+   "лджи",
+   "элджи"
+  ],
+  "categories": [
+   "tvs",
+   "monitors"
+  ]
+ },
+ "AOC": {
+  "aliases": [],
+  "categories": [
+   "monitors"
+  ]
+ },
+ "BenQ": {
+  "aliases": [
+   "бенкью"
+  ],
+  "categories": [
+   "monitors",
+   "projectors"
+  ]
+ },
+ "Gigabyte": {
+  "aliases": [
+   "гигабайт"
+  ],
+  "categories": [
+   "monitors",
+   "motherboards",
+   "psu"
+  ]
+ },
+ "ASRock": {
+  "aliases": [],
+  "categories": [
+   "motherboards"
+  ]
+ },
+ "Logitech": {
+  "aliases": [
+   "логитек",
+   "логитех"
+  ],
+  "categories": []
+ },
+ "Razer": {
+  "aliases": [
+   "рейзер"
+  ],
+  "categories": []
+ },
+ "Keychron": {
+  "aliases": [],
+  "categories": []
+ },
+ "HyperX": {
+  "aliases": [
+   "хайперикс"
+  ],
+  "categories": [
+   "keyboards-mice",
+   "headphones"
+  ]
+ },
+ "Defender": {
+  "aliases": [
+   "дефендер"
+  ],
+  "categories": [
+   "keyboards-mice"
+  ]
+ },
+ "NVIDIA": {
+  "aliases": [
+   "нвидиа",
+   "нвидия",
+   "джифорс"
+  ],
+  "categories": []
+ },
+ "AMD": {
+  "aliases": [
+   "амд"
+  ],
+  "categories": []
+ },
+ "Intel": {
+  "aliases": [
+   "интел"
+  ],
+  "categories": []
+ },
+ "Kingston": {
+  "aliases": [
+   "кингстон"
+  ],
+  "categories": [
+   "ram",
+   "storage"
+  ]
+ },
+ "Corsair": {
+  "aliases": [
+   "корсар"
+  ],
+  "categories": [
+   "ram",
+   "psu",
+   "keyboards-mice"
+  ]
+ },
+ "G.Skill": {
+  "aliases": [],
+  "categories": [
+   "ram"
+  ]
+ },
+ "Crucial": {
+  "aliases": [],
+  "categories": [
+   "ram",
+   "storage"
+  ]
+ },
+ "ADATA": {
+  "aliases": [],
+  "categories": [
+   "ram",
+   "storage"
+  ]
+ },
+ "Western Digital": {
+  "aliases": [
+   "wd",
+   "вд"
+  ],
+  "categories": [
+   "storage"
+  ]
+ },
+ "Seagate": {
+  "aliases": [
+   "сигейт"
+  ],
+  "categories": [
+   "storage"
+  ]
+ },
+ "Toshiba": {
+  "aliases": [
+   "тошиба"
+  ],
+  "categories": [
+   "storage"
+  ]
+ },
+ "be quiet!": {
+  "aliases": [
+   "би квайт"
+  ],
+  "categories": [
+   "psu"
+  ]
+ },
+ "Cooler Master": {
+  "aliases": [],
+  "categories": [
+   "psu"
+  ]
+ },
+ "Deepcool": {
+  "aliases": [
+   "дипкул"
+  ],
+  "categories": [
+   "psu"
+  ]
+ },
+ "Chieftec": {
+  "aliases": [],
+  "categories": [
+   "psu"
+  ]
+ },
+ "PocketBook": {
+  "aliases": [
+   "покетбук"
+  ],
+  "categories": []
+ },
+ "Amazon": {
+  "aliases": [
+   "киндл",
+   "kindle"
+  ],
+  "categories": []
+ },
+ "Sony": {
+  "aliases": [
+   "сони"
+  ],
+  "categories": [
+   "tvs"
+  ]
+ },
+ "JBL": {
+  "aliases": [
+   "джибиэль"
+  ],
+  "categories": []
+ },
+ "Marshall": {
+  "aliases": [
+   "маршал",
+   "маршалл"
+  ],
+  "categories": []
+ },
+ "Bose": {
+  "aliases": [
+   "боуз"
+  ],
+  "categories": []
+ },
+ "Sennheiser": {
+  "aliases": [
+   "сеннхайзер"
+  ],
+  "categories": []
+ },
+ "Beats": {
+  "aliases": [
+   "битс"
+  ],
+  "categories": []
+ },
+ "Яндекс": {
+  "aliases": [
+   "yandex",
+   "алиса"
+  ],
+  "categories": [
+   "tv-boxes",
+   "tvs"
+  ]
+ },
+ "TCL": {
+  "aliases": [],
+  "categories": [
+   "tvs"
+  ]
+ },
+ "Hisense": {
+  "aliases": [
+   "хайсенс"
+  ],
+  "categories": [
+   "tvs"
+  ]
+ },
+ "Haier": {
+  "aliases": [
+   "хайер"
+  ],
+  "categories": [
+   "tvs"
+  ]
+ },
+ "Epson": {
+  "aliases": [
+   "эпсон"
+  ],
+  "categories": [
+   "projectors"
+  ]
+ },
+ "XGIMI": {
+  "aliases": [],
+  "categories": [
+   "projectors"
+  ]
+ },
+ "Wanbo": {
+  "aliases": [],
+  "categories": [
+   "projectors"
+  ]
+ },
+ "Microsoft": {
+  "aliases": [
+   "майкрософт",
+   "иксбокс"
+  ],
+  "categories": []
+ },
+ "Nintendo": {
+  "aliases": [
+   "нинтендо"
+  ],
+  "categories": []
+ },
+ "Valve": {
+  "aliases": [
+   "валв",
+   "стим дек"
+  ],
+  "categories": []
+ },
+ "8BitDo": {
+  "aliases": [],
+  "categories": []
+ },
+ "Canon": {
+  "aliases": [
+   "кэнон",
+   "канон"
+  ],
+  "categories": [
+   "lenses"
+  ]
+ },
+ "Nikon": {
+  "aliases": [
+   "никон"
+  ],
+  "categories": [
+   "lenses"
+  ]
+ },
+ "Fujifilm": {
+  "aliases": [
+   "фуджи",
+   "фудзи",
+   "фуджифильм"
+  ],
+  "categories": [
+   "lenses"
+  ]
+ },
+ "Panasonic": {
+  "aliases": [
+   "панасоник"
+  ],
+  "categories": [
+   "lenses"
+  ]
+ },
+ "Sigma": {
+  "aliases": [
+   "сигма"
+  ],
+  "categories": [
+   "lenses"
+  ]
+ },
+ "Tamron": {
+  "aliases": [
+   "тамрон"
+  ],
+  "categories": [
+   "lenses"
+  ]
+ },
+ "Samyang": {
+  "aliases": [],
+  "categories": [
+   "lenses"
+  ]
+ },
+ "Viltrox": {
+  "aliases": [],
+  "categories": [
+   "lenses"
+  ]
+ },
+ "GoPro": {
+  "aliases": [
+   "гопро",
+   "гоу про"
+  ],
+  "categories": []
+ },
+ "DJI": {
+  "aliases": [
+   "диджиай"
+  ],
+  "categories": []
+ },
+ "Insta360": {
+  "aliases": [],
+  "categories": []
+ },
+ "Amazfit": {
+  "aliases": [
+   "амазфит"
+  ],
+  "categories": []
+ },
+ "Garmin": {
+  "aliases": [
+   "гармин"
+  ],
+  "categories": []
+ },
+ "Anker": {
+  "aliases": [
+   "анкер"
+  ],
+  "categories": [
+   "chargers",
+   "power-banks"
+  ]
+ },
+ "Baseus": {
+  "aliases": [
+   "басеус",
+   "бейсус"
+  ],
+  "categories": [
+   "chargers",
+   "power-banks",
+   "cases"
+  ]
+ },
+ "Ugreen": {
+  "aliases": [],
+  "categories": [
+   "chargers",
+   "power-banks"
+  ]
+ },
+ "Belkin": {
+  "aliases": [],
+  "categories": [
+   "chargers"
+  ]
+ },
+ "Hoco": {
+  "aliases": [],
+  "categories": [
+   "chargers",
+   "power-banks"
+  ]
+ }
+}

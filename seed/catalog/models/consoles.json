@@ -1,0 +1,32 @@
+{
+  "category": "consoles",
+  "brands": {
+    "Sony": [
+      {"name": "PlayStation 5", "year": 2020, "options": {"storage": ["825 ГБ"]}},
+      {"name": "PlayStation 5 Digital Edition", "year": 2020, "options": {"storage": ["825 ГБ"]}},
+      {"name": "PlayStation 5 Slim", "year": 2023, "options": {"storage": ["1 ТБ"]}},
+      {"name": "PlayStation 5 Slim Digital Edition", "year": 2023, "options": {"storage": ["1 ТБ"]}},
+      {"name": "PlayStation 5 Pro", "year": 2024, "options": {"storage": ["2 ТБ"]}},
+      {"name": "PlayStation 4", "year": 2013, "options": {"storage": ["500 ГБ", "1 ТБ"]}},
+      {"name": "PlayStation 4 Slim", "year": 2016, "options": {"storage": ["500 ГБ", "1 ТБ"]}},
+      {"name": "PlayStation 4 Pro", "year": 2016, "options": {"storage": ["1 ТБ"]}},
+      {"name": "PlayStation Portal", "year": 2023}
+    ],
+    "Microsoft": [
+      {"name": "Xbox Series X", "year": 2020, "options": {"storage": ["1 ТБ"]}},
+      {"name": "Xbox Series S", "year": 2020, "options": {"storage": ["512 ГБ", "1 ТБ"]}},
+      {"name": "Xbox One S", "year": 2016, "options": {"storage": ["500 ГБ", "1 ТБ"]}},
+      {"name": "Xbox One X", "year": 2017, "options": {"storage": ["1 ТБ"]}}
+    ],
+    "Nintendo": [
+      {"name": "Switch", "year": 2017, "options": {"storage": ["32 ГБ"]}},
+      {"name": "Switch OLED", "year": 2021, "options": {"storage": ["64 ГБ"]}},
+      {"name": "Switch Lite", "year": 2019, "options": {"storage": ["32 ГБ"]}},
+      {"name": "Switch 2", "year": 2025, "options": {"storage": ["256 ГБ"]}}
+    ],
+    "Valve": [
+      {"name": "Steam Deck LCD", "year": 2022, "options": {"storage": ["64 ГБ", "256 ГБ", "512 ГБ"]}},
+      {"name": "Steam Deck OLED", "year": 2023, "options": {"storage": ["512 ГБ", "1 ТБ"]}}
+    ]
+  }
+}

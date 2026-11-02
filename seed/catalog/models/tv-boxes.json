@@ -1,0 +1,15 @@
+{
+  "category": "tv-boxes",
+  "brands": {
+    "Xiaomi": [
+      {"name": "Mi Box S (2-го поколения)", "year": 2023, "specs": {"resolution": "4K"}},
+      {"name": "TV Stick 4K", "year": 2022, "specs": {"resolution": "4K"}}
+    ],
+    "Apple": [
+      {"name": "Apple TV 4K (2022)", "year": 2022, "specs": {"resolution": "4K"}}
+    ],
+    "Google": [
+      {"name": "Chromecast with Google TV", "year": 2020, "specs": {"resolution": "4K"}}
+    ]
+  }
+}
