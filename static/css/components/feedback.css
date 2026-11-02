@@ -141,6 +141,14 @@
   font-weight: 550;
 }
 
+.toast__text a {
+  color: inherit;
+}
+
+.toast__text a:hover {
+  color: var(--lime-400);
+}
+
 .toast__close {
   display: grid;
   place-items: center;

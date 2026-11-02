@@ -1,0 +1,1 @@
+<span class="counter" data-notifications-count{% if not unread_notifications %} hidden{% endif %}>{% if unread_notifications > 99 %}99+{% else %}{{ unread_notifications|default:0 }}{% endif %}</span>

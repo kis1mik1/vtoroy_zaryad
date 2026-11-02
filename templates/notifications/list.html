@@ -1,0 +1,38 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Уведомления{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="notices-page">
+    <header class="page-header notices-page__header">
+      <h1>Уведомления</h1>
+      {% if unread_notifications %}
+        <form method="post" action="{% url 'notifications:read_all' %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          <button class="btn btn--secondary btn--sm" type="submit">{% icon "check" 16 %}Прочитать все</button>
+        </form>
+      {% endif %}
+    </header>
+    <nav class="tabs" aria-label="Фильтр уведомлений">
+      <a class="tabs__tab" href="{% url 'notifications:list' %}"{% if not only_unread %} aria-current="page"{% endif %}>Все<span class="tabs__count">{{ total_count }}</span></a>
+      <a class="tabs__tab" href="?filter=unread"{% if only_unread %} aria-current="page"{% endif %}>Непрочитанные<span class="tabs__count">{{ unread_notifications }}</span></a>
+    </nav>
+    <div class="card notices-page__list"{% if not page_obj.object_list %} hidden{% endif %}{% if page_obj.number == 1 %} data-live-notices{% endif %}>
+      {% for notification in page_obj %}{% include "notifications/partials/item.html" %}{% endfor %}
+    </div>
+    {% if page_obj.object_list %}
+      {% pagination page_obj %}
+    {% else %}
+      <div data-live-empty>
+        {% if only_unread %}
+          {% include "components/empty_state.html" with icon_name="circle-check" title="Всё прочитано" text="Новых уведомлений нет." %}
+        {% else %}
+          {% include "components/empty_state.html" with icon_name="bell" title="Уведомлений пока нет" text="Здесь появятся ответы покупателей, решения модерации и снижение цен в избранном." %}
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

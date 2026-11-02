@@ -1,0 +1,10 @@
+<a class="notice{% if not notification.is_read %} notice--unread{% endif %}" href="{% url 'notifications:open' notification.pk %}">
+  <span class="notice__icon notice__icon--{{ notification.kind }}">
+    {% if notification.kind == "message" %}{% icon "message-circle" 18 %}{% elif notification.kind == "moderation" %}{% icon "shield-check" 18 %}{% elif notification.kind == "price_drop" %}{% icon "hand-coins" 18 %}{% elif notification.kind == "saved_search" %}{% icon "search" 18 %}{% elif notification.kind == "review" %}{% icon "star" 18 %}{% elif notification.kind == "payment" %}{% icon "wallet" 18 %}{% else %}{% icon "user" 18 %}{% endif %}
+  </span>
+  <span class="notice__text">
+    <span class="notice__title">{{ notification.title }}</span>
+    {% if notification.body %}<span class="notice__body">{{ notification.body|truncatechars:140 }}</span>{% endif %}
+    <time class="notice__time" datetime="{{ notification.created_at|date:'c' }}">{{ notification.created_at|humandate }}</time>
+  </span>
+</a>

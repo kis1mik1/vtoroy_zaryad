@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "django_htmx",
     "apps.core",
     "apps.accounts",
+    "apps.notifications",
 ]
 
 MIDDLEWARE = [
@@ -44,8 +45,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "apps.core.middleware.CurrentCityMiddleware",
+    "apps.accounts.middleware.BannedUserMiddleware",
+    "apps.accounts.middleware.LastSeenMiddleware",
     "apps.core.middleware.HtmxMessagesMiddleware",
+    "apps.core.middleware.RateLimitMiddleware",
 ]
+
+CLIENT_IP_HEADER = env("CLIENT_IP_HEADER", default="")
 
 ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
@@ -62,6 +68,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.site",
+                "apps.notifications.context_processors.notifications",
             ],
             "builtins": ["apps.core.templatetags.ui"],
         },
@@ -98,6 +105,10 @@ CELERY_TIMEZONE = "Asia/Vladivostok"
 CELERY_BEAT_SCHEDULE = {}
 
 AUTH_USER_MODEL = "accounts.User"
+LOGIN_URL = "accounts:login"
+LOGIN_REDIRECT_URL = "core:home"
+LOGOUT_REDIRECT_URL = "core:home"
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 3
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},

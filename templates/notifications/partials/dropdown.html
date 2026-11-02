@@ -1,0 +1,16 @@
+<div class="notices-dropdown" id="notices-dropdown">
+  <div class="notices-dropdown__header">
+    <span class="notices-dropdown__title">Уведомления</span>
+    {% if unread_notifications %}
+      <button class="btn btn--ghost btn--sm" type="button" hx-post="{% url 'notifications:read_all' %}" hx-target="#notices-dropdown" hx-swap="outerHTML">Прочитать все</button>
+    {% endif %}
+  </div>
+  {% if notifications %}
+    <div class="notices-dropdown__list">
+      {% for notification in notifications %}{% include "notifications/partials/item.html" %}{% endfor %}
+    </div>
+  {% else %}
+    <p class="notices-dropdown__empty">Здесь появятся ответы покупателей, решения модерации и новости по избранному.</p>
+  {% endif %}
+  <a class="notices-dropdown__all" href="{% url 'notifications:list' %}">Все уведомления</a>
+</div>

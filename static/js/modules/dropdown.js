@@ -28,6 +28,9 @@ export function initDropdowns() {
       closeAll(dropdown);
       menu.hidden = !opening;
       toggle.setAttribute("aria-expanded", String(opening));
+      if (opening) {
+        menu.dispatchEvent(new CustomEvent("dropdown:open"));
+      }
       if (opening && event.detail === 0) {
         items(menu)[0]?.focus();
       }

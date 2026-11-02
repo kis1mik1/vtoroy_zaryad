@@ -7,3 +7,9 @@
     </div>
   {% endfor %}
 </div>
+{% if not oob %}
+<template id="toast-template-info"><div class="toast toast--info" data-toast>{% icon "bell" %}<span class="toast__text"></span><button class="toast__close" type="button" aria-label="Закрыть" data-toast-close>{% icon "x" 18 %}</button></div></template>
+<template id="toast-template-success"><div class="toast toast--success" data-toast>{% icon "circle-check" %}<span class="toast__text"></span><button class="toast__close" type="button" aria-label="Закрыть" data-toast-close>{% icon "x" 18 %}</button></div></template>
+<template id="toast-template-warning"><div class="toast toast--warning" data-toast>{% icon "triangle-alert" %}<span class="toast__text"></span><button class="toast__close" type="button" aria-label="Закрыть" data-toast-close>{% icon "x" 18 %}</button></div></template>
+<template id="toast-template-error"><div class="toast toast--error" data-toast>{% icon "circle-x" %}<span class="toast__text"></span><button class="toast__close" type="button" aria-label="Закрыть" data-toast-close>{% icon "x" 18 %}</button></div></template>
+{% endif %}

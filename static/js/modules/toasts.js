@@ -19,6 +19,25 @@ function schedule(root) {
   });
 }
 
+export function showToast(text, level = "info", url = "") {
+  const container = document.getElementById("toasts");
+  const template = document.getElementById(`toast-template-${level}`);
+  if (!container || !template) {
+    return;
+  }
+  const toast = template.content.firstElementChild.cloneNode(true);
+  const label = toast.querySelector(".toast__text");
+  if (url) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.textContent = text;
+    label.append(link);
+  } else {
+    label.textContent = text;
+  }
+  container.append(toast);
+}
+
 export function initToasts() {
   const container = document.getElementById("toasts");
   if (!container) {
@@ -26,6 +45,20 @@ export function initToasts() {
   }
   schedule(container);
   new MutationObserver(() => schedule(container)).observe(container, { childList: true });
+
+  document.addEventListener("toast", (event) => {
+    showToast(event.detail.text, event.detail.level);
+  });
+
+  document.addEventListener("htmx:responseError", (event) => {
+    if (event.detail.xhr.status >= 500) {
+      showToast("Не получилось выполнить действие. Попробуйте ещё раз.", "error");
+    }
+  });
+
+  document.addEventListener("htmx:sendError", () => {
+    showToast("Нет связи с сервером. Проверьте интернет.", "error");
+  });
 
   container.addEventListener("click", (event) => {
     const button = event.target.closest("[data-toast-close]");
