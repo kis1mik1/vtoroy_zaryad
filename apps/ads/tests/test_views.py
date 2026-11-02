@@ -251,7 +251,7 @@ def test_admin_reject_asks_reason_then_rejects(admin_client):
             "action": "reject_ads",
             "_selected_action": [ad.pk],
             "apply": "1",
-            "reason": "Запрещённый товар",
+            "reason": "forbidden",
             "comment": "Это не электроника",
         },
     )
