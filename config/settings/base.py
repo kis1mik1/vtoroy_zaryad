@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "apps.moderation",
     "apps.chat",
     "apps.payments",
+    "apps.reviews",
 ]
 
 MIDDLEWARE = [

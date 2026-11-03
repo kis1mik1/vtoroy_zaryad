@@ -1,0 +1,35 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}{% if review %}Изменить отзыв{% else %}Отзыв о {{ target.first_name }}{% endif %}{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/reviews.css' %}">{% endblock %}
+
+{% block content %}
+  <section class="review-form surface">
+    <header class="page-header">
+      <h1>{% if review %}Изменить отзыв{% else %}Отзыв о сделке{% endif %}</h1>
+      <p>{{ target.first_name }}{% if ad %} · «{{ ad.title }}»{% endif %}. Отзыв увидят все, кто откроет профиль.</p>
+    </header>
+    <form class="form" method="post" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}<ul class="form__errors" role="alert">{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+      <fieldset class="field rating-input{% if form.rating.errors %} field--invalid{% endif %}">
+        <legend class="field__label">{{ form.rating.label }}<span class="required" aria-hidden="true">*</span></legend>
+        <div class="rating-input__stars">
+          {% for radio in form.rating %}
+            {{ radio.tag }}
+            <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}">{% icon "star" 32 %}<span class="visually-hidden">{{ radio.data.value }} — {{ radio.choice_label }}</span></label>
+          {% endfor %}
+        </div>
+        {% if form.rating.errors %}<ul class="field__error">{% for error in form.rating.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+      </fieldset>
+      {% include "components/forms/field.html" with field=form.text %}
+      <p class="field__help">Пишите о сделке: как общались, совпал ли товар с описанием, пришли ли на встречу. Без оскорблений и личных данных.</p>
+      <div class="form__actions">
+        <button class="btn btn--primary" type="submit">{% if review %}Сохранить{% else %}Опубликовать отзыв{% endif %}</button>
+        <a class="btn btn--ghost" href="{{ back_url }}">Отмена</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}

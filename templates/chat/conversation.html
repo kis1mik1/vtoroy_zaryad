@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% load static %}
+{% load static reviews %}
 
 {% block title %}{{ other.first_name }} — {{ conversation.ad.title }}{% endblock %}
 {% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
@@ -17,6 +17,7 @@
         <a href="{% url 'ads:profile' other.pk %}">{% include "components/avatar.html" with person=other size="sm" %}<span>{{ other.first_name }}</span></a>
         {% if other.last_seen_at %}<span class="chat__seen">{% last_seen other.last_seen_at %}</span>{% endif %}
       </div>
+      {% review_action conversation %}
       <div class="dropdown" data-dropdown>
         <button class="btn btn--ghost btn--icon btn--sm" type="button" aria-label="Действия с диалогом" aria-haspopup="true" aria-expanded="false" data-dropdown-toggle>{% icon "menu" 18 %}</button>
         <div class="dropdown__menu" role="menu" hidden data-dropdown-menu>

@@ -1,0 +1,5 @@
+{% if review %}
+  <a class="chat__review" href="{% url 'reviews:list' review.target_id %}#review-{{ review.pk }}">{% include "reviews/partials/stars.html" with rating=review.rating size=14 %}Ваш отзыв</a>
+{% elif can_review %}
+  <a class="btn btn--secondary btn--sm chat__review" href="{% url 'reviews:create' conversation.pk %}">{% icon "star" 16 %}Оставить отзыв</a>
+{% endif %}

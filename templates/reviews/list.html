@@ -1,0 +1,41 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Отзывы о {{ person.first_name }}{% endblock %}
+{% block meta_description %}Отзывы покупателей и продавцов о пользователе {{ person.first_name }} на «{{ project_name }}».{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/reviews.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header reviews-header">
+    <a class="reviews-header__person" href="{% url 'ads:profile' person.pk %}">
+      {% include "components/avatar.html" with person=person size="lg" %}
+      <span><h1>Отзывы о {{ person.first_name }}</h1><span class="muted">{% if person.city %}{{ person.city.name }} · {% endif %}на сайте с {{ person.date_joined|date:"E Y" }}</span></span>
+    </a>
+  </header>
+
+  <div class="reviews-page">
+    <aside class="reviews-page__summary surface">
+      {% if person.rating_count %}
+        {% include "reviews/partials/distribution.html" %}
+      {% else %}
+        <p class="muted">Пока без отзывов.</p>
+      {% endif %}
+      <p class="reviews-page__note">Отзыв можно оставить только после переписки по объявлению, в которой писали оба. Оценка — среднее по всем видимым отзывам.</p>
+    </aside>
+    <section class="reviews-page__list">
+      <nav class="tabs" aria-label="Чьи отзывы">
+        {% for value, label in roles %}
+          <a class="tabs__tab" href="?role={{ value }}"{% if value == role %} aria-current="page"{% endif %}>{{ label }}</a>
+        {% endfor %}
+      </nav>
+      {% if page_obj.object_list %}
+        <div class="review-list">
+          {% for review in page_obj %}{% include "reviews/partials/review.html" %}{% endfor %}
+        </div>
+        {% pagination page_obj %}
+      {% else %}
+        {% include "components/empty_state.html" with icon_name="star" title="Отзывов нет" text="Здесь появятся отзывы после сделок." %}
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

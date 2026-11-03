@@ -21,6 +21,8 @@ GROUP_PERMISSIONS = (
     ("ads", "view_adphoto"),
     ("accounts", "view_user"),
     ("accounts", "view_banrecord"),
+    ("reviews", "moderate_review"),
+    ("reviews", "view_review"),
 )
 
 

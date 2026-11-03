@@ -5,6 +5,7 @@ from django.core.management.base import CommandError
 from apps.accounts.models import User
 from apps.ads.models import Ad
 from apps.moderation.models import Complaint
+from apps.reviews.models import Review
 
 pytestmark = pytest.mark.django_db
 
@@ -26,6 +27,8 @@ def test_seed_demo_creates_data_and_clears():
     assert Complaint.objects.filter(author__in=sellers).exists()
     assert all(ad.price > 0 and ad.search_vector is not None for ad in ads)
     assert ads.filter(photos__isnull=False).exists()
+    rated = sellers.filter(rating_count__gt=0).first()
+    assert rated.rating_count == Review.objects.filter(target=rated, is_hidden=False).count()
 
     call_command("seed_demo", users=1, ads=1, clear=True)
     assert User.objects.filter(email__endswith="@demo.vtoroy-zaryad.ru").count() == 1

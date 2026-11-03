@@ -12,6 +12,9 @@
         {% if perms.moderation.handle_complaint %}
           <a href="{% url 'moderation:complaints' %}"{% if section == "complaints" %} aria-current="page"{% endif %}>Жалобы{% if moderation_counts.complaints %}<span class="tabs__count">{{ moderation_counts.complaints }}</span>{% endif %}</a>
         {% endif %}
+        {% if perms.reviews.moderate_review %}
+          <a href="{% url 'reviews:moderation' %}"{% if section == "reviews" %} aria-current="page"{% endif %}>Отзывы{% if moderation_counts.reviews %}<span class="tabs__count">{{ moderation_counts.reviews }}</span>{% endif %}</a>
+        {% endif %}
         <a href="{% url 'moderation:rejected' %}"{% if section == "rejected" %} aria-current="page"{% endif %}>Отклонены автоматически</a>
         <a href="{% url 'moderation:history' %}"{% if section == "history" %} aria-current="page"{% endif %}>Журнал решений</a>
       </nav>

@@ -1,0 +1,14 @@
+<section class="profile-reviews" aria-labelledby="profile-reviews-title">
+  <div class="profile-reviews__head">
+    <h2 id="profile-reviews-title">Отзывы</h2>
+    {% if person.rating_count %}<a href="{% url 'reviews:list' person.pk %}">Все отзывы</a>{% endif %}
+  </div>
+  {% if person.rating_count %}
+    {% include "reviews/partials/distribution.html" %}
+    <div class="review-list">
+      {% for review in latest %}{% include "reviews/partials/review.html" with user=None %}{% endfor %}
+    </div>
+  {% else %}
+    <p class="muted">Отзывов пока нет. Их оставляют покупатели и продавцы после переписки по объявлению.</p>
+  {% endif %}
+</section>

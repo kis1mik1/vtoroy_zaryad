@@ -17,5 +17,5 @@ def schedule_check(sender, ad, **kwargs):
 
 @receiver(post_migrate)
 def create_moderators_group(sender, **kwargs):
-    if sender.name == "apps.moderation":
+    if sender.name in ("apps.moderation", "apps.reviews"):
         ensure_moderators_group()

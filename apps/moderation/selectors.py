@@ -7,6 +7,7 @@ from django.utils import timezone
 
 from apps.ads.models import CHECK_TIMEOUT, Ad, AdPhoto, AdStatus
 from apps.ads.selectors import with_market
+from apps.reviews.models import Review
 
 from .ml import images
 from .ml.text import load_text_classifier
@@ -159,6 +160,7 @@ def counters() -> dict:
     return {
         "queue": review_queue().count(),
         "complaints": open_complaints.values("ad_id", "target_user_id").distinct().count(),
+        "reviews": Review.objects.reported().count(),
     }
 
 

@@ -13,10 +13,13 @@ from PIL import Image
 
 from apps.accounts.models import ContactMode, User
 from apps.catalog.models import AttributeKind, Category, DeviceModel
+from apps.chat.models import Conversation, Message
 from apps.core.images import fit_within, to_webp
 from apps.core.models import City
 from apps.moderation import services as moderation
 from apps.moderation.models import ComplaintReason
+from apps.reviews.models import AuthorRole, Review
+from apps.reviews.services import recalculate_rating
 
 from .market import recalculate_price_stats
 from .models import Ad, AdPhoto, AdStatus, Condition, Favorite, PriceChange
@@ -151,6 +154,34 @@ COMPLAINT_COMMENTS = {
     ComplaintReason.SPAM: "Такое же объявление уже было у этого продавца.",
     ComplaintReason.OTHER: "Фото явно из интернета, свои показать отказался.",
 }
+
+DEAL_DIALOGS = (
+    ("Здравствуйте! Ещё продаёте?", "Да, в наличии. Можно посмотреть в любой день после шести."),
+    ("Добрый день. Торг возможен?", "Немного уступлю при встрече, если всё устроит."),
+    ("Аккумулятор менялся?", "Нет, родной. Ёмкость указал в объявлении."),
+    ("Комплект полный?", "Да, коробка, кабель и документы."),
+    ("Можно проверить на месте?", "Конечно, приходите, всё покажу."),
+)
+BUYER_REVIEWS = {
+    5: (
+        "Всё как в описании, встретились без опозданий.",
+        "Продавец всё показал, проверили на месте. Рекомендую.",
+        "Быстро договорились, техника в отличном состоянии.",
+        "Честное описание и адекватная цена. Спасибо!",
+    ),
+    4: (
+        "Всё хорошо, но на встрече пришлось подождать минут двадцать.",
+        "Товар в порядке, есть мелкие царапины, о которых не сказали заранее.",
+    ),
+    3: ("Состояние хуже, чем на фото, но цену немного снизили.",),
+    2: ("Долго отвечал и дважды переносил встречу.",),
+}
+SELLER_REVIEWS = (
+    "Пришёл вовремя, всё проверил и сразу купил.",
+    "Вежливый покупатель, сделка прошла быстро.",
+)
+REPLIES = ("Спасибо, пользуйтесь на здоровье!", "Спасибо за отзыв!", "Рад, что всё понравилось.")
+RATING_WEIGHTS = {5: 12, 4: 5, 3: 2, 2: 1}
 
 
 @dataclass
@@ -493,6 +524,59 @@ class DemoBuilder:
             comment="Взял залог за доставку и перестал отвечать.",
         )
         return filed + 1
+
+    @transaction.atomic
+    def deals(self, users: list[User], ads: list[Ad], count: int = 60) -> tuple[int, int]:
+        if len(users) < 2:
+            return 0, 0
+        active = list(
+            Ad.objects.filter(pk__in=[ad.pk for ad in ads], status=AdStatus.ACTIVE)
+            .select_related("seller")
+            .order_by("pk")
+        )
+        picked = self.rng.sample(active, min(count, len(active)))
+        reviews = 0
+        for ad in picked:
+            buyer = self.rng.choice([user for user in users if user.pk != ad.seller_id])
+            asked_at = self.now - timedelta(
+                days=self.rng.randint(1, 25), hours=self.rng.randint(0, 12)
+            )
+            answered_at = asked_at + timedelta(minutes=self.rng.randint(3, 180))
+            conversation = Conversation.objects.create(
+                ad=ad, buyer=buyer, seller_id=ad.seller_id, last_message_at=answered_at
+            )
+            question, answer = self.rng.choice(DEAL_DIALOGS)
+            for sender, text, sent_at in (
+                (buyer, question, asked_at),
+                (ad.seller, answer, answered_at),
+            ):
+                message = Message.objects.create(
+                    conversation=conversation, sender=sender, text=text, read_at=sent_at
+                )
+                Message.objects.filter(pk=message.pk).update(created_at=sent_at)
+            if self.rng.random() < 0.7:
+                reviews += self._review(buyer, ad.seller, ad, AuthorRole.BUYER, answered_at)
+            if self.rng.random() < 0.35:
+                reviews += self._review(ad.seller, buyer, ad, AuthorRole.SELLER, answered_at)
+        for user in users:
+            recalculate_rating(user.pk)
+        return len(picked), reviews
+
+    def _review(self, author, target, ad, role, after) -> int:
+        if role == AuthorRole.BUYER:
+            rating = self.rng.choices(list(RATING_WEIGHTS), list(RATING_WEIGHTS.values()))[0]
+            text = self.rng.choice(BUYER_REVIEWS[rating])
+        else:
+            rating, text = 5, self.rng.choice(SELLER_REVIEWS)
+        written_at = after + timedelta(days=self.rng.randint(0, 3), hours=self.rng.randint(1, 8))
+        review = Review.objects.create(
+            author=author, target=target, ad=ad, author_role=role, rating=rating, text=text
+        )
+        updates = {"created_at": written_at}
+        if role == AuthorRole.BUYER and self.rng.random() < 0.3:
+            updates.update(reply_text=self.rng.choice(REPLIES), reply_at=written_at)
+        Review.objects.filter(pk=review.pk).update(**updates)
+        return 1
 
     def finish(self, ads: list[Ad]) -> int:
         for ad in ads:

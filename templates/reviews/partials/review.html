@@ -1,0 +1,69 @@
+<article class="review{% if review.is_hidden %} review--hidden{% endif %}" id="review-{{ review.pk }}">
+  <header class="review__head">
+    {% include "components/avatar.html" with person=review.author size="sm" %}
+    <div class="review__who">
+      <a class="review__author" href="{% url 'ads:profile' review.author_id %}">{{ review.author.first_name }}</a>
+      <span class="review__meta">{{ review.get_author_role_display }} · {{ review.created_at|humandate }}</span>
+    </div>
+    {% include "reviews/partials/stars.html" with rating=review.rating %}
+  </header>
+  {% if review.ad %}<p class="review__deal">Сделка: {% if review.ad.status == "active" %}<a href="{% url 'ads:detail' review.ad.pk review.ad.slug %}">{{ review.ad.title }}</a>{% else %}{{ review.ad.title }}{% endif %}</p>{% endif %}
+  <p class="review__text">{{ review.text|linebreaksbr }}</p>
+  {% if review.is_hidden %}<p class="review__hidden">{% icon "ban" 16 %}Скрыт модератором: {{ review.hidden_reason }}</p>{% endif %}
+
+  {% if review.reply_text %}
+    <div class="review__reply">
+      <span class="review__reply-title">Ответ {{ review.target.first_name|default:"продавца" }} · {{ review.reply_at|humandate }}</span>
+      <p>{{ review.reply_text|linebreaksbr }}</p>
+    </div>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <div class="review__actions">
+      {% if user.pk == review.author_id and review.is_editable %}
+        <a class="link-action" href="{% url 'reviews:edit' review.pk %}">{% icon "pencil" 16 %}Изменить</a>
+      {% endif %}
+      {% if user.pk == review.target_id and not review.is_hidden %}
+        {% if not review.reply_text %}
+          <details class="review__form">
+            <summary class="link-action">{% icon "message-circle" 16 %}Ответить</summary>
+            <form method="post" action="{% url 'reviews:reply' review.pk %}" class="form">
+              {% csrf_token %}
+              {% include "components/forms/field.html" with field=reply_form.text %}
+              <button class="btn btn--primary btn--sm" type="submit">Опубликовать ответ</button>
+            </form>
+          </details>
+        {% endif %}
+        {% if review.can_be_reported %}
+          <details class="review__form">
+            <summary class="link-action">{% icon "flag" 16 %}Пожаловаться</summary>
+            <form method="post" action="{% url 'reviews:report' review.pk %}" class="form">
+              {% csrf_token %}
+              {% include "components/forms/field.html" with field=report_form.reason %}
+              <button class="btn btn--secondary btn--sm" type="submit">Отправить модератору</button>
+            </form>
+          </details>
+        {% elif review.reported_at %}
+          <span class="review__note">Жалоба на рассмотрении</span>
+        {% endif %}
+      {% endif %}
+      {% if can_moderate %}
+        {% if review.is_hidden %}
+          <form method="post" action="{% url 'reviews:moderate' review.pk 'restore' %}">
+            {% csrf_token %}<input type="hidden" name="next" value="list">
+            <button class="link-action" type="submit">{% icon "rotate-ccw" 16 %}Вернуть</button>
+          </form>
+        {% else %}
+          <details class="review__form">
+            <summary class="link-action">{% icon "ban" 16 %}Скрыть</summary>
+            <form method="post" action="{% url 'reviews:moderate' review.pk 'hide' %}" class="form">
+              {% csrf_token %}<input type="hidden" name="next" value="list">
+              {% include "components/forms/field.html" with field=hide_form.reason %}
+              <button class="btn btn--danger btn--sm" type="submit">Скрыть отзыв</button>
+            </form>
+          </details>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+</article>

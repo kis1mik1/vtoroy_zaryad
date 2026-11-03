@@ -11,5 +11,6 @@
     {% if seller.last_seen_at %}<li>{% last_seen seller.last_seen_at %}</li>{% endif %}
     {% if seller.city %}<li>{{ seller.city.name }}</li>{% endif %}
   </ul>
+  {% if seller.rating_count %}<a class="seller__more" href="{% url 'reviews:list' seller.pk %}">Отзывы о продавце</a>{% endif %}
   {% if seller_ads_count > 1 %}<a class="seller__more" href="{% url 'ads:profile' seller.pk %}">Ещё {{ seller_ads_count|add:"-1"|count_plural:"объявление,объявления,объявлений" }} продавца</a>{% endif %}
 </div>

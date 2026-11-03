@@ -29,10 +29,12 @@ class Command(BaseCommand):
         stats = builder.finish(created)
         complaints = builder.complaints(sellers, created)
         problems = builder.problem_ads(sellers)
+        conversations, reviews = builder.deals(sellers, created)
         self.stdout.write(
             self.style.SUCCESS(
                 f"Готово: продавцов {len(sellers)}, объявлений {len(created)}, "
                 f"изменений цены {history}, в избранном {favorites}, групп цен {stats}, "
-                f"жалоб {complaints}, объявлений для автопроверки {problems}."
+                f"жалоб {complaints}, объявлений для автопроверки {problems}, "
+                f"переписок {conversations}, отзывов {reviews}."
             )
         )

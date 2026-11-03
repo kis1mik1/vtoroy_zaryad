@@ -1,0 +1,12 @@
+<div class="rating-summary">
+  <div class="rating-summary__total">
+    <span class="rating-summary__value">{{ person.rating_avg|floatformat:1 }}</span>
+    {% include "reviews/partials/stars.html" with rating=person.rating_avg|floatformat:0|add:0 size=18 %}
+    <span class="rating-summary__count">{{ person.rating_count|count_plural:"отзыв,отзыва,отзывов" }}</span>
+  </div>
+  <ul class="rating-bars">
+    {% for row in distribution %}
+      <li><span class="rating-bars__stars">{{ row.stars }} {% icon "star" 12 %}</span><span class="rating-bars__track"><span class="rating-bars__fill" style="width: {{ row.percent }}%"></span></span><span class="rating-bars__count">{{ row.count }}</span></li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% load static %}
+{% load static reviews %}
 
 {% block title %}{{ seller.first_name }} — объявления продавца{% endblock %}
 {% block meta_description %}Объявления продавца {{ seller.first_name }}{% if seller.city %} {{ seller.city.where }}{% endif %} на «{{ project_name }}».{% endblock %}
@@ -10,7 +10,7 @@
     <aside class="profile__card surface">
       {% include "components/avatar.html" with person=seller size="xl" %}
       <h1>{{ seller.first_name }}</h1>
-      <p class="profile__rating">{% if seller.rating_count %}{% icon "star" 16 %}{{ seller.rating_avg|floatformat:1 }} · {{ seller.rating_count|count_plural:"отзыв,отзыва,отзывов" }}{% else %}Пока без отзывов{% endif %}</p>
+      <p class="profile__rating">{% if seller.rating_count %}{% icon "star" 16 %}<a href="{% url 'reviews:list' seller.pk %}">{{ seller.rating_avg|floatformat:1 }} · {{ seller.rating_count|count_plural:"отзыв,отзыва,отзывов" }}</a>{% else %}Пока без отзывов{% endif %}</p>
       <ul class="profile__facts">
         {% if seller.city %}<li>{% icon "map-pin" 16 %}{{ seller.city.name }}</li>{% endif %}
         <li>{% icon "clock" 16 %}На сайте с {{ seller.date_joined|date:"E Y" }}</li>
@@ -29,6 +29,7 @@
       {% endif %}
       {% if perms.moderation.review_ad %}<a class="btn btn--ghost btn--block" href="{% url 'moderation:user' seller.pk %}">{% icon "shield-check" 16 %}Открыть в модерации</a>{% endif %}
     </aside>
+    <div class="profile__main">
     <section class="profile__ads">
       <h2>{{ page_obj.paginator.count|count_plural:"объявление,объявления,объявлений" }}</h2>
       {% if page_obj.object_list %}
@@ -38,5 +39,7 @@
         {% include "components/empty_state.html" with icon_name="package" title="Сейчас нет активных объявлений" text="Загляните позже — продавец может разместить новые." %}
       {% endif %}
     </section>
+    {% reviews_summary seller %}
+    </div>
   </div>
 {% endblock %}

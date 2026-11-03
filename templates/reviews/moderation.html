@@ -1,0 +1,57 @@
+{% extends "layouts/moderation.html" %}
+{% load static %}
+
+{% block title %}Отзывы — модерация{% endblock %}
+{% block styles %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/pages/reviews.css' %}">{% endblock %}
+
+{% block panel %}
+  <header class="page-header">
+    <h1>Отзывы</h1>
+    <p>Жалобы на отзывы присылают те, о ком отзыв. Скрытый отзыв не влияет на рейтинг, автор получает причину.</p>
+  </header>
+  <nav class="tabs" aria-label="Отзывы">
+    <a class="tabs__tab" href="?"{% if not hidden %} aria-current="page"{% endif %}>Жалобы{% if moderation_counts.reviews %}<span class="tabs__count">{{ moderation_counts.reviews }}</span>{% endif %}</a>
+    <a class="tabs__tab" href="?show=hidden"{% if hidden %} aria-current="page"{% endif %}>Скрытые</a>
+  </nav>
+  {% if page_obj.object_list %}
+    <ul class="mod-reviews">
+      {% for review in page_obj %}
+        <li class="mod-review surface">
+          <div class="mod-review__head">
+            <span><a href="{% url 'moderation:user' review.author_id %}">{{ review.author.first_name }}</a> → <a href="{% url 'moderation:user' review.target_id %}">{{ review.target.first_name }}</a></span>
+            {% include "reviews/partials/stars.html" with rating=review.rating %}
+            <span class="muted">{{ review.created_at|humandate }}</span>
+          </div>
+          {% if review.ad %}<p class="muted">Сделка: <a href="{% url 'moderation:ad' review.ad_id %}">{{ review.ad.title }}</a></p>{% endif %}
+          <p class="mod-review__text">{{ review.text|linebreaksbr }}</p>
+          {% if hidden %}
+            <p class="review__hidden">{% icon "ban" 16 %}{{ review.hidden_reason }}{% if review.moderated_by %} — {{ review.moderated_by.first_name }}, {{ review.moderated_at|humandate }}{% endif %}</p>
+            <form method="post" action="{% url 'reviews:moderate' review.pk 'restore' %}">
+              {% csrf_token %}<button class="btn btn--secondary btn--sm" type="submit">{% icon "rotate-ccw" 16 %}Вернуть</button>
+            </form>
+          {% else %}
+            <div class="mod-review__report">{% icon "flag" 16 %}<div><strong>Жалоба {{ review.reported_at|humandate }}:</strong> {{ review.report_reason }}</div></div>
+            <div class="mod-review__actions">
+              <form method="post" action="{% url 'reviews:moderate' review.pk 'hide' %}" class="mod-review__hide">
+                {% csrf_token %}
+                <label class="visually-hidden" for="hide-{{ review.pk }}">Причина</label>
+                <input class="input" id="hide-{{ review.pk }}" name="reason" maxlength="300" required placeholder="Причина для автора">
+                <button class="btn btn--danger btn--sm" type="submit">Скрыть</button>
+              </form>
+              <form method="post" action="{% url 'reviews:moderate' review.pk 'keep' %}">
+                {% csrf_token %}<button class="btn btn--ghost btn--sm" type="submit">Оставить</button>
+              </form>
+            </div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    {% pagination page_obj %}
+  {% else %}
+    {% if hidden %}
+      {% include "components/empty_state.html" with icon_name="star" title="Скрытых отзывов нет" %}
+    {% else %}
+      {% include "components/empty_state.html" with icon_name="circle-check" title="Жалоб на отзывы нет" text="Когда пользователь пожалуется на отзыв о себе, он появится здесь." %}
+    {% endif %}
+  {% endif %}
+{% endblock %}
