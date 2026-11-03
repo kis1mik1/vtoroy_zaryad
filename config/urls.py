@@ -28,6 +28,7 @@ urlpatterns = [
     path("", include("apps.chat.urls")),
     path("", include("apps.payments.urls")),
     path("", include("apps.reviews.urls")),
+    path("", include("apps.support.urls")),
     path("", include("apps.ads.urls")),
     path("", include("apps.core.urls")),
 ]

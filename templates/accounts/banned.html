@@ -16,7 +16,7 @@
     <dt>Причина</dt>
     <dd>{{ banned_user.ban_reason|default:"Нарушение правил площадки" }}</dd>
   </dl>
-  <p class="muted">Если считаете блокировку ошибкой, напишите на <a href="mailto:{{ support_email }}">{{ support_email }}</a> с адреса {{ banned_user.email }}. Пока аккаунт заблокирован, ваши объявления не показываются.</p>
+  <p class="muted">Если считаете блокировку ошибкой, <a href="{% url 'support:contact' %}?topic=account">напишите в поддержку</a>. Пока аккаунт заблокирован, ваши объявления не показываются.</p>
   <div class="cluster">
     <a class="btn btn--secondary" href="{% url 'core:rules' %}">Правила площадки</a>
     <form method="post" action="{% url 'accounts:logout' %}">

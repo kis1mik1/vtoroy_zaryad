@@ -1,0 +1,9 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">Обращение № {{ ticket.pk }}</h1>
+<p style="margin:0 0 8px;color:#5b636e;">{{ ticket.get_topic_display }} · {{ ticket.name }} &lt;{{ ticket.email }}&gt;{% if ticket.user_id %} · пользователь № {{ ticket.user_id }}{% endif %}</p>
+<p style="margin:0 0 8px;font-weight:700;">{{ ticket.subject }}</p>
+<p style="margin:0 0 8px;white-space:pre-line;">{{ ticket.message }}</p>
+{% include "emails/button.html" with url=admin_ticket_url label="Ответить в админке" %}
+{% endblock %}
+{% block footer %}Письмо отправлено формой обращения на сайте. Ответ лучше писать в админке: он сохранится в истории обращения.{% endblock %}

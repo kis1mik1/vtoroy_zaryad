@@ -14,6 +14,7 @@
         <ul>
           <li><a href="{% url 'core:rules' %}">Правила размещения</a></li>
           <li><a href="{% url 'core:safety' %}">Безопасная сделка</a></li>
+          <li><a href="{% url 'support:faq' %}">Помощь</a></li>
           <li><a href="{% url 'core:about' %}">О проекте</a></li>
         </ul>
       </nav>
@@ -22,7 +23,7 @@
         <ul>
           <li><a href="{% url 'core:terms' %}">Пользовательское соглашение</a></li>
           <li><a href="{% url 'core:privacy' %}">Политика конфиденциальности</a></li>
-          <li><a href="mailto:{{ support_email }}">{{ support_email }}</a></li>
+          <li><a href="{% url 'support:contact' %}">Написать в поддержку</a></li>
         </ul>
       </nav>
     </div>

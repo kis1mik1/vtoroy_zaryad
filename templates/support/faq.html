@@ -1,0 +1,45 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Помощь{% endblock %}
+{% block meta_description %}Ответы на частые вопросы о размещении объявлений, безопасных сделках, продвижении и отзывах.{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/support.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>Помощь</h1>
+    <p>Ответы на частые вопросы. Не нашли свой — напишите нам.</p>
+  </header>
+
+  <div class="help">
+    <div class="help__main">
+      <form class="help-search" method="get" action="{% url 'support:faq' %}" role="search">
+        <label class="visually-hidden" for="help-q">Поиск по вопросам</label>
+        <div class="input-group">
+          {% icon "search" 18 %}
+          <input class="input" id="help-q" type="search" name="q" value="{{ query }}" placeholder="Например, не пришло письмо" autocomplete="off"
+                 hx-get="{% url 'support:faq' %}" hx-trigger="input changed delay:300ms, search" hx-target="#faq-results" hx-swap="outerHTML" hx-push-url="true">
+        </div>
+      </form>
+      {% include "support/partials/faq_results.html" %}
+    </div>
+
+    <aside class="help__side">
+      <div class="help-card surface">
+        <span class="help-card__icon">{% icon "circle-help" 24 %}</span>
+        <h2>Не нашли ответ?</h2>
+        <p>Опишите вопрос, и мы ответим на почту в течение рабочего дня.</p>
+        <a class="btn btn--primary btn--block" href="{% url 'support:contact' %}">Написать в поддержку</a>
+        {% if user.is_authenticated %}<a class="btn btn--ghost btn--block" href="{% url 'support:tickets' %}">Мои обращения</a>{% endif %}
+      </div>
+      <nav class="help-card surface" aria-label="Разделы помощи">
+        <h2>Разделы</h2>
+        <ul class="help-links">
+          {% for section in sections %}{% if section.published %}<li><a href="{% url 'support:faq' %}#{{ section.slug }}">{{ section.title }}</a></li>{% endif %}{% endfor %}
+          <li><a href="{% url 'core:rules' %}">Правила размещения</a></li>
+          <li><a href="{% url 'core:safety' %}">Безопасная сделка</a></li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+{% endblock %}

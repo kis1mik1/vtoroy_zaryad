@@ -11,6 +11,9 @@ BANNED_ALLOWED_NAMES = (
     "core:terms",
     "core:privacy",
     "core:safety",
+    "support:faq",
+    "support:contact",
+    "support:contact_sent",
 )
 
 

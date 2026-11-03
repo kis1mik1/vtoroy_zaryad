@@ -1,0 +1,18 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Обращение отправлено{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/support.css' %}">{% endblock %}
+
+{% block content %}
+  <section class="contact contact--sent surface">
+    <span class="help-card__icon help-card__icon--ok">{% icon "circle-check" 32 %}</span>
+    <h1>Обращение № {{ ticket_id }} принято</h1>
+    <p>Мы отправили подтверждение на почту и ответим туда же в течение рабочего дня.</p>
+    <div class="cluster">
+      <a class="btn btn--primary" href="{% url 'ads:home' %}">На главную</a>
+      {% if user.is_authenticated %}<a class="btn btn--ghost" href="{% url 'support:tickets' %}">Мои обращения</a>{% else %}<a class="btn btn--ghost" href="{% url 'support:faq' %}">Помощь</a>{% endif %}
+    </div>
+  </section>
+{% endblock %}

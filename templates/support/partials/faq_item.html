@@ -1,0 +1,4 @@
+<details class="faq-item"{% if open %} open{% endif %} id="faq-{{ item.pk }}">
+  <summary>{{ item.question }}{% icon "chevron-down" 18 "faq-item__chevron" %}</summary>
+  <div class="faq-item__answer">{{ item.answer|linebreaks }}</div>
+</details>

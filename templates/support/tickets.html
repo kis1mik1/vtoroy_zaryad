@@ -1,0 +1,36 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Мои обращения{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/support.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header tickets-header">
+    <h1>Мои обращения</h1>
+    <a class="btn btn--secondary" href="{% url 'support:contact' %}">{% icon "plus" 18 %}Новое обращение</a>
+  </header>
+  {% if tickets %}
+    <ul class="tickets">
+      {% for ticket in tickets %}
+        <li class="ticket card">
+          <div class="ticket__head">
+            <h2>№ {{ ticket.pk }}. {{ ticket.subject }}</h2>
+            <span class="badge badge--{% if ticket.status == 'answered' %}success{% elif ticket.status == 'new' %}warning{% endif %}">{{ ticket.get_status_display }}</span>
+          </div>
+          <p class="ticket__meta">{{ ticket.get_topic_display }} · {{ ticket.created_at|humandate }}</p>
+          <p class="ticket__text">{{ ticket.message|linebreaksbr }}</p>
+          {% for reply in ticket.replies.all %}
+            <div class="ticket__reply">
+              <span class="ticket__reply-title">Поддержка · {{ reply.created_at|humandate }}</span>
+              <p>{{ reply.message|linebreaksbr }}</p>
+            </div>
+          {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% url 'support:contact' as contact_url %}
+    {% include "components/empty_state.html" with icon_name="mail" title="Обращений пока нет" text="Если что-то не работает или нужна помощь, напишите нам." action_url=contact_url action_label="Написать в поддержку" %}
+  {% endif %}
+{% endblock %}

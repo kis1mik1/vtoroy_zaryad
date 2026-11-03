@@ -1,0 +1,9 @@
+Обращение № {{ ticket.pk }}
+Тема: {{ ticket.get_topic_display }}
+От: {{ ticket.name }} <{{ ticket.email }}>{% if ticket.user_id %}, пользователь № {{ ticket.user_id }}{% endif %}
+
+{{ ticket.subject }}
+
+{{ ticket.message }}
+
+Ответить пользователю можно в админке: {{ admin_ticket_url }}

@@ -1,0 +1,22 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Обращение в поддержку{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/support.css' %}">{% endblock %}
+
+{% block content %}
+  <section class="contact surface">
+    <header class="page-header">
+      <h1>Обращение в поддержку</h1>
+      <p>Ответим на почту{% if user.is_authenticated %} {{ user.email }}{% endif %} в течение рабочего дня. Возможно, ответ уже есть в <a href="{% url 'support:faq' %}">разделе помощи</a>.</p>
+    </header>
+    <form class="form" method="post" novalidate>
+      {% csrf_token %}
+      {{ form }}
+      {% captcha %}
+      <div class="form__actions">
+        <button class="btn btn--primary" type="submit">Отправить</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}

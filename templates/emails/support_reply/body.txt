@@ -1,0 +1,6 @@
+{{ ticket.name }}, здравствуйте!
+
+{{ reply.message }}
+
+Ваше обращение № {{ ticket.pk }}: {{ ticket.subject }}
+Если вопрос остался, напишите нам снова: {{ site_url }}{% url 'support:contact' %}

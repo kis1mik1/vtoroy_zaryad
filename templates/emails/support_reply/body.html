@@ -1,0 +1,8 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">Ответ на обращение № {{ ticket.pk }}</h1>
+<p style="margin:0 0 16px;">{{ ticket.name }}, здравствуйте!</p>
+<p style="margin:0 0 16px;white-space:pre-line;">{{ reply.message }}</p>
+<p style="margin:0 0 8px;color:#5b636e;">Ваше обращение: {{ ticket.subject }}</p>
+{% url 'support:contact' as contact_path %}{% include "emails/button.html" with url=site_url|add:contact_path label="Написать снова" %}
+{% endblock %}

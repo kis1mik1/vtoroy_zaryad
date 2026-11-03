@@ -13,6 +13,7 @@ class StaticViewSitemap(Sitemap):
             "core:terms",
             "core:privacy",
             "core:about",
+            "support:faq",
         ]
 
     def location(self, item):

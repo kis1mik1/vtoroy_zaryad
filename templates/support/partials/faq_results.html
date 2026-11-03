@@ -1,0 +1,18 @@
+<div id="faq-results" class="faq-results">
+  {% if results is None %}
+    {% for section in sections %}
+      {% if section.published %}
+        <section class="faq-section" id="{{ section.slug }}">
+          <h2>{{ section.title }}</h2>
+          {% for item in section.published %}{% include "support/partials/faq_item.html" %}{% endfor %}
+        </section>
+      {% endif %}
+    {% endfor %}
+  {% elif results %}
+    <p class="faq-results__count">По запросу «{{ query }}» {{ results|length|count_plural:"ответ,ответа,ответов" }}</p>
+    {% for item in results %}{% include "support/partials/faq_item.html" with open=forloop.first %}{% endfor %}
+  {% else %}
+    {% url 'support:contact' as contact_url %}
+    {% include "components/empty_state.html" with icon_name="search-x" title="Ничего не нашлось" text="Попробуйте другие слова или напишите нам — ответим в течение рабочего дня." action_url=contact_url action_label="Написать в поддержку" %}
+  {% endif %}
+</div>

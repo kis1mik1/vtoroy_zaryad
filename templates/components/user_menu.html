@@ -27,6 +27,7 @@
       <a class="dropdown__item" role="menuitem" href="{% url 'payments:history' %}">{% icon "wallet" 18 %}Платежи</a>
       <a class="dropdown__item" role="menuitem" href="{% url 'accounts:settings' %}">{% icon "settings" 18 %}Настройки профиля</a>
       <a class="dropdown__item" role="menuitem" href="{% url 'notifications:list' %}">{% icon "bell" 18 %}Уведомления</a>
+      <a class="dropdown__item" role="menuitem" href="{% url 'support:faq' %}">{% icon "circle-help" 18 %}Помощь</a>
       {% if moderation_counts %}
         <a class="dropdown__item" role="menuitem" href="{% url 'moderation:queue' %}">{% icon "shield-check" 18 %}Модерация{% if moderation_counts.queue %}<span class="counter">{{ moderation_counts.queue }}</span>{% endif %}</a>
       {% endif %}

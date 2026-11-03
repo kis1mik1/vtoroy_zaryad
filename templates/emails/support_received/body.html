@@ -1,0 +1,7 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">Обращение № {{ ticket.pk }} принято</h1>
+<p style="margin:0 0 16px;">{{ ticket.name }}, здравствуйте! Мы ответим на этот адрес в течение рабочего дня.</p>
+<p style="margin:0 0 8px;font-weight:700;">{{ ticket.subject }}</p>
+<p style="margin:0 0 8px;white-space:pre-line;color:#5b636e;">{{ ticket.message }}</p>
+{% endblock %}
