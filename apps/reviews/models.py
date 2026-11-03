@@ -93,6 +93,10 @@ class Review(TimeStampedModel):
         return RATING_LABELS.get(self.rating, "")
 
     @property
+    def reply_title(self) -> str:
+        return "Ответ продавца" if self.author_role == AuthorRole.BUYER else "Ответ покупателя"
+
+    @property
     def is_editable(self) -> bool:
         return not self.is_hidden and not self.reply_text
 

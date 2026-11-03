@@ -1,7 +1,7 @@
 {% extends "layouts/default.html" %}
 {% load static %}
 
-{% block title %}{% if review %}Изменить отзыв{% else %}Отзыв о {{ target.first_name }}{% endif %}{% endblock %}
+{% block title %}{% if review %}Изменить отзыв{% else %}Отзыв о сделке{% endif %}{% endblock %}
 {% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/reviews.css' %}">{% endblock %}
 

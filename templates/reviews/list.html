@@ -1,7 +1,7 @@
 {% extends "layouts/default.html" %}
 {% load static %}
 
-{% block title %}Отзывы о {{ person.first_name }}{% endblock %}
+{% block title %}{{ person.first_name }} — отзывы{% endblock %}
 {% block meta_description %}Отзывы покупателей и продавцов о пользователе {{ person.first_name }} на «{{ project_name }}».{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/reviews.css' %}">{% endblock %}
 
@@ -9,7 +9,7 @@
   <header class="page-header reviews-header">
     <a class="reviews-header__person" href="{% url 'ads:profile' person.pk %}">
       {% include "components/avatar.html" with person=person size="lg" %}
-      <span><h1>Отзывы о {{ person.first_name }}</h1><span class="muted">{% if person.city %}{{ person.city.name }} · {% endif %}на сайте с {{ person.date_joined|date:"E Y" }}</span></span>
+      <span><h1>{{ person.first_name }} — отзывы</h1><span class="muted">{% if person.city %}{{ person.city.name }} · {% endif %}на сайте с {{ person.date_joined|date:"E Y" }}</span></span>
     </a>
   </header>
 

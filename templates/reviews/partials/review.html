@@ -13,7 +13,7 @@
 
   {% if review.reply_text %}
     <div class="review__reply">
-      <span class="review__reply-title">Ответ {{ review.target.first_name|default:"продавца" }} · {{ review.reply_at|humandate }}</span>
+      <span class="review__reply-title">{{ review.reply_title }} · {{ review.reply_at|humandate }}</span>
       <p>{{ review.reply_text|linebreaksbr }}</p>
     </div>
   {% endif %}
