@@ -33,3 +33,6 @@ class UserEventsConsumer(AsyncJsonWebsocketConsumer):
 
     async def notification_read(self, event):
         await self.send_json({"type": "notification_read", "unread": event["unread"]})
+
+    async def messages_unread(self, event):
+        await self.send_json({"type": "messages_unread", "unread": event["unread"]})
