@@ -1,0 +1,22 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Платежи{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/payments.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>Платежи</h1>
+    <p class="muted">Оплаты продвижения объявлений: поднятие, выделение и закрепление.</p>
+  </header>
+  {% if page_obj.object_list %}
+    <ul class="payment-list">
+      {% for payment in page_obj %}{% include "payments/partials/payment_row.html" %}{% endfor %}
+    </ul>
+    {% pagination page_obj %}
+  {% else %}
+    {% url 'ads:my_ads' as my_ads_url %}
+    {% include "components/empty_state.html" with icon_name="wallet" title="Платежей пока нет" text="Поднять, выделить или закрепить объявление можно в разделе «Мои объявления»." action_url=my_ads_url action_label="Мои объявления" %}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,6 @@
+{% if ad.pinned_until|is_future or ad.highlighted_until|is_future %}
+  <ul class="promo-badges">
+    {% if ad.pinned_until|is_future %}<li>{% icon "zap" 14 %}Закреплено до {{ ad.pinned_until|date:"j E, H:i" }}</li>{% endif %}
+    {% if ad.highlighted_until|is_future %}<li>{% icon "star" 14 %}Выделено до {{ ad.highlighted_until|date:"j E, H:i" }}</li>{% endif %}
+  </ul>
+{% endif %}

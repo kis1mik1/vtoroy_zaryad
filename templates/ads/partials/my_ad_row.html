@@ -20,6 +20,7 @@
       {% endif %}
       {% if ad.status == "active" or ad.status == "sold" %}<span>{% icon "eye" 14 %}{{ ad.views_count|number }}</span>{% endif %}
     </div>
+    {% if ad.status == "active" %}{% include "payments/partials/promotion_state.html" %}{% endif %}
     {% if ad.status == "rejected" and ad.rejection_reason %}
       <p class="my-ad__reason">{% icon "circle-x" 16 %}{{ ad.rejection_reason }}</p>
     {% elif ad.is_checking %}
@@ -33,6 +34,7 @@
       <a class="btn btn--secondary btn--sm" href="{% url 'ads:edit' ad.pk %}">{% icon "pencil" 16 %}{% if ad.status == "rejected" %}Исправить{% else %}Редактировать{% endif %}</a>
     {% endif %}
     {% if ad.status == "active" %}
+      <a class="btn btn--secondary btn--sm" href="{% url 'payments:promote' ad.pk %}">{% icon "zap" 16 %}Продвинуть</a>
       {% include "ads/partials/status_button.html" with action="sold" label="Продано" icon_name="hand-coins" confirm="Отметить объявление проданным? Оно исчезнет из поиска." %}
       {% include "ads/partials/status_button.html" with action="withdraw" label="Снять с публикации" icon_name="archive" confirm="Снять объявление с публикации? Его можно будет вернуть из архива." %}
     {% elif ad.status == "pending" %}

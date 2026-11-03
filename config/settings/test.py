@@ -20,3 +20,7 @@ LOGGING = {"version": 1, "disable_existing_loggers": False}
 
 SMARTCAPTCHA_CLIENT_KEY = ""
 SMARTCAPTCHA_SERVER_KEY = ""
+
+YOOKASSA_SHOP_ID = "123456"
+YOOKASSA_SECRET_KEY = "test_secret"
+YOOKASSA_CHECK_WEBHOOK_IP = True

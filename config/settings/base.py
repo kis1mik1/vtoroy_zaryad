@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "apps.ads",
     "apps.moderation",
     "apps.chat",
+    "apps.payments",
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,10 @@ CLIENT_IP_HEADER = env("CLIENT_IP_HEADER", default="")
 
 SMARTCAPTCHA_CLIENT_KEY = env("SMARTCAPTCHA_CLIENT_KEY", default="")
 SMARTCAPTCHA_SERVER_KEY = env("SMARTCAPTCHA_SERVER_KEY", default="")
+
+YOOKASSA_SHOP_ID = env("YOOKASSA_SHOP_ID", default="")
+YOOKASSA_SECRET_KEY = env("YOOKASSA_SECRET_KEY", default="")
+YOOKASSA_CHECK_WEBHOOK_IP = env.bool("YOOKASSA_CHECK_WEBHOOK_IP", default=True)
 
 ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
@@ -132,6 +137,11 @@ CELERY_BEAT_SCHEDULE = {
     },
     "check-saved-searches": {"task": "apps.ads.tasks.check_saved_searches", "schedule": 60 * 60},
     "email-unread-messages": {"task": "apps.chat.tasks.email_unread_messages", "schedule": 5 * 60},
+    "expire-promotions": {"task": "apps.payments.tasks.expire_promotions", "schedule": 15 * 60},
+    "sync-pending-payments": {
+        "task": "apps.payments.tasks.sync_pending_payments",
+        "schedule": 10 * 60,
+    },
 }
 
 AUTH_USER_MODEL = "accounts.User"

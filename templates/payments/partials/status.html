@@ -1,0 +1,39 @@
+<div class="payment-status payment-status--{{ payment.status }}" id="payment-status"{% if payment.is_pending and payment.is_fresh %} hx-get="{% url 'payments:status' payment.pk %}" hx-trigger="every 3s" hx-swap="outerHTML"{% endif %}>
+  {% if payment.status == "succeeded" %}
+    <span class="payment-status__icon">{% icon "circle-check" 40 %}</span>
+    <h1>Оплата прошла</h1>
+    <p>«{{ payment.tariff.title }}» за {{ payment.amount|price }}{% if payment.ad %} для объявления «{{ payment.ad.title }}»{% endif %} уже работает.</p>
+    {% if payment.ad %}
+      <ul class="payment-status__perks">
+        {% if payment.ad.pinned_until|is_future %}<li>Закреплено до {{ payment.ad.pinned_until|date:"j E, H:i" }}</li>{% endif %}
+        {% if payment.ad.highlighted_until|is_future %}<li>Выделено до {{ payment.ad.highlighted_until|date:"j E, H:i" }}</li>{% endif %}
+        {% if payment.tariff.bump %}<li>Поднято наверх ленты {{ payment.ad.bumped_at|humandate }}</li>{% endif %}
+      </ul>
+    {% endif %}
+    <div class="cluster payment-status__actions">
+      {% if payment.ad %}<a class="btn btn--primary" href="{% url 'ads:detail' payment.ad.pk payment.ad.slug %}">К объявлению</a>{% endif %}
+      <a class="btn btn--ghost" href="{% url 'payments:history' %}">Мои платежи</a>
+    </div>
+  {% elif payment.status == "canceled" %}
+    <span class="payment-status__icon">{% icon "circle-x" 40 %}</span>
+    <h1>Платёж не прошёл</h1>
+    <p>{{ payment.cancellation_reason|default:"Оплата отменена." }} Деньги не списаны.</p>
+    <div class="cluster payment-status__actions">
+      {% if payment.ad %}<a class="btn btn--primary" href="{% url 'payments:promote' payment.ad.pk %}">Попробовать снова</a>{% endif %}
+      <a class="btn btn--ghost" href="{% url 'payments:history' %}">Мои платежи</a>
+    </div>
+  {% else %}
+    <span class="payment-status__icon payment-status__icon--wait">{% icon "clock" 40 %}</span>
+    <h1>Ждём подтверждения оплаты</h1>
+    {% if payment.is_fresh %}
+      <p>Обычно это несколько секунд. Страница обновится сама, а когда оплата пройдёт, придёт уведомление.</p>
+    {% else %}
+      <p>Платёж пока не оплачен. Если вы уже оплатили, мы применим продвижение, как только банк подтвердит списание, и пришлём уведомление.</p>
+    {% endif %}
+    {% if not reachable %}<p class="muted">Платёжная система не ответила, проверим ещё раз.</p>{% endif %}
+    <div class="cluster payment-status__actions">
+      {% if payment.confirmation_url and payment.is_fresh %}<a class="btn btn--primary" href="{{ payment.confirmation_url }}">Перейти к оплате</a>{% endif %}
+      <a class="btn btn--ghost" href="{% url 'payments:history' %}">Мои платежи</a>
+    </div>
+  {% endif %}
+</div>

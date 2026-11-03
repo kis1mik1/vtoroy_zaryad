@@ -1,0 +1,12 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Платёж № {{ payment.pk }}{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/payments.css' %}">{% endblock %}
+
+{% block content %}
+  <section class="payment-result surface" aria-live="polite">
+    {% include "payments/partials/status.html" %}
+  </section>
+{% endblock %}

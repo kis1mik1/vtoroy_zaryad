@@ -1,0 +1,23 @@
+<li class="payment-row card">
+  {% if not compact %}
+    {% with photo=payment.ad.ordered_photos|first %}
+      <span class="payment-row__photo">{% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="72" height="54" loading="lazy">{% else %}{% icon "image" 20 %}{% endif %}</span>
+    {% endwith %}
+  {% endif %}
+  <div class="payment-row__body">
+    <div class="payment-row__top">
+      <a class="payment-row__title" href="{% url 'payments:return' payment.pk %}">«{{ payment.tariff.title }}»{% if not compact %}{% if payment.ad %} · {{ payment.ad.title }}{% else %} · объявление удалено{% endif %}{% endif %}</a>
+      <span class="payment-row__amount">{{ payment.amount|price }}</span>
+    </div>
+    <div class="payment-row__meta">
+      <span class="badge badge--{% if payment.status == 'succeeded' %}success{% elif payment.status == 'canceled' %}danger{% else %}warning{% endif %}">{{ payment.get_status_display }}</span>
+      <span>{{ payment.created_at|humandate }}</span>
+      <span>№ {{ payment.pk }}</span>
+      {% if payment.is_test %}<span>тестовый</span>{% endif %}
+    </div>
+    {% if payment.status == "canceled" and payment.cancellation_reason %}<p class="payment-row__reason">{{ payment.cancellation_reason }}</p>{% endif %}
+  </div>
+  {% if payment.is_pending and payment.confirmation_url and payment.is_fresh %}
+    <a class="btn btn--secondary btn--sm payment-row__action" href="{{ payment.confirmation_url }}">Оплатить</a>
+  {% endif %}
+</li>

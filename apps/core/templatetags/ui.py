@@ -1,6 +1,7 @@
 from django import template
 from django.conf import settings
 from django.templatetags.static import static
+from django.utils import timezone
 from django.utils.html import format_html
 
 from apps.core import captcha as smartcaptcha
@@ -45,6 +46,11 @@ def day(value):
     if not value:
         return ""
     return text.format_day(value)
+
+
+@register.filter
+def is_future(value):
+    return bool(value) and value > timezone.now()
 
 
 @register.simple_tag

@@ -87,9 +87,11 @@
           <div class="ad-buy__actions">
             {% if ad.is_editable %}<a class="btn btn--primary btn--block" href="{% url 'ads:edit' ad.pk %}">{% icon "pencil" 18 %}Редактировать</a>{% endif %}
             {% if ad.status == "active" %}
+              <a class="btn btn--secondary btn--block" href="{% url 'payments:promote' ad.pk %}">{% icon "zap" 18 %}Продвинуть</a>
               <form method="post" action="{% url 'ads:status' ad.pk 'sold' %}" data-confirm="Отметить объявление проданным? Оно исчезнет из поиска." data-confirm-action="Продано">{% csrf_token %}<button class="btn btn--secondary btn--block" type="submit">{% icon "hand-coins" 18 %}Продано</button></form>
               <form method="post" action="{% url 'ads:status' ad.pk 'withdraw' %}" data-confirm="Снять объявление с публикации?" data-confirm-action="Снять">{% csrf_token %}<button class="btn btn--ghost btn--block" type="submit">{% icon "archive" 18 %}Снять с публикации</button></form>
             {% endif %}
+            {% include "payments/partials/promotion_state.html" %}
             <p class="ad-buy__stats">{{ ad.views_count|count_plural:"просмотр,просмотра,просмотров" }} · {{ ad.contacts_shown_count|count_plural:"показ телефона,показа телефона,показов телефона" }} · {{ ad.favorites_count }} в избранном</p>
           </div>
         {% elif ad.status == "active" %}

@@ -1,0 +1,71 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}Продвижение: {{ ad.title }}{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/payments.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>Продвижение объявления</h1>
+    <p class="muted">Закреплённые и выделенные объявления покупатели замечают раньше остальных.</p>
+  </header>
+
+  <div class="promo">
+    {% with photo=ad.photos.all|first %}
+      <a class="promo-ad surface" href="{% url 'ads:detail' ad.pk ad.slug %}">
+        <span class="promo-ad__photo">{% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="96" height="72">{% else %}{% icon "image" 24 %}{% endif %}</span>
+        <span class="promo-ad__text">
+          <strong>{{ ad.title }}</strong>
+          <span>{{ ad.price|price }} · {{ ad.city.name }}</span>
+        </span>
+      </a>
+    {% endwith %}
+
+    {% if ad.pinned_until|is_future or ad.highlighted_until|is_future %}
+      <ul class="promo-state">
+        {% if ad.pinned_until|is_future %}<li><span class="badge badge--accent">{% icon "zap" 14 %}Закреплено</span>до {{ ad.pinned_until|date:"j E, H:i" }}</li>{% endif %}
+        {% if ad.highlighted_until|is_future %}<li><span class="badge badge--info">Выделено</span>до {{ ad.highlighted_until|date:"j E, H:i" }}</li>{% endif %}
+      </ul>
+    {% endif %}
+
+    {% if not can_promote %}
+      <div class="alert alert--warning">{% icon "info" %}<div>Продвинуть можно только опубликованное объявление. Сейчас оно в статусе «{{ ad.get_status_display|lower }}».</div></div>
+    {% elif not configured %}
+      <div class="alert alert--warning">{% icon "triangle-alert" %}<div>Оплата временно недоступна. Загляните чуть позже.</div></div>
+    {% endif %}
+
+    <div class="tariffs">
+      {% for tariff in tariffs %}
+        <form class="tariff surface{% if tariff.perks|length > 1 %} tariff--combo{% endif %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="tariff" value="{{ tariff.code }}">
+          <div class="tariff__head">
+            <h2 class="tariff__title">{{ tariff.title }}</h2>
+            {% if tariff.perks|length > 1 %}<span class="badge badge--accent">Выгоднее</span>{% endif %}
+          </div>
+          <div class="tariff__price">{{ tariff.price|price }}</div>
+          <p class="tariff__text">{{ tariff.description }}</p>
+          <ul class="tariff__perks">
+            {% for perk in tariff.perks %}<li>{% icon "check" 16 %}{{ perk }}</li>{% endfor %}
+          </ul>
+          <button class="btn {% if tariff.perks|length > 1 %}btn--primary{% else %}btn--secondary{% endif %} btn--block" type="submit"{% if not can_promote or not configured %} disabled{% endif %}>Оплатить {{ tariff.price|price }}</button>
+        </form>
+      {% endfor %}
+    </div>
+
+    <p class="promo-note">{% icon "lock" 16 %}Оплата картой или через СБП на защищённой странице ЮKassa. Данные карты мы не видим и не храним. Если продвижение уже действует, срок продлится.</p>
+    {% if test_shop and configured %}
+      <div class="alert">{% icon "info" %}<div><div class="alert__title">Тестовый магазин</div>Деньги не списываются. Карта 5555 5555 5555 4477, срок — любой в будущем, CVC — любые три цифры.</div></div>
+    {% endif %}
+
+    {% if payments %}
+      <section class="promo-history">
+        <h2>Платежи по объявлению</h2>
+        <ul class="payment-list">
+          {% for payment in payments %}{% include "payments/partials/payment_row.html" with compact=True %}{% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  </div>
+{% endblock %}

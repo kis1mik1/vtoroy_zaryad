@@ -11,3 +11,4 @@ Pillow==13.0.0
 pillow-heif==1.8.1
 gunicorn==23.0.0
 scikit-learn==1.9.1
+yookassa==3.13.0
