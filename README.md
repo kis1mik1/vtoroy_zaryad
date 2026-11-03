@@ -97,6 +97,39 @@ python manage.py runserver
 
 На ноутбуке сайт по-прежнему доступен и по http://localhost:8000: localhost браузеры считают безопасным, микрофон там работает и без сертификата.
 
+## Запуск на Windows
+
+Нужны Windows 10/11, Docker Desktop с движком WSL 2 (Settings → General → Use the WSL 2 based engine) и Git for Windows. Команды — в PowerShell.
+
+```powershell
+git clone https://github.com/kis1mik1/vtoroy_zaryad.git
+cd vtoroy_zaryad
+Copy-Item .env.example .env
+docker compose up -d --build
+docker compose exec web python manage.py prepare_demo
+```
+
+Сайт: http://localhost:8000.
+
+Скрипты, `Dockerfile` и конфиги nginx в репозитории всегда хранятся с переводами строк LF (`.gitattributes`). Если файл со скриптом попадёт в контейнер с CRLF, контейнер упадёт с ошибкой «no such file or directory». Если проект клонировали до появления `.gitattributes`, пересоздайте рабочие файлы: `git rm -r --cached . ; git reset --hard` (несохранённые правки пропадут).
+
+**Демо с телефона.** Телефон и ноутбук должны быть в одной Wi-Fi-сети, а сеть в Windows — частной (Параметры → Сеть и Интернет → Wi-Fi → свойства сети → «Частная сеть»).
+
+1. Выпустите сертификат (mkcert скрипт поставит сам через winget):
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File deploy\local-https.ps1
+   ```
+   Адрес ноутбука скрипт берёт из `Get-NetIPAddress` по сетевому адаптеру с маршрутом по умолчанию. Если он ошибся (например, при подключённом VPN), укажите адрес явно: `-Ip 192.168.1.20`. Скрипт напечатает строки для `.env` и путь к `rootCA.pem`.
+2. Впишите строки в `.env` и перезапустите: `docker compose up -d; docker compose restart nginx`.
+3. Разрешите входящие подключения в брандмауэре. Если скрипт запускали от имени администратора, правило уже добавлено. Иначе откройте PowerShell от имени администратора и выполните:
+   ```powershell
+   New-NetFirewallRule -DisplayName "Второй заряд: доступ с телефона" -Direction Inbound -Protocol TCP -LocalPort 8000,8443 -Action Allow -Profile Private
+   ```
+   Если при первом запуске Windows спросила про доступ для Docker Desktop, разрешите его для частных сетей.
+4. Установите на телефон `rootCA.pem` так же, как описано в разделе «Демо с телефона», и откройте `https://192.168.1.20:8443`.
+
+**Пороги CLIP на Windows.** Папку с фото подключите в контейнер: `docker compose run --rm -v "${env:USERPROFILE}\Pictures\clip:/data" web python manage.py tune_clip_thresholds /data`.
+
 ## Подключение сервисов
 
 Все ключи вписываются в `.env`, затем `docker compose up -d` (или перезапуск `runserver`). Проверить всё разом:
