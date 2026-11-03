@@ -19,3 +19,5 @@ CLIENT_IP_HEADER = env("CLIENT_IP_HEADER", default="HTTP_X_REAL_IP")
 PROTECTED_MEDIA_ACCEL_PREFIX = env.str(
     "PROTECTED_MEDIA_ACCEL_PREFIX", default="/protected-internal/"
 )
+
+SILENCED_SYSTEM_CHECKS = ["security.W004", "security.W008", "security.W012", "security.W016"]

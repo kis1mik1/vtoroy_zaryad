@@ -117,6 +117,19 @@ class Ad(TimeStampedModel):
                 condition=Q(status="pending"),
                 name="ad_review_queue_idx",
             ),
+            models.Index(
+                fields=["bumped_at"], condition=Q(status="active"), name="ad_active_bumped_idx"
+            ),
+            models.Index(
+                fields=["pinned_until"],
+                condition=Q(pinned_until__isnull=False),
+                name="ad_pinned_until_idx",
+            ),
+            models.Index(
+                fields=["highlighted_until"],
+                condition=Q(highlighted_until__isnull=False),
+                name="ad_highlighted_until_idx",
+            ),
             GinIndex(fields=["search_vector"], name="ad_search_vector_idx"),
             GinIndex(fields=["search_text"], opclasses=["gin_trgm_ops"], name="ad_search_trgm_idx"),
         ]

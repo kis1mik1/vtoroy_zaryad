@@ -561,6 +561,13 @@ class DemoBuilder:
                 reviews += self._review(buyer, ad.seller, ad, AuthorRole.BUYER, answered_at)
             if self.rng.random() < 0.35:
                 reviews += self._review(ad.seller, buyer, ad, AuthorRole.SELLER, answered_at)
+        disputed = Review.objects.filter(
+            ad__in=picked, author_role=AuthorRole.BUYER, rating__lte=2
+        ).first()
+        if disputed is not None:
+            Review.objects.filter(pk=disputed.pk).update(
+                reported_at=self.now, report_reason="Встречу переносил покупатель, а не я."
+            )
         for user in users:
             recalculate_rating(user.pk)
         return len(picked), reviews
