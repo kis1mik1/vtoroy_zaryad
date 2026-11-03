@@ -14,6 +14,7 @@ CELERY_TASK_EAGER_PROPAGATES = True
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.InMemoryStorage"},
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    "protected": {"BACKEND": "django.core.files.storage.InMemoryStorage"},
 }
 LOGGING = {"version": 1, "disable_existing_loggers": False}
 

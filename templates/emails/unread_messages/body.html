@@ -1,0 +1,9 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<h1 style="margin:0 0 16px;font-size:22px;">Вам написали</h1>
+<p style="margin:0 0 12px;">{{ user.first_name }}, у вас есть сообщения, которые вы ещё не прочитали:</p>
+{% for title, name, url in conversations %}
+<p style="margin:0 0 8px;"><a href="{{ url }}" style="color:#1f5fd6;">{{ name }} — {{ title }}</a></p>
+{% endfor %}
+{% endblock %}
+{% block footer %}Вы получили письмо, потому что включили письма о новых сообщениях. <a href="{{ settings_url }}" style="color:#5b636e;">Настроить письма</a>.{% endblock %}

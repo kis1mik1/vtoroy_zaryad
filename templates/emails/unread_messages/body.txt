@@ -1,0 +1,8 @@
+{{ user.first_name }}, здравствуйте!
+
+У вас есть непрочитанные сообщения:
+{% for title, name, url in conversations %}
+{{ name }} — {{ title }}
+{{ url }}
+{% endfor %}
+Настроить письма: {{ settings_url }}

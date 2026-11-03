@@ -1,12 +1,12 @@
 from pathlib import Path
 
 from .base import *  # noqa: F403
-from .base import BASE_DIR, LOGGING, env
+from .base import BASE_DIR, LOGGING, STORAGES, env
 
 DEBUG = False
 
 STORAGES = {
-    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    **STORAGES,
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"},
 }
 

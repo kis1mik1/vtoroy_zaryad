@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "apps.catalog",
     "apps.ads",
     "apps.moderation",
+    "apps.chat",
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,7 @@ TEMPLATES = [
                 "apps.notifications.context_processors.notifications",
                 "apps.ads.context_processors.compare",
                 "apps.moderation.context_processors.moderation",
+                "apps.chat.context_processors.messages",
             ],
             "builtins": ["apps.core.templatetags.ui"],
         },
@@ -129,6 +131,7 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 60 * 60,
     },
     "check-saved-searches": {"task": "apps.ads.tasks.check_saved_searches", "schedule": 60 * 60},
+    "email-unread-messages": {"task": "apps.chat.tasks.email_unread_messages", "schedule": 5 * 60},
 }
 
 AUTH_USER_MODEL = "accounts.User"
@@ -156,6 +159,16 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = Path(env.str("STATIC_ROOT", default=str(BASE_DIR / "staticfiles")))
 MEDIA_URL = "/media/"
 MEDIA_ROOT = Path(env.str("MEDIA_ROOT", default=str(BASE_DIR / "media")))
+PROTECTED_MEDIA_ROOT = Path(env.str("PROTECTED_MEDIA_ROOT", default=str(BASE_DIR / "protected")))
+PROTECTED_MEDIA_ACCEL_PREFIX = env.str("PROTECTED_MEDIA_ACCEL_PREFIX", default="")
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    "protected": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {"location": PROTECTED_MEDIA_ROOT, "base_url": None},
+    },
+}
 
 EMAIL_CONFIG = env.email_url("EMAIL_URL", default="consolemail://")
 vars().update(EMAIL_CONFIG)
