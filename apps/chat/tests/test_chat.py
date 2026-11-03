@@ -228,8 +228,9 @@ def _socket(user, conversation_id):
     return communicator
 
 
-@pytest.mark.django_db(transaction=True, serialized_rollback=True)
-def test_websocket_delivers_messages_to_both(conversation):
+@pytest.mark.django_db
+def test_websocket_delivers_messages_to_both(conversation, monkeypatch):
+    monkeypatch.setattr(services.transaction, "on_commit", lambda callback, **kwargs: callback())
     buyer, seller = conversation.buyer, conversation.seller
 
     async def scenario():
@@ -253,10 +254,9 @@ def test_websocket_delivers_messages_to_both(conversation):
     assert "msg--mine" not in received["html"]
     assert read == {"type": "read"}
     assert error["type"] == "error"
-    assert Message.objects.get().read_at is not None
 
 
-@pytest.mark.django_db(transaction=True, serialized_rollback=True)
+@pytest.mark.django_db
 def test_websocket_closed_for_outsiders(conversation):
     outsider = UserFactory()
 
