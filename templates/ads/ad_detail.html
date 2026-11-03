@@ -94,6 +94,11 @@
           </div>
         {% elif ad.status == "active" %}
           <div class="ad-buy__actions">
+            {% if user.is_authenticated %}
+              <form method="post" action="{% url 'chat:start' ad.pk %}">{% csrf_token %}<button class="btn btn--secondary btn--block btn--lg" type="submit">{% icon "message-circle" 18 %}Написать продавцу</button></form>
+            {% else %}
+              <a class="btn btn--secondary btn--block btn--lg" href="{% url 'accounts:login' %}?next={{ request.get_full_path|urlencode }}">{% icon "message-circle" 18 %}Написать продавцу</a>
+            {% endif %}
             {% include "ads/partials/phone_button.html" %}
             <div class="ad-buy__row">
               {% if ad.pk in favorite_ids %}{% include "ads/partials/favorite_button.html" with is_favorite=True variant="full" %}{% else %}{% include "ads/partials/favorite_button.html" with is_favorite=False variant="full" %}{% endif %}

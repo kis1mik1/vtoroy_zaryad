@@ -14,6 +14,10 @@
     <span class="bottom-nav__plus">{% icon "plus" 22 %}</span><span>Разместить</span>
   </a>
   {% if user.is_authenticated %}
+    {% url 'chat:list' as chat_url %}
+    <a class="bottom-nav__item" href="{{ chat_url }}"{% if request.path|slice:":10" == "/messages/" %} aria-current="page"{% endif %}>
+      <span class="bottom-nav__icon">{% icon "message-circle" 22 %}{% include "chat/partials/badge.html" %}</span><span>Сообщения</span>
+    </a>
     {% url 'notifications:list' as notifications_url %}
     <a class="bottom-nav__item" href="{{ notifications_url }}"{% if request.path == notifications_url %} aria-current="page"{% endif %}>
       <span class="bottom-nav__icon">{% icon "bell" 22 %}{% include "notifications/partials/badge.html" %}</span><span>Уведомления</span>

@@ -1,0 +1,70 @@
+{% extends "layouts/default.html" %}
+{% load static %}
+
+{% block title %}{{ other.first_name }} — {{ conversation.ad.title }}{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/chat.css' %}">{% endblock %}
+
+{% block content %}
+  {% with ad=conversation.ad photo=conversation.ad.ordered_photos|first %}
+  <section class="chat surface" data-chat data-socket="/ws/chat/{{ conversation.pk }}/" aria-label="Переписка с {{ other.first_name }}">
+    <header class="chat__head">
+      <a class="chat__ad" href="{% url 'ads:detail' ad.pk ad.slug %}">
+        <span class="chat-list__photo">{% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="56" height="56">{% else %}{% icon "image" 20 %}{% endif %}</span>
+        <span class="chat__ad-text"><strong>{{ ad.title }}</strong><span>{{ ad.price|price }}{% if ad.status != "active" %} · {{ ad.get_status_display|lower }}{% endif %}</span></span>
+      </a>
+      <div class="chat__person">
+        <a href="{% url 'ads:profile' other.pk %}">{% include "components/avatar.html" with person=other size="sm" %}<span>{{ other.first_name }}</span></a>
+        {% if other.last_seen_at %}<span class="chat__seen">{% last_seen other.last_seen_at %}</span>{% endif %}
+      </div>
+      <div class="dropdown" data-dropdown>
+        <button class="btn btn--ghost btn--icon btn--sm" type="button" aria-label="Действия с диалогом" aria-haspopup="true" aria-expanded="false" data-dropdown-toggle>{% icon "menu" 18 %}</button>
+        <div class="dropdown__menu" role="menu" hidden data-dropdown-menu>
+          <form method="post" action="{% url 'chat:block' conversation.pk %}"{% if not blocked_by_me %} data-confirm="Заблокировать {{ other.first_name }}? Переписка в этом и других диалогах станет недоступна." data-confirm-action="Заблокировать"{% endif %}>
+            {% csrf_token %}
+            {% if blocked_by_me %}<input type="hidden" name="action" value="unblock">{% endif %}
+            <button class="dropdown__item" type="submit" role="menuitem">{% icon "ban" 18 %}{% if blocked_by_me %}Разблокировать{% else %}Заблокировать{% endif %}</button>
+          </form>
+          <a class="dropdown__item" role="menuitem" href="{% url 'moderation:complain_user' other.pk %}" hx-get="{% url 'moderation:complain_user' other.pk %}" hx-target="#modal-content">{% icon "flag" 18 %}Пожаловаться</a>
+          <form method="post" action="{% url 'chat:hide' conversation.pk %}">
+            {% csrf_token %}
+            <button class="dropdown__item" type="submit" role="menuitem">{% icon "archive" 18 %}Скрыть диалог</button>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <ol class="chat__messages" data-chat-messages aria-live="polite">
+      {% for message in history %}
+        {% include "chat/partials/message.html" with viewer=user %}
+      {% empty %}
+        <li class="chat__empty" data-chat-empty>{% if is_seller %}Покупатель ещё ничего не написал.{% else %}Спросите про состояние, комплект или договоритесь о встрече. Не переводите предоплату.{% endif %}</li>
+      {% endfor %}
+    </ol>
+
+    {% if blocked %}
+      <div class="alert alert--warning chat__blocked">
+        {% icon "ban" %}
+        <div>{% if blocked_by_me %}Вы заблокировали собеседника. Чтобы продолжить переписку, разблокируйте его в меню диалога.{% else %}Собеседник ограничил переписку с вами.{% endif %}</div>
+      </div>
+    {% elif not user.is_email_verified %}
+      {% include "accounts/partials/verify_banner.html" %}
+    {% else %}
+      <form class="chat__composer" method="post" action="{% url 'chat:send' conversation.pk %}" data-chat-form>
+        {% csrf_token %}
+        <label class="visually-hidden" for="chat-text">Сообщение</label>
+        <textarea id="chat-text" name="text" rows="1" maxlength="2000" placeholder="Сообщение" required data-chat-input></textarea>
+        <label class="btn btn--ghost btn--icon" title="Отправить фото">{% icon "camera" 20 %}<span class="visually-hidden">Отправить фото</span><input type="file" accept="image/*" hidden data-chat-photo data-url="{% url 'chat:photo' conversation.pk %}"></label>
+        <button class="btn btn--ghost btn--icon" type="button" aria-label="Записать голосовое" data-voice-start data-url="{% url 'chat:voice' conversation.pk %}">{% icon "mic" 20 %}</button>
+        <button class="btn btn--primary btn--icon" type="submit" aria-label="Отправить">{% icon "send" 20 %}</button>
+      </form>
+      <div class="chat__recorder" hidden data-voice-panel>
+        <span class="chat__rec-dot" aria-hidden="true"></span>
+        <span><span data-voice-timer>0:00</span> из 2:00</span>
+        <button class="btn btn--ghost btn--sm" type="button" data-voice-cancel>Отмена</button>
+        <button class="btn btn--primary btn--sm" type="button" data-voice-send>{% icon "send" 16 %}Отправить</button>
+      </div>
+    {% endif %}
+  </section>
+  {% endwith %}
+{% endblock %}

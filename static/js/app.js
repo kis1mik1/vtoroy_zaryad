@@ -1,5 +1,6 @@
 import { initAdForm } from "./modules/ad-form.js";
 import { initAvatarInput } from "./modules/avatar-input.js";
+import { initChat } from "./modules/chat.js";
 import { initConfirm } from "./modules/confirm.js";
 import { initDialogs } from "./modules/dialogs.js";
 import { initDropdowns } from "./modules/dropdown.js";
@@ -12,6 +13,7 @@ import { initTabs } from "./modules/tabs.js";
 import { initTheme } from "./modules/theme.js";
 import { initToasts } from "./modules/toasts.js";
 import { initUploader } from "./modules/uploader.js";
+import { initVoicePlayers } from "./modules/voice.js";
 
 initTheme();
 initDropdowns();
@@ -27,6 +29,8 @@ initAdForm();
 initUploader();
 initFilters();
 initGallery();
+initChat();
+initVoicePlayers();
 
 document.addEventListener("htmx:load", (event) => {
   initTabs(event.detail.elt);

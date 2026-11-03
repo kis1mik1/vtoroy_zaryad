@@ -1,0 +1,21 @@
+{% load chat %}
+<li class="msg{% if message.sender_id == viewer.pk %} msg--mine{% endif %}" data-message-id="{{ message.pk }}" data-kind="{{ message.kind }}" data-mine="{% if message.sender_id == viewer.pk %}true{% else %}false{% endif %}">
+  <div class="msg__bubble">
+    {% if message.kind == "photo" %}
+      <a class="msg__photo" href="{% url 'chat:file' message.pk %}" target="_blank" rel="noopener"><img src="{% url 'chat:file' message.pk %}" width="{{ message.width }}" height="{{ message.height }}" alt="Фото в переписке" loading="lazy"></a>
+    {% elif message.kind == "voice" %}
+      <div class="voice" data-voice-player>
+        <button class="voice__play" type="button" aria-label="Слушать голосовое">{% icon "play" 18 %}</button>
+        <span class="voice__track"><span class="voice__bar" data-voice-bar></span></span>
+        <span class="voice__time" data-voice-time data-total="{{ message.duration|duration }}">{{ message.duration|duration }}</span>
+        <audio preload="none" src="{% url 'chat:file' message.pk %}"></audio>
+      </div>
+    {% else %}
+      <p class="msg__text">{{ message.text|linebreaksbr }}</p>
+    {% endif %}
+    <span class="msg__meta">{{ message.created_at|humandate }}{% if message.sender_id == viewer.pk %}<span class="msg__status" data-status>{% if message.read_at %}{% icon "check-check" 14 %}прочитано{% else %}{% icon "check" 14 %}отправлено{% endif %}</span>{% endif %}</span>
+  </div>
+  {% if message.is_suspicious and message.sender_id != viewer.pk %}
+    <p class="msg__warning">{% icon "triangle-alert" 16 %}<span>Осторожно: в сообщении ссылка или просьба об оплате. Не переходите по ссылкам для «оплаты доставки» и не переводите деньги заранее. <a href="{% url 'core:safety' %}">Как не попасться</a></span></p>
+  {% endif %}
+</li>

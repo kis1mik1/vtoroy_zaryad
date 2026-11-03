@@ -22,6 +22,7 @@
     <div class="site-header__actions">
       <a class="btn btn--primary btn--sm site-header__post hide-mobile" href="{% url 'ads:create' %}">{% icon "plus" 18 %}Разместить объявление</a>
       {% if user.is_authenticated %}<a class="header-control header-control--icon hide-mobile" href="{% url 'ads:favorites' %}" aria-label="Избранное">{% icon "heart" 20 %}</a>{% endif %}
+      {% if user.is_authenticated %}<a class="header-control header-control--icon header-bell hide-mobile" href="{% url 'chat:list' %}" aria-label="Сообщения">{% icon "message-circle" 20 %}{% include "chat/partials/badge.html" %}</a>{% endif %}
       {% include "components/theme_switcher.html" %}
       {% include "components/user_menu.html" %}
     </div>

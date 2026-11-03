@@ -9,6 +9,13 @@ function setCount(value) {
   });
 }
 
+function setMessages(value) {
+  document.querySelectorAll("[data-messages-count]").forEach((badge) => {
+    badge.textContent = value > 99 ? "99+" : String(value);
+    badge.hidden = value === 0;
+  });
+}
+
 function handle(event) {
   if (event.type === "notification") {
     setCount(event.unread);
@@ -21,6 +28,8 @@ function handle(event) {
     }
   } else if (event.type === "notification_read") {
     setCount(event.unread);
+  } else if (event.type === "messages_unread") {
+    setMessages(event.unread);
   }
 }
 

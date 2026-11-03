@@ -1,0 +1,32 @@
+{% extends "layouts/default.html" %}
+{% load static chat %}
+
+{% block title %}Сообщения{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/chat.css' %}">{% endblock %}
+
+{% block content %}
+  <header class="page-header"><h1>Сообщения</h1></header>
+  {% if conversations %}
+    <ul class="chat-list card">
+      {% for item in conversations %}
+        {% with other=item|interlocutor:user photo=item.ad.ordered_photos|first %}
+          <li>
+            <a class="chat-list__item{% if item.unread %} chat-list__item--unread{% endif %}" href="{% url 'chat:conversation' item.pk %}">
+              <span class="chat-list__photo">{% if photo %}<img src="{{ photo.thumb.url }}" alt="" width="64" height="64" loading="lazy">{% else %}{% icon "image" 22 %}{% endif %}</span>
+              <span class="chat-list__body">
+                <span class="chat-list__top"><strong>{{ other.first_name }}</strong><span class="chat-list__time">{{ item.last_message_at|humandate }}</span></span>
+                <span class="chat-list__ad">{{ item.ad.title }}</span>
+                <span class="chat-list__last">{% if item.last_sender == user.pk %}Вы: {% endif %}{% if item.last_kind == "photo" %}Фото{% elif item.last_kind == "voice" %}Голосовое сообщение{% else %}{{ item.last_text|truncatechars:80 }}{% endif %}</span>
+              </span>
+              {% if item.unread %}<span class="counter">{{ item.unread }}</span>{% endif %}
+            </a>
+          </li>
+        {% endwith %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% url 'ads:search' as search_url %}
+    {% include "components/empty_state.html" with icon_name="message-circle" title="Сообщений пока нет" text="Напишите продавцу со страницы объявления — переписка появится здесь." action_url=search_url action_label="Найти технику" %}
+  {% endif %}
+{% endblock %}
