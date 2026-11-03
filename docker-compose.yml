@@ -1,3 +1,28 @@
+x-app: &app
+  build: .
+  image: vtoroy-zaryad
+  env_file: .env
+  environment:
+    DJANGO_SETTINGS_MODULE: config.settings.local
+    DEBUG: "False"
+    DATABASE_URL: postgres://vz:vz@postgres:5432/vtoroy_zaryad
+    CACHE_REDIS_URL: redis://redis:6379/1
+    CHANNELS_REDIS_URL: redis://redis:6379/2
+    CELERY_BROKER_URL: redis://redis:6379/0
+    CELERY_TASK_ALWAYS_EAGER: "False"
+    CLIENT_IP_HEADER: HTTP_X_REAL_IP
+  volumes:
+    - media:/app/media
+    - protected:/app/protected
+    - var:/app/var
+    - static:/app/staticfiles
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_started
+  restart: unless-stopped
+
 services:
   postgres:
     image: postgres:16
@@ -14,6 +39,7 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+    restart: unless-stopped
 
   redis:
     image: redis:7-alpine
@@ -21,7 +47,45 @@ services:
       - "6379:6379"
     volumes:
       - redis-data:/data
+    restart: unless-stopped
+
+  web:
+    <<: *app
+    command: >
+      sh -c "python manage.py migrate --noinput
+      && python manage.py collectstatic --noinput -v 0
+      && daphne -b 0.0.0.0 -p 8000 --proxy-headers config.asgi:application"
+
+  worker:
+    <<: *app
+    command: celery -A config worker -l info --concurrency 2
+
+  beat:
+    <<: *app
+    command: celery -A config beat -l info --schedule /app/var/celerybeat-schedule
+
+  nginx:
+    image: nginx:1.27-alpine
+    ports:
+      - "8000:80"
+      - "8443:443"
+    volumes:
+      - ./deploy/nginx/locations.conf:/etc/nginx/vz/locations.conf:ro
+      - ./deploy/nginx/http.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./deploy/nginx/https.conf:/etc/nginx/vz/https.conf:ro
+      - ./deploy/nginx/enable-https.sh:/docker-entrypoint.d/40-enable-https.sh:ro
+      - ./certs:/etc/nginx/certs:ro
+      - static:/srv/static:ro
+      - media:/srv/media:ro
+      - protected:/srv/protected:ro
+    depends_on:
+      - web
+    restart: unless-stopped
 
 volumes:
   postgres-data:
   redis-data:
+  media:
+  protected:
+  var:
+  static:

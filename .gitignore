@@ -16,3 +16,5 @@ htmlcov/
 .idea/
 .vscode/
 .DS_Store
+/certs/*
+!/certs/.gitkeep

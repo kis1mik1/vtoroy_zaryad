@@ -18,6 +18,7 @@ from apps.core.images import fit_within, to_webp
 from apps.core.models import City
 from apps.moderation import services as moderation
 from apps.moderation.models import ComplaintReason
+from apps.payments.models import Payment
 from apps.reviews.models import AuthorRole, Review
 from apps.reviews.services import recalculate_rating
 
@@ -316,8 +317,9 @@ def _condition_report(rng, category: Category, condition: str) -> dict:
 
 
 class DemoBuilder:
-    def __init__(self, seed: int = 2026):
+    def __init__(self, seed: int = 2026, password: str = ""):
         self.rng = random.Random(seed)
+        self.password = password
         self.now = timezone.now()
 
     def clear(self) -> int:
@@ -325,6 +327,7 @@ class DemoBuilder:
         count = users.count()
         for photo in AdPhoto.objects.filter(owner__in=users):
             photo.delete()
+        Payment.objects.filter(user__in=users).delete()
         users.delete()
         return count
 
@@ -349,7 +352,7 @@ class DemoBuilder:
                 email_on_moderation=False,
             )
             user.date_joined = self.now - timedelta(days=self.rng.randint(20, 700))
-            user.set_password(secrets.token_urlsafe(16))
+            user.set_password(self.password or secrets.token_urlsafe(16))
             users.append(user)
         return User.objects.bulk_create(users)
 

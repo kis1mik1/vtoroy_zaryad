@@ -14,11 +14,14 @@ class Command(BaseCommand):
         parser.add_argument(
             "--clear", action="store_true", help=f"Удалить прежние демо-данные (@{DEMO_DOMAIN})"
         )
+        parser.add_argument(
+            "--password", default="", help="Пароль демо-пользователей (по умолчанию случайный)"
+        )
 
-    def handle(self, *args, users, ads, seed, clear, **options):
+    def handle(self, *args, users, ads, seed, clear, password, **options):
         if not DeviceModel.objects.exists():
             raise CommandError("Справочник пуст. Сначала выполните python manage.py load_catalog")
-        builder = DemoBuilder(seed)
+        builder = DemoBuilder(seed, password)
         if clear:
             removed = builder.clear()
             self.stdout.write(f"Удалено демо-пользователей: {removed}")
