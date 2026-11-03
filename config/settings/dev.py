@@ -2,7 +2,9 @@ from .base import *  # noqa: F403
 from .base import INSTALLED_APPS, MIDDLEWARE, env
 
 DEBUG = True
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", *env.list("ALLOWED_HOSTS", default=[])]
+ALLOWED_HOSTS = list(
+    dict.fromkeys(["localhost", "127.0.0.1", "[::1]", *env.list("ALLOWED_HOSTS", default=[])])
+)
 
 INSTALLED_APPS = [*INSTALLED_APPS, "debug_toolbar"]
 MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware", *MIDDLEWARE]

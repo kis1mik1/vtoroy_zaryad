@@ -6,7 +6,9 @@ from decimal import Decimal
 from django.conf import settings
 from yookassa import Configuration
 from yookassa import Payment as YooPayment
+from yookassa import Settings as YooSettings
 from yookassa.domain.common import SecurityHelper
+from yookassa.domain.exceptions import ApiError, UnauthorizedError
 
 logger = logging.getLogger(__name__)
 
@@ -99,3 +101,32 @@ def fetch_payment(payment_id: str) -> RemotePayment:
         logger.warning("ЮKassa: не удалось получить платёж %s: %r", payment_id, exc)
         raise GatewayError("Не удалось узнать статус платежа.") from exc
     return _parse(response)
+
+
+@dataclass(frozen=True)
+class Shop:
+    account_id: str
+    test: bool
+    status: str
+
+
+def shop_info() -> Shop:
+    _configure()
+    try:
+        response = YooSettings.get_account_settings()
+    except Exception as exc:
+        logger.warning("ЮKassa: не удалось получить данные магазина: %r", exc)
+        raise GatewayError(_describe(exc)) from exc
+    return Shop(
+        account_id=str(response.account_id),
+        test=bool(getattr(response, "test", False)),
+        status=str(getattr(response, "status", "")),
+    )
+
+
+def _describe(exc: Exception) -> str:
+    if isinstance(exc, UnauthorizedError):
+        return "ЮKassa не приняла shopId или секретный ключ."
+    if isinstance(exc, ApiError):
+        return f"ЮKassa ответила ошибкой: {exc}"
+    return f"нет связи с api.yookassa.ru ({exc.__class__.__name__})"

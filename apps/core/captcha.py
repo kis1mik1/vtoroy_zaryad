@@ -1,6 +1,6 @@
 import json
 import logging
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
@@ -38,3 +38,18 @@ def verify(token: str, ip: str) -> bool:
     except ValueError:
         logger.warning("SmartCaptcha вернула некорректный ответ: %s", body[:200])
         return True
+
+
+def check_server_key() -> tuple[bool, str]:
+    payload = urlencode({"secret": settings.SMARTCAPTCHA_SERVER_KEY, "token": "check", "ip": ""})
+    request = Request(VALIDATE_URL, data=payload.encode(), method="POST")
+    try:
+        with urlopen(request, timeout=TIMEOUT) as response:
+            body = json.loads(response.read().decode() or "{}")
+    except HTTPError as exc:
+        return False, f"SmartCaptcha не приняла серверный ключ (HTTP {exc.code})."
+    except (URLError, TimeoutError, OSError, ValueError) as exc:
+        return False, f"нет связи с smartcaptcha.yandexcloud.net ({exc.__class__.__name__})"
+    if body.get("status") == "failed":
+        return True, "серверный ключ принят, пробный токен отклонён, как и должно быть"
+    return False, f"неожиданный ответ SmartCaptcha: {body}"
